@@ -1,0 +1,32 @@
+<?php
+
+/**
+ *  Classe principale de l'objet de connexion PDO
+ */
+class dbConnect
+{
+    private static $instance = null;
+    private $connexion;
+    private function __construct()
+    {
+        try {
+            $this->connexion = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'] . "; charset=utf8", $_ENV['DB_LOGIN'], $_ENV['DB_PASSWORD']);
+            $this->connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die($e->getMessage() . "<br />Erreur de connexion PDO");
+        }
+    }
+    
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new dbConnect();
+        }
+        return self::$instance;
+    }
+
+    public function getConnection()
+    {
+        return $this->connexion;
+    }
+}

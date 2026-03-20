@@ -1,0 +1,19 @@
+{
+    "name": "odium-bt/coteinfo",
+    "description": "Cote Info - Synthèse de compétences acquises",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "PDOProjet\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ZadigMouquet",
+            "email": "zadig.mouquet@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}

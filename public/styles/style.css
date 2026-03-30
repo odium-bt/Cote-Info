@@ -1,0 +1,126 @@
+/* montserrat-regular - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/montserrat-v31-latin-regular.woff2") format("woff2");
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* open-sans-regular - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/open-sans-v44-latin-regular.woff2") format("woff2");
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* ===== Base ===== */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contenu {
+  max-width: 1200px;
+  width: 100%;
+  margin: 40px auto;
+}
+
+body {
+  background-color: #E5F9FF;
+  font-size: 18px;
+}
+
+.box {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px 3px rgba(0, 0, 0, 0.1450980392);
+}
+
+/* ===== Head ===== */
+header {
+  height: 175px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .logo {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  width: 25%;
+  height: 100%;
+  margin: 1px;
+}
+header nav {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+header nav ul {
+  display: flex;
+}
+header nav ul li {
+  margin: 3px;
+  background-color: lightblue;
+}
+
+#burger-menu {
+  display: none;
+}
+
+/* ===== Index ===== */
+/* -- Carte -- */
+.map .map_image path {
+  fill: rgb(101, 176, 201);
+  stroke: #FFF;
+  transition: fill 0.3s;
+}
+.map .map_image path.active {
+  stroke-width: 1px;
+  fill: rgb(99, 187, 216);
+}
+.map .map_image path.active:hover {
+  fill: rgb(72, 149, 175);
+}
+.mapmap_list {
+  float: left;
+  width: 50%;
+}
+.mapmap_list ul {
+  list-style: none;
+}
+.mapmap_list ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+  width: 250px;
+  height: 50px;
+  border-radius: 40px;
+  border: 1px solid black;
+}
+.mapmap_list ul li a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+/*# sourceMappingURL=style.css.map */

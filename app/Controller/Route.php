@@ -1,0 +1,38 @@
+<?php
+namespace CoteInfo\Controller;
+/*
+ * Classe Route
+ * Gère le routage par la méthode $_GET["action"]
+*/
+
+class Route
+{
+    public $action;
+
+    public function __construct()
+    {
+        // Récupère $_GET, sinon "accueil" quand vide
+        $this->action = $_GET["action"] ?? "accueil";
+    }
+
+    public function redirigeVers()
+    {
+        require ROOT . "/app/View/header.php";
+        switch ($this->action) {
+            case "home":
+                new Home;
+                break;
+            case "news":
+                new News;
+                break;
+            case "about":
+                new About;
+                break;
+            default:
+                // Si $_GET["action"] = action non reconnue
+                new PageNotFound;
+                break;
+        }
+        require ROOT . "/app/View/footer.php";
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "coteinfo",
+  "version": "1.0.0",
+  "description": "My interactive map tourist guide website project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+        "sass": "sass --watch sass/style.scss:public/styles/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/odium-bt/refactored-octo-telegram.git"
+  },
+  "author": "Zadig Mouquet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/odium-bt/refactored-octo-telegram/issues"
+  },
+  "homepage": "https://github.com/odium-bt/refactored-octo-telegram#readme",
+  "dependencies": {
+    "sass": "^1.98.0"
+  }
+}

@@ -1,8 +1,10 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+require __DIR__ . '/app/config/config.php';
+require ROOT . '/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(ROOT);
 $dotenv->load();
 
-use CoteInfo\Controller\RouteCtl;
+use CoteInfo\Controller\Route;
 
-$route = new RouteCtl;
+$route = new Route;
+$route->redirigeVers();

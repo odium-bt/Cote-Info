@@ -1,9 +1,11 @@
 <?php
+
 namespace CoteInfo\Controller;
 /*
  * Classe News
  * Gère la page des actualités
  */
+
 class News
 {
     public function __construct()

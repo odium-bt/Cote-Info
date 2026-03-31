@@ -1,5 +1,10 @@
 <?php
 
+namespace CoteInfo\Model;
+
+use PDO;
+use PDOException;
+
 /**
  *  Classe principale de l'objet de connexion PDO
  */
@@ -16,7 +21,7 @@ class dbConnect
             die($e->getMessage() . "<br />Erreur de connexion PDO");
         }
     }
-    
+
     public static function getInstance()
     {
         if (self::$instance === null) {

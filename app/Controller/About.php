@@ -1,9 +1,11 @@
 <?php
+
 namespace CoteInfo\Controller;
 /*
  * Classe About
  * Gère la page A propos
  */
+
 class About
 {
     public function __construct()

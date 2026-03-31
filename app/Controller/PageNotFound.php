@@ -1,9 +1,11 @@
 <?php
+
 namespace CoteInfo\Controller;
 /*
  * Classe PageNotFound
  * Gère la page 404
  */
+
 class PageNotFound
 {
     public function __construct()

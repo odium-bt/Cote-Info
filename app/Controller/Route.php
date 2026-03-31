@@ -1,4 +1,5 @@
 <?php
+
 namespace CoteInfo\Controller;
 /*
  * Classe Route
@@ -12,7 +13,7 @@ class Route
     public function __construct()
     {
         // Récupère $_GET, sinon "accueil" quand vide
-        $this->action = $_GET["action"] ?? "accueil";
+        $this->action = $_GET["action"] ?? "home";
     }
 
     public function redirigeVers()

@@ -14,12 +14,12 @@
     <header class="box">
 
         <div class="logo">
-            <a href="?action=accueil"><img src="./public/images/logo1.png" alt="Logo Côte Info"></a>
+            <a href="?action=home"><img src="./public/images/logo1.png" alt="Logo Côte Info"></a>
         </div>
         <i id="burger-menu" class="fa-solid fa-bars"></i>
         <nav>
             <ul>
-                <li><a href="?action=carte"><i class="fa-regular fa-map"></i> Carte</a></li>
+                <li><a href="?action=home"><i class="fa-regular fa-map"></i> Carte</a></li>
                 <li><a href="?action=news"><i class="fa-regular fa-newspaper"></i> Actualités</a></li>
                 <li><a href="?action=about"><i class="fa-solid fa-magnifying-glass"></i> A propos</a></li>
                 <li><a href="?action=login"><i class="fa-regular fa-circle-user"></i> Connexion</a></li>

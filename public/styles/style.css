@@ -43,7 +43,12 @@ ul {
 
 body {
   background-color: #E5F9FF;
+  font-family: "Open Sans", sans-serif;
   font-size: 18px;
+}
+
+.titre {
+  font-family: "Montserrat", serif;
 }
 
 .box {
@@ -52,12 +57,22 @@ body {
   box-shadow: 0px 4px 10px 3px rgba(0, 0, 0, 0.1450980392);
 }
 
+.content {
+  margin: 0% 20% 0% 20%;
+}
+
+h1 {
+  margin-bottom: 30px;
+}
+
 /* ===== Head ===== */
 header {
   height: 175px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 60px;
+  border-radius: 0% !important;
 }
 header .logo {
   display: flex;
@@ -88,26 +103,36 @@ header nav ul li {
 
 /* ===== Index ===== */
 /* -- Carte -- */
-.map .map_image path {
+.map {
+  margin: 5% 5% 0% 5%;
+  position: relative;
+}
+.map__title {
+  color: rgb(150, 210, 245);
+  text-align: center;
+  font-size: 1.3em;
+  padding-top: 20px;
+}
+.map__image {
+  padding: 5% 10% 5% 10%;
+}
+.map__image path {
   fill: rgb(101, 176, 201);
   stroke: #FFF;
   transition: fill 0.3s;
 }
-.map .map_image path.active {
+.map__image path.active {
   stroke-width: 1px;
   fill: rgb(99, 187, 216);
 }
-.map .map_image path.active:hover {
-  fill: rgb(72, 149, 175);
-}
-.mapmap_list {
+.map__list {
   float: left;
   width: 50%;
 }
-.mapmap_list ul {
+.map__list ul {
   list-style: none;
 }
-.mapmap_list ul li {
+.map__list ul li {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,10 +142,16 @@ header nav ul li {
   border-radius: 40px;
   border: 1px solid black;
 }
-.mapmap_list ul li a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.3s;
+.map .map-credit {
+  font-size: small;
+  text-align: right;
+  padding: 5px;
+}
+.map .map-credit a {
+  color: rgb(122, 112, 255);
+}
+.map .map-credit a:hover {
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=style.css.map */

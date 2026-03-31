@@ -1,5 +1,5 @@
-@use "couleurs";
-@use "fonts";
+@import "fonts";
+@import "couleurs";
 
 /* ===== Base ===== */
 * {
@@ -9,7 +9,7 @@
 
 a {
     text-decoration: none;
-    color:#000;
+    color: #000;
 }
 
 ul {
@@ -26,12 +26,12 @@ ul {
 
 body {
     background-color: #E5F9FF;
-    // font-family: fonts.$fontTexte;
+    font-family: $fontTexte;
     font-size: 18px;
 }
 
 .titre {
-    // font-family: fonts.$fontTitle;
+    font-family: $fontTitle;
 }
 
 .box {
@@ -40,20 +40,30 @@ body {
     box-shadow: 0px 4px 10px 3px #00000025;
 }
 
+.content {
+    margin: 0% 20% 0% 20%;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
 /* ===== Head ===== */
 header {
     height: 175px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 60px;
+    border-radius: 0% !important;
 
     .logo {
-        display:flex;
+        display: flex;
         align-items: center;
-justify-content: right;
-        width:25%;
-        height:100%;
-        margin:1px;
+        justify-content: right;
+        width: 25%;
+        height: 100%;
+        margin: 1px;
     }
 
     nav {
@@ -67,8 +77,8 @@ justify-content: right;
             display: flex;
 
             li {
-            margin:3px;
-            background-color : lightblue;
+                margin: 3px;
+                background-color: lightblue;
             }
         }
     }
@@ -81,10 +91,24 @@ justify-content: right;
 /* ===== Index ===== */
 
 /* -- Carte -- */
+
 .map {
+    margin: 5% 5% 0% 5%;
+    position: relative;
+
+    // .box {}
+
+    &__title {
+        color: rgb(150, 210, 245);
+        text-align: center;
+        font-size: 1.3em;
+        padding-top: 20px;
+    }
 
     // Image SVG
-    .map_image {
+    &__image {
+        padding: 5% 10% 5% 10%;
+
         path {
             fill: rgb(101, 176, 201);
             stroke: #FFF;
@@ -93,17 +117,13 @@ justify-content: right;
             &.active {
                 stroke-width: 1px;
                 fill: rgb(99, 187, 216);
-
-                &:hover {
-                    fill: rgb(72, 149, 175);
-                }
             }
 
         }
     }
 
     // Boutons
-    &map_list {
+    &__list {
         float: left;
         width: 50%;
 
@@ -120,11 +140,20 @@ justify-content: right;
                 border-radius: 40px;
                 border: 1px solid black;
 
-                a {
-                    color: inherit;
-                    text-decoration: none;
-                    transition: color 0.3s;
-                }
+            }
+        }
+    }
+
+    .map-credit {
+        font-size: small;
+        text-align: right;
+        padding: 5px;
+
+        a {
+            color: rgb(122, 112, 255);
+
+            &:hover {
+                text-decoration: underline;
             }
         }
     }

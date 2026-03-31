@@ -35,12 +35,6 @@ ul {
   margin: 0;
 }
 
-.contenu {
-  max-width: 1200px;
-  width: 100%;
-  margin: 40px auto;
-}
-
 body {
   background-color: #E5F9FF;
   font-family: "Open Sans", sans-serif;
@@ -58,11 +52,32 @@ body {
 }
 
 .content {
-  margin: 0% 20% 0% 20%;
+  max-width: 1200px;
+  width: 100%;
+  margin: 40px auto;
 }
 
 h1 {
   margin-bottom: 30px;
+}
+
+/* -- Forms -- */
+.form-group {
+  --pad: .75rem;
+  position: relative;
+}
+
+label {
+  position: absolute;
+  left: var(--pad);
+  top: var(--pad);
+  pointer-events: none;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+  transform: translateY(calc(-50% - var(--pad))) scale(0.8);
+  color: var(--accent);
 }
 
 /* ===== Head ===== */

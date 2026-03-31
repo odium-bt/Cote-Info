@@ -1,14 +1,9 @@
 <?php
 
-namespace CoteInfo\Model;
-
-use PDO;
-use PDOException;
-
-/**
+/*
  *  Classe principale de l'objet de connexion PDO
  */
-class dbConnect
+class Database
 {
     private static $instance = null;
     private $connexion;
@@ -25,7 +20,7 @@ class dbConnect
     public static function getInstance()
     {
         if (self::$instance === null) {
-            self::$instance = new dbConnect();
+            self::$instance = new Database();
         }
         return self::$instance;
     }

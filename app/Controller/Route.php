@@ -29,6 +29,17 @@ class Route
             case "about":
                 new About;
                 break;
+            case "login":
+                new Login;
+                break;
+            case "station":
+                // Si un station ID est trouvé, continue à page station
+                if (isset($_GET["stationID"])) {
+                    new Station;
+                } else {
+                    new PageNotFound;
+                }
+                break;
             default:
                 // Si $_GET["action"] = action non reconnue
                 new PageNotFound;

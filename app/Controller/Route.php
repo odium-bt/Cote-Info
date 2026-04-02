@@ -32,8 +32,11 @@ class Route
             case "login":
                 new Login;
                 break;
+            case "register":
+                new RegisterForm;
+                break;
             case "station":
-                // Si un station ID est trouvé, continue à page station
+                // Si aucun ID station est trouvé, affiche la page 404
                 if (isset($_GET["stationID"])) {
                     new Station;
                 } else {

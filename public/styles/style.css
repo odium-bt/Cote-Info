@@ -29,6 +29,13 @@ a {
   color: #000;
 }
 
+.blue-link {
+  color: rgb(122, 112, 255);
+}
+.blue-link:hover {
+  text-decoration: underline;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -47,7 +54,6 @@ body {
 
 .box {
   background-color: white;
-  border-radius: 20px;
   box-shadow: 0px 4px 10px 3px rgba(0, 0, 0, 0.1450980392);
 }
 
@@ -61,23 +67,39 @@ h1 {
   margin-bottom: 30px;
 }
 
+.button {
+  border: none;
+  border-radius: 15px;
+  background-color: #358fe2;
+  color: #fff;
+  font-size: 18px;
+  width: 15em;
+  height: 2.5em;
+}
+
 /* -- Forms -- */
-.form-group {
-  --pad: .75rem;
-  position: relative;
+.flex {
+  display: flex;
+  justify-content: center;
 }
 
-label {
-  position: absolute;
-  left: var(--pad);
-  top: var(--pad);
-  pointer-events: none;
+.form {
+  padding: 5em 10em;
+  width: 800px;
+}
+.form a {
+  font-size: 12px;
 }
 
-input:focus + label,
-input:not(:placeholder-shown) + label {
-  transform: translateY(calc(-50% - var(--pad))) scale(0.8);
-  color: var(--accent);
+input {
+  height: 2em;
+  width: 100%;
+}
+
+.error {
+  color: red;
+  font-size: 0.8em;
+  font-style: oblique;
 }
 
 /* ===== Head ===== */
@@ -121,6 +143,7 @@ header nav ul li {
 .map {
   margin: 5% 5% 0% 5%;
   position: relative;
+  border-radius: 20px;
 }
 .map__title {
   color: rgb(150, 210, 245);
@@ -161,12 +184,6 @@ header nav ul li {
   font-size: small;
   text-align: right;
   padding: 5px;
-}
-.map .map-credit a {
-  color: rgb(122, 112, 255);
-}
-.map .map-credit a:hover {
-  text-decoration: underline;
 }
 
 /*# sourceMappingURL=style.css.map */

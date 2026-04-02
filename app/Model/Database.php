@@ -1,8 +1,13 @@
 <?php
 
+namespace CoteInfo\Model;
+
+use PDO;
+use PDOException;
 /*
  *  Classe principale de l'objet de connexion PDO
  */
+
 class Database
 {
     private static $instance = null;

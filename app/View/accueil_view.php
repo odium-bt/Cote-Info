@@ -2,8 +2,8 @@
     <h1>Découvrez la météo des plages de France</h1>
     <p>Cliquez sur une région pour consulter les prévisions météo des zones côtières et stations balnéaires</p>
 
-    <article id="map" class="map">
-        <div class="box">
+    <article id="map" class="box map">
+
             <h2 class="map__title">Carte interactive des régions côtières</h2>
 
             <!-- Carte interactive en SVG -->
@@ -41,8 +41,8 @@
 
             </div>
 
-            <p class="map-credit"><a href="https://www.amcharts.com/svg-maps/?map=france">Carte de France par amCharts</a> est licensée sous <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
-        </div>
+            <p class="map-credit"><a class="blue-link" href="https://www.amcharts.com/svg-maps/?map=france">Carte de France par amCharts</a> est licensée sous <a class="blue-link" href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+
         <div class="map__list">
             <ul>
                 <li><i class="fa-solid fa-arrow-left-long"></i></li>

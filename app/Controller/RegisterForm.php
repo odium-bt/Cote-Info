@@ -52,7 +52,7 @@ class RegisterForm
                 $this->errors['email'] = "Requis";
             } else if (strlen(($this->email)) > 254) {
                 $this->errors['email'] = "L'adresse entrée est trop longue";
-            } else if ($this->checkEmail() == false) {
+            } else if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
                 $this->errors['email'] = "Veuillez entrer une adresse email valide";
             }
             // Confirmation d'email
@@ -82,7 +82,7 @@ class RegisterForm
         if (empty($_POST) || !empty($this->errors)) {
             require ROOT . '/app/View/inscription_view.php';
         }
-        // Sinon $_POST est rempli sans erreurs, appelle le fichier d'enregistrement de produit
+        // Sinon $_POST est rempli sans erreurs, appelle le fichier d'enregistrement d'utilisateur
         else {
             $newUser = new UserModel;
             if ($newUser->isEmailUsed($this->email) === false) {
@@ -95,30 +95,5 @@ class RegisterForm
             }
         }
         // ============
-    }
-
-    /*
-     * Fonction checkEmail :
-     * Regarde si l'email de l'utilisateur est une adresse email conforme
-     * Résultat : booléen (adresse conforme = true)
-     */
-    private function checkEmail()
-    {
-        $arobaz = explode('@', $this->email) ?? null; // sépare selon le ou les arobaz @
-        if (count($arobaz) > 1) {
-            $domain = explode('.', $arobaz[1]) ?? null;   // sépare la partie après le premier arobaz @
-            $name = explode('.', $arobaz[0]) ?? null;     // sépare la première partie de l'email si il y a un (des) points
-
-            if (
-                count($arobaz) == 2 && strlen($arobaz[1]) >= 6 && count($domain) == 2 && (strlen($domain[1]) >= 2 && strlen($domain[1]) <= 4) &&
-                (count($name) == 1 && strlen($name[0]) >= 3 || count($name) == 2 && $name[0] != "" && strlen($name[1]) >= 3)
-            ) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
     }
 }

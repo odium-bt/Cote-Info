@@ -13,7 +13,7 @@
                                     echo $_POST["username"] ?? '';
                                 } else {
                                     echo '';
-                                }; ?>>
+                                }; ?> required>
                     <?php if (isset($this->errors['username'])) echo ("<br><span class='error'>" . $this->errors['username'] . "</span>"); ?>
                 </div>
 
@@ -25,25 +25,25 @@
                                     echo $_POST["email"] ?? '';
                                 } else {
                                     echo '';
-                                }; ?>>
+                                }; ?> required>
                     <?php if (isset($this->errors['email'])) echo ("<br><span class='error'>" . $this->errors['email'] . "</span>"); ?>
                 </div>
 
                 <div class="form-group">
                     <label for="email-confirm">Confirmez votre email : </label><br>
-                    <input type="text" name="email-confirm" id="email-confirm">
+                    <input type="text" name="email-confirm" id="email-confirm" required>
                     <?php if (isset($this->errors['email-confirm'])) echo ("<br><span class='error'>" . $this->errors['email-confirm'] . "</span>"); ?>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Mot de passe : </label><br>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password" id="password" required>
                     <?php if (isset($this->errors["password"])) echo ("<br><span class='error'>" . $this->errors["password"] . "</span>"); ?>
                 </div>
 
                 <div class="form-group">
                     <label for="password-confirm">Confirmez votre mot de passe : </label><br>
-                    <input type="password" name="password-confirm" id="password-confirm">
+                    <input type="password" name="password-confirm" id="password-confirm" required>
                     <?php if (isset($this->errors["password-confirm"])) echo ("<br><span class='error'>" . $this->errors["password-confirm"] . "</span>"); ?>
                 </div>
 

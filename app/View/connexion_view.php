@@ -12,12 +12,12 @@
                                     echo $_POST["email"] ?? '';
                                 } else {
                                     echo '';
-                                }; ?>>
+                                }; ?> required>
                     <?php if (isset($Login->errors['email'])) echo ("<br><span class='error'>" . $Login->errors['email'] . "</span>"); ?>
                 </div>
                 <div class="form-group">
                     <label for="password">Mot de passe : </label><br>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password" id="password" required>
                     <?php if (isset($Login->errors["password"])) echo ("<br><span class='error'>" . $Login->errors["password"] . "</span>"); ?>
                 </div>
                 <a class="blue-link" href="?action=register">Vous n'avez pas de compte ?</a>

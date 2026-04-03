@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Côte Info</title>
     <link rel="stylesheet" href="./public/styles/style.css">
+    <link rel="script" href="./public/js/script.js" defer>
 </head>
 
 <body>

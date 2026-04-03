@@ -27,10 +27,11 @@ class RegisterForm
                         $this->username = htmlspecialchars(trim($_POST['username'])) ?? null;
                         break;
                     case 'email':
-                        $this->email = htmlspecialchars(trim($_POST['email'])) ?? null;
+                        $this->email = strtolower(htmlspecialchars(trim($_POST['email']))) ?? null;
                         break;
                     case 'email-confirm':
-                        $this->emailConfirm = htmlspecialchars(trim($_POST['email-confirm'])) ?? null;
+                        $this->emailConfirm = strtolower(htmlspecialchars(trim($_POST['email-confirm']))) ?? null;
+                        break;
                     case 'password':
                         $this->password = htmlspecialchars(trim($_POST['password'])) ?? null;
                         break;
@@ -82,12 +83,16 @@ class RegisterForm
         if (empty($_POST) || !empty($this->errors)) {
             require ROOT . '/app/View/inscription_view.php';
         }
-        // Sinon $_POST est rempli sans erreurs, appelle le fichier d'enregistrement d'utilisateur
+        // Sinon $_POST est rempli sans erreurs, effectue une dernière vérification
         else {
-            $newUser = new UserModel;
-            if ($newUser->isEmailUsed($this->email) === false) {
-                $newUser->registerUser($this->username, $this->email, $this->password); // envoie les infos utilisateur sur le modèle
-                require ROOT . '/vue/inscription_succes_vue.php'; // affiche page succès
+            if (!isset($user)) {
+            $user = new UserModel;
+            }
+
+            // Vérifie que l'adresse email ne soit pas déjà utilisée
+            if ($user->isEmailUsed($this->email) === false) {
+                $user->registerUser($this->username, $this->email, $this->password); // envoie les infos utilisateur sur le modèle
+                require ROOT . '/app/View/inscription_succes_view.php'; // affiche page succès
             } else {
                 // Affiche une erreur dans le formulaire d'inscription
                 $this->errors['email'] = "Cette adresse existe déjà";

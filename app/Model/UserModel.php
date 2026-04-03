@@ -11,6 +11,7 @@ class UserModel extends Model
     public function __construct()
     {
         $this->tableName = "users";
+        $this->idColName = "id_user";
         parent::__construct();
     }
 
@@ -22,15 +23,26 @@ class UserModel extends Model
      */
     public function isEmailUsed(string $email)
     {
-        if (null !== (
-            $this->dbRequest(
-                "SELECT email FROM " . $this->tableName . " WHERE email = '$email'",
-            )
-        )) {
-            return true;
-        } else {
-            return false;
-        }
+        // Cherche l'utilisateur par email avec requête paramétrée
+        $result = $this->dbRequest(
+            "SELECT password FROM " . $this->tableName . " WHERE email = :email",
+            ['email' => $email]
+        );
+
+        return ($result !== null) ? true : false;
+    }
+
+    /*
+     * Fonction getIdByEmail
+     * paramètres : email
+     * résultat : donne l'id de l'utilisateur
+     */
+    public function getIdByEmail(string $email)
+    {
+        return $this->dbRequest(
+            "SELECT " . $this->idColName . " FROM `" . $this->tableName . "` WHERE email = ?",
+            [$email]
+        );
     }
 
     /*
@@ -53,15 +65,22 @@ class UserModel extends Model
      */
     public function loginCheck($email, $password)
     {
-        if (null !== ($this->dbRequest("SELECT email FROM " . $this->tableName . " WHERE email = '$email'"))) {
-            $hash = $this->dbRequest("SELECT password FROM" . $this->tableName . "WHERE email = '$email'");
-            if (password_verify($password, $hash) === true) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        // Cherche l'utilisateur par email avec requête paramétrée (sécurité anti-injection)
+        $user = $this->dbRequest(
+            "SELECT password FROM " . $this->tableName . " WHERE email = :email",
+            ['email' => $email]
+        );
+
+        // Si aucun utilisateur trouvé, échec
+        if ($user === null || !isset($user['password'])) {
             return false;
         }
+
+        // Compare le mot de passe clair entré par l'utilisateur avec le hash en base
+        if (password_verify($password, $user['password'])) {
+            return true;
+        }
+
+        return false;
     }
 }

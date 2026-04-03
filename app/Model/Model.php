@@ -13,6 +13,7 @@ use PDOException;
 abstract class Model
 {
     protected string $tableName;
+    protected string $idColName;
     protected Database $db;
     protected PDO $dbConnector;
 
@@ -35,7 +36,7 @@ abstract class Model
             $stmt->execute($params ?? null);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return $result;
+            return $result === false ? null : $result;
         } catch (PDOException $e) {
             die($e->getMessage() . "<br>Erreur de connexion PDO");
         }
@@ -52,15 +53,15 @@ abstract class Model
     }
 
     /*
-     * Fonction getById
+     * Fonction getByCol
      * paramètres : valeur, nom de colonne
      * résultat : Retourne les éléments de la table selon la colonne donnée
      */
-    public function getById(string $id, string $colname)
+    public function getByCol(string $v, string $colname)
     {
-        $id = $id ?? "?";
         return $this->dbRequest(
-            "SELECT * FROM `" . $this->tableName . "` WHERE $colname = '$id'",
+            "SELECT * FROM `" . $this->tableName . "` WHERE `$colname` = ?",
+            [$v]
         );
     }
 
@@ -71,15 +72,13 @@ abstract class Model
      */
     public function save(array $fields, array $values)
     {
-        try {
-            $fields = "(" . implode(", ", $fields) . ")";
-            $values = "('" . implode("', '", $values) . "')";
+        $fields = "(" . implode(", ", $fields) . ")";
+        $placeholders = str_repeat('?, ', count($values) - 1) . '?';
 
-            $this->dbRequest(
-                "INSERT INTO `" . $this->tableName . "` $fields VALUES $values"
-            );
-        } catch (PDOException $e) {
-            die($e->getMessage() . "<br>Erreur de connexion PDO");
-        }
+        // Insère les valeurs dans les champs correspondants dans une nouvelle entrée en base
+        $this->dbRequest(
+            "INSERT INTO `" . $this->tableName . "` $fields VALUES ($placeholders)",
+            $values
+        );
     }
 }

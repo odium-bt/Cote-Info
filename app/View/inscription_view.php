@@ -8,30 +8,36 @@
                 <div class="form-group">
                     <label for="username">Nom d'utilisateur : </label><br>
                     <input type="text" name="username" id="username"
-                        value=<?php // Garde la valeur si pas d'erreurs, efface si il y en a
+                        value="<?php // Garde la valeur si pas d'erreurs, efface si il y en a
                                 if (!isset($this->errors["username"])) {
                                     echo $_POST["username"] ?? '';
                                 } else {
                                     echo '';
-                                }; ?> required>
+                                }; ?>" required>
                     <?php if (isset($this->errors['username'])) echo ("<br><span class='error'>" . $this->errors['username'] . "</span>"); ?>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email : </label><br>
                     <input type="text" name="email" id="email"
-                        value=<?php // Garde la valeur si pas d'erreurs, efface si il y en a
+                        value="<?php // Garde la valeur si pas d'erreurs, efface si il y en a
                                 if (!isset($this->errors["email"])) {
                                     echo $_POST["email"] ?? '';
                                 } else {
                                     echo '';
-                                }; ?> required>
+                                }; ?>" required>
                     <?php if (isset($this->errors['email'])) echo ("<br><span class='error'>" . $this->errors['email'] . "</span>"); ?>
                 </div>
 
                 <div class="form-group">
                     <label for="email-confirm">Confirmez votre email : </label><br>
-                    <input type="text" name="email-confirm" id="email-confirm" required>
+                    <input type="text" name="email-confirm" id="email-confirm"
+                        value="<?php // Garde la valeur si pas d'erreurs, efface si il y en a
+                                if (!isset($this->errors["email-confirm"])) {
+                                    echo $_POST["email-confirm"] ?? '';
+                                } else {
+                                    echo '';
+                                }; ?>" required>
                     <?php if (isset($this->errors['email-confirm'])) echo ("<br><span class='error'>" . $this->errors['email-confirm'] . "</span>"); ?>
                 </div>
 

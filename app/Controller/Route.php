@@ -18,6 +18,13 @@ class Route
 
     public function redirigeVers()
     {
+        // Ferme la session de l'utilisateur si cela fait trop longtemps depuis la dernière activité
+        if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > 1800) {
+            session_destroy();
+        }
+        $_SESSION['last_activity'] = time();
+
+
         require ROOT . "/app/View/header.php";
         switch ($this->action) {
             case "home":
@@ -30,7 +37,7 @@ class Route
                 new About;
                 break;
             case "login":
-                new Login;
+                new LoginForm;
                 break;
             case "register":
                 new RegisterForm;

@@ -26,7 +26,7 @@ class LoginForm
             foreach ($_POST as $key => $post_element) {
                 switch ($key) {
                     case 'email':
-                        $this->email = htmlspecialchars(trim($_POST['email'])) ?? null;
+                        $this->email = strtolower(htmlspecialchars(trim($_POST['email']))) ?? null;
                         break;
                     case 'password':
                         $this->password = htmlspecialchars(trim($_POST['password'])) ?? null;
@@ -43,9 +43,12 @@ class LoginForm
                 $this->errors['password'] = "Requis";
             }
 
-            $user = new UserModel;
+            if (!isset($user)) {
+                $user = new UserModel;
+            }
             if (!$user->loginCheck($this->email, $this->password)) {
                 $this->errors['failure'] = "L'email ou le mot de passe que vous avez entrés sont erronés";
+                // Incrémente le compteur d'erreurs de connexion
                 $this->incrementCounter();
             };
         }
@@ -56,7 +59,9 @@ class LoginForm
         }
         // Sinon $_POST est rempli sans erreurs, affiche la page succès et connecte l'utilisateur
         else {
-            require ROOT . '/vue/connexion_succes_vue.php'; // Affiche page succès
+            $_SESSION['user_id'] = $user->getIdByEmail($this->email);
+            require ROOT . '/app/View/connexion_succes_view.php'; // Affiche page succès
+            session_regenerate_id(true);
         }
         // ============
     }

@@ -14,7 +14,12 @@ class UserModel extends Model
         parent::__construct();
     }
 
-
+    /*
+     * Fonction isEmailUsed
+     * paramètres : un email
+     * résultat : true - si l'email a été trouvé dans la base de données
+     *            false - si l'email n'existe pas dans la base de données
+     */
     public function isEmailUsed(string $email)
     {
         if (null !== (
@@ -43,7 +48,8 @@ class UserModel extends Model
     /*
      * Fonction loginCheck
      * paramètres : l'email et le mot de passe entrés par l'utilisateur
-     * résultat : booléen (email et mot de passe correspondent à un compte existant = true)
+     * résultat : true - si l'email et le mot de passe correspondent à un compte existant
+     *            false - si l'email n'est pas trouvé ou si le mot de passe associé à l'email ne correspond pas
      */
     public function loginCheck($email, $password)
     {
@@ -54,6 +60,8 @@ class UserModel extends Model
             } else {
                 return false;
             }
+        } else {
+            return false;
         }
     }
 }

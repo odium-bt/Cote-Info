@@ -22,7 +22,12 @@ abstract class Model
         $this->dbConnector = $this->db->getConnection();
     }
 
-    // Template pour mes requêtes BDD
+    /*
+     * Fonction dbRequest
+     * paramètres : - requête sql  
+     *              - array de paramètres (optionnel)
+     * résultat : Exécute le statement PDO et retourne le résultat sous forme de tableau associatif
+     */
     protected function dbRequest(string $sql, array $params = [])
     {
         try {
@@ -36,28 +41,36 @@ abstract class Model
         }
     }
 
-    // Retourne tous les éléments de la table
+    /*
+     * Fonction getAll
+     * paramètres : /
+     * résultat : Retourne tous les éléments de la table
+     */
     public function getAll()
     {
-        $this->dbRequest("SELECT * FROM `" . $this->tableName . "`");
+        $this->dbRequest("SELECT * FROM " . $this->tableName);
     }
 
-    // Retourne les éléments de la table selon l'ID donné
-    public function getById(string $id, string $idName)
+    /*
+     * Fonction getById
+     * paramètres : valeur, nom de colonne
+     * résultat : Retourne les éléments de la table selon la colonne donnée
+     */
+    public function getById(string $id, string $colname)
     {
         $id = $id ?? "?";
         return $this->dbRequest(
-            "SELECT * FROM `" . $this->tableName . "` WHERE $idName = '$id'",
+            "SELECT * FROM `" . $this->tableName . "` WHERE $colname = '$id'",
         );
-        
     }
 
-    // Sauvegarde un élément dans la table selon les champs et les valeurs
+    /*
+     * Fonction save
+     * paramètres : champs à remplir, valeurs à remplir
+     * résultat : Sauvegarde les éléments dans la base de données
+     */
     public function save(array $fields, array $values)
     {
-
-
-
         try {
             $fields = "(" . implode(", ", $fields) . ")";
             $values = "('" . implode("', '", $values) . "')";

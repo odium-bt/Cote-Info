@@ -13,7 +13,7 @@ use PDOException;
 abstract class Model
 {
     protected string $tableName;
-    protected string $idColName;
+    protected string $idName;
     protected Database $db;
     protected PDO $dbConnector;
 
@@ -36,7 +36,26 @@ abstract class Model
             $stmt->execute($params ?? null);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return $result === false ? null : $result;
+            return empty($result) ? null : $result;
+        } catch (PDOException $e) {
+            die($e->getMessage() . "<br>Erreur de connexion PDO");
+        }
+    }
+
+    /*
+     * Fonction dbRequestAll
+     * paramètres : - requête sql  
+     *              - array de paramètres (optionnel)
+     * résultat : Exécute le statement PDO et retourne tous les résultats sous forme de tableau associatif
+     */
+    protected function dbRequestAll(string $sql, array $params = [])
+    {
+        try {
+            $stmt = $this->dbConnector->prepare($sql);
+            $stmt->execute($params ?? null);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return empty($result) ? null : $result;
         } catch (PDOException $e) {
             die($e->getMessage() . "<br>Erreur de connexion PDO");
         }
@@ -49,19 +68,19 @@ abstract class Model
      */
     public function getAll()
     {
-        $this->dbRequest("SELECT * FROM " . $this->tableName);
+        $this->dbRequestAll("SELECT * FROM " . $this->tableName);
     }
 
     /*
-     * Fonction getByCol
-     * paramètres : valeur, nom de colonne
-     * résultat : Retourne les éléments de la table selon la colonne donnée
+     * Fonction getById
+     * paramètres : id
+     * résultat : Retourne l'élément avec l'id donné
      */
-    public function getByCol(string $v, string $colname)
+    public function getById($id)
     {
         return $this->dbRequest(
-            "SELECT * FROM `" . $this->tableName . "` WHERE `$colname` = ?",
-            [$v]
+            "SELECT * FROM `" . $this->tableName . "` WHERE `$this->idName` = ?",
+            [$id]
         );
     }
 

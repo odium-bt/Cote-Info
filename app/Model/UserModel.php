@@ -11,7 +11,7 @@ class UserModel extends Model
     public function __construct()
     {
         $this->tableName = "users";
-        $this->idColName = "id_user";
+        $this->idName = "id_user";
         parent::__construct();
     }
 
@@ -25,8 +25,8 @@ class UserModel extends Model
     {
         // Cherche l'utilisateur par email avec requête paramétrée
         $result = $this->dbRequest(
-            "SELECT password FROM " . $this->tableName . " WHERE email = :email",
-            ['email' => $email]
+            "SELECT password FROM " . $this->tableName . " WHERE email = ?",
+            [$email]
         );
 
         return ($result !== null) ? true : false;
@@ -40,7 +40,7 @@ class UserModel extends Model
     public function getIdByEmail(string $email)
     {
         return $this->dbRequest(
-            "SELECT " . $this->idColName . " FROM `" . $this->tableName . "` WHERE email = ?",
+            "SELECT " . $this->idName . " FROM `" . $this->tableName . "` WHERE email = ?",
             [$email]
         );
     }
@@ -63,15 +63,15 @@ class UserModel extends Model
      * résultat : true - si l'email et le mot de passe correspondent à un compte existant
      *            false - si l'email n'est pas trouvé ou si le mot de passe associé à l'email ne correspond pas
      */
-    public function loginCheck($email, $password)
+    public function loginCheck(string $email, string $password)
     {
         // Cherche l'utilisateur par email avec requête paramétrée (sécurité anti-injection)
         $user = $this->dbRequest(
-            "SELECT password FROM " . $this->tableName . " WHERE email = :email",
-            ['email' => $email]
+            "SELECT password FROM " . $this->tableName . " WHERE email = ?",
+            [$email]
         );
 
-        // Si aucun utilisateur trouvé, échec
+        // Si aucun utilisateur trouvé ou il n'y a pas de mot de passe, échec
         if ($user === null || !isset($user['password'])) {
             return false;
         }
@@ -82,5 +82,24 @@ class UserModel extends Model
         }
 
         return false;
+    }
+
+    /*
+     * Fonction getAuthors
+     * paramètres : tableau d'id utilisateurs
+     * résultat : tableau des autheurs avec les avatars et noms d'utilisateurs
+     */
+    public function getAuthors(array $userIds)
+    {
+        if (empty($userIds)) {
+            return [];
+        }
+
+        $placeholders = implode(', ', array_fill(0, count($userIds), '?'));
+
+        return $this->dbRequestAll(
+            "SELECT id_user, username, avatar FROM " . $this->tableName . " WHERE id_user IN ($placeholders)",
+            $userIds
+        ) ?? [];
     }
 }

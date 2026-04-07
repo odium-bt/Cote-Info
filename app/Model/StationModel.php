@@ -107,31 +107,22 @@ class StationModel extends Model
     }
 
     /*
-     * Fonction getCommentsFromStation
-     * paramètre : /
-     * résultat : commentaires associés à la station
-     */
-    public function getComments()
-    {
-        return $this->dbRequestAll(
-            "SELECT * FROM comments WHERE id_station = ?",
-            [$this->id]
-        ) ?? [];
-    }
-
-    /*
      * Fonction getCommentsWithAuthors
      * paramètre : /
-     * résultat : commentaires avec les auteurs associés
+     * résultat : commentaires de la page avec les auteurs associés
      */
     public function getCommentsWithAuthors()
     {
-        $comments = $this->getComments();
+        // Appelle CommentsModel pour récupérer les commentaires associés à la page
+        $commentsModel = new CommentsModel();
+        $comments = $commentsModel->getCommentsByStation($this->id) ?? [];
         if (empty($comments)) {
             return [];
         }
 
+        // Assigne une variable avec les id des auteurs
         $userIds = array_column($comments, 'id_user');
+        // Appelle UserModel pour récupérer les noms et avatars des auteurs des commentaires
         $userModel = new UserModel();
         $authors = $userModel->getAuthors($userIds);
 

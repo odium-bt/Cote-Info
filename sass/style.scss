@@ -3,193 +3,276 @@
 
 /* ===== Base ===== */
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 a {
-    text-decoration: none;
-    color: #000;
-
+  text-decoration: none;
+  color: #000;
 }
 
 .blue-link {
-    color: rgb(122, 112, 255);
+  color: rgb(122, 112, 255);
 
-    &:hover {
-        text-decoration: underline;
-    }
+  &:hover {
+    text-decoration: underline;
+  }
 }
-
 
 ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
-
+html,
 body {
-    background-color: $secondaryColor;
-    font-family: $fontTexte;
-    font-size: 18px;
+  height: 100%;
+  margin: 0;
 }
-
+body {
+  background-color: $secondaryColor;
+  font-family: $fontTexte;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1;
+}
 .titre {
-    font-family: $fontTitle;
+  font-family: $fontTitle;
 }
 
 .box {
-    background-color: white;
-    box-shadow: 0px 4px 10px 3px #00000025;
+  background-color: white;
+  box-shadow: 0px 4px 10px 3px #00000025;
 }
 
 .content {
-    max-width: 1200px;
-    width: 100%;
-    margin: 40px auto;
+  max-width: 1200px;
+  width: 100%;
+  margin: 40px auto;
 }
 
 h1 {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .button {
-    border: none;
-    border-radius: 15px;
-    background-color: $primaryColor;
-    color: #fff;
-    font-size: 18px;
-    width: 15em;
-    height: 2.5em;
+  border: none;
+  border-radius: 15px;
+  background-color: $primaryColor;
+  color: #fff;
+  font-size: 18px;
+  width: 15em;
+  height: 2.5em;
 }
 
+button {
+  background-color: none;
+  border: none;
+}
+p {
+  margin: 0;
+}
 /* -- Forms -- */
 .flex {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .form {
+  padding: 5em 10em;
+  width: 800px;
 
-    padding: 5em 10em;
-    width: 800px;
-
-    a {
-        font-size: 12px;
-    }
+  a {
+    font-size: 12px;
+  }
 }
 
 input {
-    height: 2em;
-    width: 100%;
+  height: 2em;
+  width: 100%;
 }
 
 .error {
-    color: red;
-    font-size: 0.8em;
-    font-style: oblique;
+  color: red;
+  font-size: 0.8em;
+  font-style: oblique;
 }
 
-/* ===== Head ===== */
+/* ===== Header ===== */
 header {
-    height: 175px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  border-radius: 0% !important;
+
+  .logo {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 60px;
-    border-radius: 0% !important;
+    justify-content: center;
+    width: 40%;
+    height: 175px;
+  }
 
-    .logo {
-        display: flex;
-        align-items: center;
-        justify-content: right;
-        width: 25%;
-        height: 100%;
-        margin: 1px;
-    }
+  nav {
+    margin-left: auto;
 
-    nav {
-        width: 50%;
-        height: 100%;
-        display: flex;
-        justify-content: right;
-        align-items: center;
+    display: flex;
+    justify-content: right;
+    align-items: center;
 
-        ul {
-            display: flex;
+    ul {
+      display: flex;
 
-            li {
-                margin: 3px;
-                background-color: lightblue;
-            }
+      li {
+        margin: 7px;
+        padding: 10px;
+        border-radius: 10px;
+        &.active {
+          background-color: $primaryColor !important;
+          color: white;
         }
+        &:hover {
+          background-color: $btnColor;
+        }
+      }
     }
+  }
 }
-
-#burger-menu {
+.searchbar {
+  display: flex;
+  align-items: center;
+  width: 15%;
+  margin-left: 2%;
+  i {
+    margin: 5px;
+  }
+  input {
     display: none;
+  }
 }
-
+#burger-menu {
+  display: none;
+}
+/* ===== Footer ===== */
+footer {
+  margin-top: 100px;
+  h5 {
+    font-family: $fontTitle;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+}
+.footernav {
+  padding: 2em 5em;
+  display: flex;
+  justify-content: space-evenly;
+  div {
+    margin: 0 15px;
+  }
+}
+.copyright {
+  text-align: center;
+  padding: 10px;
+}
 /* ===== Index ===== */
 
-/* -- Carte -- */
-
+/* ===== Carte ===== */
 .map {
-    margin: 5% 5% 0% 5%;
-    position: relative;
-    border-radius: 20px;
+  margin: 5% 10% 0% 10%;
+  position: relative;
+  border-radius: 20px;
+  height: 955px;
+  overflow: hidden;
 
-    // .box {}
+  &__title {
+    color: rgb(150, 210, 245);
+    text-align: center;
+    font-size: 1.3em;
+    padding-top: 20px;
+  }
 
-    &__title {
-        color: rgb(150, 210, 245);
-        text-align: center;
-        font-size: 1.3em;
-        padding-top: 20px;
+  // Image SVG
+  #svgmap {
+    padding: 5% 10% 5% 10%;
+    width: 100%;
+    height: 90%;
+
+    path {
+      fill: rgb(101, 176, 201);
+      stroke: #fff;
+      transition: fill 0.3s;
+
+      &.active {
+        stroke-width: 1px;
+        fill: rgb(99, 187, 216);
+      }
     }
+  }
+}
 
-    // Image SVG
-    &__image {
-        padding: 5% 10% 5% 10%;
+/* - Boutons - */
+.reset-btn {
+  position: absolute;
+  background-color: rgb(255, 255, 62);
+  border-radius: 0 30px 30px 0;
+  width: 110px;
+  height: 30px;
+}
+.reset-btn:hover {
+  box-shadow: 0px 4px 10px 3px #00000025;
+}
 
-        path {
-            fill: rgb(101, 176, 201);
-            stroke: #FFF;
-            transition: fill 0.3s;
+/* prettier-ignore */
+.region-btn {
+  position: absolute;
+  background-color: aqua;
+  border-radius: 35px;
+  width: 100%;
+  height: 95%;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.3s ease,
+    filter 0.2s ease;
+  &.btn-1 { background-color: $normandie; }
+  &.btn-2 { background-color: $pays-de-la-loire; }
+  &.btn-3 { background-color: $nouvelle-aquitaine; }
+  &.btn-4 { background-color: $occitanie; }
+  &.btn-5 { background-color: $bretagne; }
+  &.btn-6 { background-color: $hauts-de-france; }
+  &.btn-7 { background-color: $provence-alpes-cote-d-azur; }
+  border: 1px solid black;
 
-            &.active {
-                stroke-width: 1px;
-                fill: rgb(99, 187, 216);
-            }
 
-        }
-    }
+  &:hover{
+    filter: brightness(0.8); /* darken when hovered */
+  }
+  &.hide{
+    opacity: 0;
+    visibility: hidden;
+  }
+}
 
-    // Boutons
-    &__list {
-        float: left;
-        width: 50%;
+.map-credit {
+  font-size: small;
+  text-align: right;
+  padding: 5px;
+}
 
-        ul {
-            list-style: none;
-
-            li {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: aqua;
-                width: 250px;
-                height: 50px;
-                border-radius: 40px;
-                border: 1px solid black;
-
-            }
-        }
-    }
-
-    .map-credit {
-        font-size: small;
-        text-align: right;
-        padding: 5px;
-    }
+/* ===== Station ===== */
+/* - Slider - */
+.slide {
+  width: 300px;
+  height: 130px;
+  display: inline-block;
+  vertical-align: top;
+}
+.hidden {
+  display: none;
 }

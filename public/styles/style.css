@@ -42,10 +42,22 @@ ul {
   margin: 0;
 }
 
+html,
 body {
-  background-color: #E5F9FF;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: #e5f9ff;
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 .titre {
@@ -77,6 +89,15 @@ h1 {
   height: 2.5em;
 }
 
+button {
+  background-color: none;
+  border: none;
+}
+
+p {
+  margin: 0;
+}
+
 /* -- Forms -- */
 .flex {
   display: flex;
@@ -102,9 +123,8 @@ input {
   font-style: oblique;
 }
 
-/* ===== Head ===== */
+/* ===== Header ===== */
 header {
-  height: 175px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -114,14 +134,12 @@ header {
 header .logo {
   display: flex;
   align-items: center;
-  justify-content: right;
-  width: 25%;
-  height: 100%;
-  margin: 1px;
+  justify-content: center;
+  width: 40%;
+  height: 175px;
 }
 header nav {
-  width: 50%;
-  height: 100%;
+  margin-left: auto;
   display: flex;
   justify-content: right;
   align-items: center;
@@ -130,20 +148,68 @@ header nav ul {
   display: flex;
 }
 header nav ul li {
-  margin: 3px;
+  margin: 7px;
+  padding: 10px;
+  border-radius: 10px;
+}
+header nav ul li.active {
+  background-color: #358fe2 !important;
+  color: white;
+}
+header nav ul li:hover {
   background-color: lightblue;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  width: 15%;
+  margin-left: 2%;
+}
+.searchbar i {
+  margin: 5px;
+}
+.searchbar input {
+  display: none;
 }
 
 #burger-menu {
   display: none;
 }
 
+/* ===== Footer ===== */
+footer {
+  margin-top: 100px;
+}
+footer h5 {
+  font-family: "Montserrat", serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.footernav {
+  padding: 2em 5em;
+  display: flex;
+  justify-content: space-evenly;
+}
+.footernav div {
+  margin: 0 15px;
+}
+
+.copyright {
+  text-align: center;
+  padding: 10px;
+}
+
 /* ===== Index ===== */
-/* -- Carte -- */
+/* ===== Carte ===== */
 .map {
-  margin: 5% 5% 0% 5%;
+  margin: 5% 10% 0% 10%;
   position: relative;
   border-radius: 20px;
+  height: 955px;
+  overflow: hidden;
 }
 .map__title {
   color: rgb(150, 210, 245);
@@ -151,39 +217,94 @@ header nav ul li {
   font-size: 1.3em;
   padding-top: 20px;
 }
-.map__image {
+.map #svgmap {
   padding: 5% 10% 5% 10%;
+  width: 100%;
+  height: 90%;
 }
-.map__image path {
+.map #svgmap path {
   fill: rgb(101, 176, 201);
-  stroke: #FFF;
+  stroke: #fff;
   transition: fill 0.3s;
 }
-.map__image path.active {
+.map #svgmap path.active {
   stroke-width: 1px;
   fill: rgb(99, 187, 216);
 }
-.map__list {
-  float: left;
-  width: 50%;
+
+/* - Boutons - */
+.reset-btn {
+  position: absolute;
+  background-color: rgb(255, 255, 62);
+  border-radius: 0 30px 30px 0;
+  width: 110px;
+  height: 30px;
 }
-.map__list ul {
-  list-style: none;
+
+.reset-btn:hover {
+  box-shadow: 0px 4px 10px 3px rgba(0, 0, 0, 0.1450980392);
 }
-.map__list ul li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+/* prettier-ignore */
+.region-btn {
+  position: absolute;
   background-color: aqua;
-  width: 250px;
-  height: 50px;
-  border-radius: 40px;
+  border-radius: 35px;
+  width: 100%;
+  height: 95%;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, filter 0.2s ease;
+}
+.region-btn.btn-1 {
+  background-color: #1e3a8a;
+}
+.region-btn.btn-2 {
+  background-color: #2563eb;
+}
+.region-btn.btn-3 {
+  background-color: #38bdf8;
+}
+.region-btn.btn-4 {
+  background-color: #2dd4bf;
+}
+.region-btn.btn-5 {
+  background-color: #22c55e;
+}
+.region-btn.btn-6 {
+  background-color: #f59e0b;
+}
+.region-btn.btn-7 {
+  background-color: #f97316;
+}
+.region-btn {
   border: 1px solid black;
 }
-.map .map-credit {
+.region-btn:hover {
+  filter: brightness(0.8); /* darken when hovered */
+}
+.region-btn.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.map-credit {
   font-size: small;
   text-align: right;
   padding: 5px;
+}
+
+/* ===== Station ===== */
+/* - Slider - */
+.slide {
+  width: 300px;
+  height: 130px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

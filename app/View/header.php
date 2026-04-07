@@ -19,11 +19,22 @@
         <i id="burger-menu" class="fa-solid fa-bars"></i>
         <nav>
             <ul>
-                <li><a href="?action=home"><i class="fa-regular fa-map"></i> Carte</a></li>
-                <li><a href="?action=news"><i class="fa-regular fa-newspaper"></i> Actualités</a></li>
-                <li><a href="?action=about"><i class="fa-solid fa-magnifying-glass"></i> A propos</a></li>
-                <li><a href="?action=login"><i class="fa-regular fa-circle-user"></i> Connexion</a></li>
+                <a href="?action=home">
+                    <li id="map" class="active"><i class="fa-regular fa-map"></i>&nbsp;Carte</li>
+                </a>
+                <a href="?action=news">
+                    <li id="news"><i class="fa-regular fa-newspaper"></i>&nbsp;Actualités</li>
+                </a>
+                <a href="?action=about">
+                    <li id="about"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;A&nbsp;propos</li>
+                </a>
+                <a href="?action=login">
+                    <li id="login"><i class="fa-regular fa-circle-user"></i>&nbsp;Connexion</li>
+                </a>
             </ul>
         </nav>
-        <i class="fa-solid fa-magnifying-glass"></i>
+        <div class="searchbar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text">
+        </div>
     </header>

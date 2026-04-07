@@ -14,6 +14,7 @@ class Route
     {
         // Récupère $_GET, sinon "accueil" quand vide
         $this->action = $_GET["action"] ?? "home";
+        $this->redirigeVers();
     }
 
     public function redirigeVers()
@@ -44,7 +45,7 @@ class Route
                 break;
             case "station":
                 // Si aucun ID station est trouvé, affiche la page 404
-                if (isset($_GET["stationID"])) {
+                if (isset($_GET["id"])) {
                     new Station;
                 } else {
                     new PageNotFound;

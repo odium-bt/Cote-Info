@@ -8,5 +8,4 @@ use CoteInfo\Controller\Route;
 
 session_start();
 
-$route = new Route;
-$route->redirigeVers();
+new Route;

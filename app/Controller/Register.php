@@ -8,7 +8,7 @@ use CoteInfo\Model\UserModel;
  * Filtre tous les champs avant de refuser ou valider l'inscription d'un nouvel utilisateur
  */
 
-class RegisterForm
+class Register
 {
     public $errors = [];
     protected string $username;
@@ -86,13 +86,13 @@ class RegisterForm
         // Sinon $_POST est rempli sans erreurs, effectue une dernière vérification
         else {
             if (!isset($user)) {
-            $user = new UserModel;
+                $user = new UserModel;
             }
 
             // Vérifie que l'adresse email ne soit pas déjà utilisée
             if ($user->isEmailUsed($this->email) === false) {
                 $user->registerUser($this->username, $this->email, $this->password); // envoie les infos utilisateur sur le modèle
-                require ROOT . '/app/View/inscription_succes_view.php'; // affiche page succès
+                require ROOT . '/app/View/inscription-succes_view.php'; // affiche page succès
             } else {
                 // Affiche une erreur dans le formulaire d'inscription
                 $this->errors['email'] = "Cette adresse existe déjà";

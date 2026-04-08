@@ -36,9 +36,12 @@
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="./public/js/script.js"></script>
+<?php if (!isset($_GET['action']) || $_GET['action'] === 'home') { ?>
+    <script src="./public/js/map.js"></script>
+<?php } ?>
 <?php if (isset($_GET['action']) && $_GET['action'] === 'station') { ?>
     <script src="./public/js/slider.js"></script>
+    <script src="./public/js/weather.js"></script>
 <?php } ?>
 </body>
 

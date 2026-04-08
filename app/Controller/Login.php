@@ -8,7 +8,7 @@ use CoteInfo\Model\UserModel;
  * Filtre les champs avant de refuser ou valider une connexion utilisateur
  */
 
-class LoginForm
+class Login
 {
     public $errors = [];
     protected string $email;
@@ -60,7 +60,7 @@ class LoginForm
         // Sinon $_POST est rempli sans erreurs, affiche la page succès et connecte l'utilisateur
         else {
             $_SESSION['user_id'] = $user->getIdByEmail($this->email);
-            require ROOT . '/app/View/connexion_succes_view.php'; // Affiche page succès
+            require ROOT . '/app/View/connexion-succes_view.php'; // Affiche page succès
             session_regenerate_id(true);
         }
         // ============

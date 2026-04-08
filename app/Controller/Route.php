@@ -26,7 +26,7 @@ class Route
         $_SESSION['last_activity'] = time();
 
 
-        require ROOT . "/app/View/header.php";
+        require ROOT . "/app/View/header_view.php";
         switch ($this->action) {
             case "home":
                 new Home;
@@ -38,10 +38,10 @@ class Route
                 new About;
                 break;
             case "login":
-                new LoginForm;
+                new Login;
                 break;
             case "register":
-                new RegisterForm;
+                new Register;
                 break;
             case "station":
                 // Si aucun ID station est trouvé, affiche la page 404
@@ -56,6 +56,6 @@ class Route
                 new PageNotFound;
                 break;
         }
-        require ROOT . "/app/View/footer.php";
+        require ROOT . "/app/View/footer_view.php";
     }
 }

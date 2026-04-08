@@ -1,8 +1,8 @@
 <main class="content">
-    <div class="flex">
+    <div class="flex center">
 
         <div class="box">
-            <h1>
+            <h1 class="titre">
                 Connexion réussie
             </h1>
 

@@ -98,12 +98,17 @@ p {
   margin: 0;
 }
 
-/* -- Forms -- */
 .flex {
   display: flex;
+}
+.flex.center {
   justify-content: center;
 }
+.flex.between {
+  justify-content: space-between;
+}
 
+/* -- Forms -- */
 .form {
   padding: 5em 10em;
   width: 800px;
@@ -249,6 +254,7 @@ footer h5 {
 .region-btn {
   position: absolute;
   background-color: aqua;
+  border: 1px solid black;
   border-radius: 35px;
   width: 100%;
   height: 95%;
@@ -277,9 +283,6 @@ footer h5 {
 .region-btn.btn-7 {
   background-color: #f97316;
 }
-.region-btn {
-  border: 1px solid black;
-}
 .region-btn:hover {
   filter: brightness(0.8); /* darken when hovered */
 }
@@ -295,16 +298,122 @@ footer h5 {
 }
 
 /* ===== Station ===== */
+.info {
+  border-radius: 10px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info h1 {
+  width: 100%;
+  padding: 30px;
+}
+
+.description {
+  padding: 30px;
+}
+
+.beach_article {
+  width: 65%;
+}
+
+.side_bar {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* - News previews - */
+.news_article {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.news_article img {
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16/9;
+}
+.news_article h6 {
+  width: 90%;
+}
+
 /* - Slider - */
+#slider {
+  width: 90%;
+  max-width: 900px;
+  aspect-ratio: 16/9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  overflow: hidden;
+}
+#slider button {
+  flex: 0 0 auto;
+  font-weight: bold;
+  font-size: 24px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 .slide {
-  width: 300px;
-  height: 130px;
-  display: inline-block;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0 0.5rem;
+  height: 90%;
   vertical-align: top;
+}
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
 }
 
 .hidden {
   display: none;
+}
+
+.legend {
+  font-size: 12px;
+  text-align: center;
+}
+
+/* - Comments section - */
+/* ===== Responsive ===== */
+@media (max-width: 650px) {
+  .flex {
+    flex-direction: column;
+    align-items: center;
+  }
+  /* - Head - */
+  #burger-menu {
+    display: block;
+  }
+  header nav {
+    display: none;
+  }
+  /* = Station = */
+  /* - Slider - */
+  #slider {
+    aspect-ratio: 4/3;
+  }
+  #slider button {
+    font-size: 20px;
+    padding: 8px;
+  }
+  .slide {
+    margin: 0 0.25rem;
+  }
+  /* - Slider - */
+  .side_bar {
+    flex-direction: row;
+    width: 90%;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

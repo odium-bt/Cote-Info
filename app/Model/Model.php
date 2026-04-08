@@ -68,7 +68,7 @@ abstract class Model
      */
     public function getAll()
     {
-        $this->dbRequestAll("SELECT * FROM " . $this->tableName);
+        return $this->dbRequestAll("SELECT * FROM " . $this->tableName) ?? [];
     }
 
     /*
@@ -99,5 +99,6 @@ abstract class Model
             "INSERT INTO `" . $this->tableName . "` $fields VALUES ($placeholders)",
             $values
         );
+        return true;
     }
 }

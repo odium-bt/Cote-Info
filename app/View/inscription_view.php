@@ -1,9 +1,9 @@
 <main class="content">
-    <div class="flex">
+    <div class="flex center">
         <!-- Formulaire de connexion -->
         <div class="box">
             <form class="form" action="?action=register" method="post">
-                <h1>Inscription</h1>
+                <h1 class="titre">Inscription</h1>
 
                 <div class="form-group">
                     <label for="username">Nom d'utilisateur : </label><br>

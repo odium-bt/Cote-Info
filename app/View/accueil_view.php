@@ -2,9 +2,9 @@
     <h1 class="titre">Découvrez la météo des plages de France</h1>
     <p>Cliquez sur une région pour consulter les prévisions météo des zones côtières et stations balnéaires</p>
 
+    <a href="?action=addbeach">New beach</a>
+    <a href="?action=station&id=1">Plage 1</a>
     <article id="map" class="box map">
-        <a href="?action=addbeach">New beach</a>
-        <a href="?action=station&id=1">Plage 1</a>
         <h2 class="map__title titre">Carte interactive des régions côtières</h2>
 
         <!-- Carte interactive en SVG -->

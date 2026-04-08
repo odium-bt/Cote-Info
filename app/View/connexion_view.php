@@ -1,9 +1,9 @@
 <main class="content">
-    <div class="flex">
+    <div class="flex center">
         <!-- Formulaire de connexion -->
         <div class="box">
             <form class="form" action="?action=login" method="post">
-                <h1>Connexion</h1>
+                <h1 class="titre">Connexion</h1>
 
                 <p><?php if (isset($this->errors["failure"])) echo ("<span class='error'>" . $this->errors["failure"] . "</span>"); ?></p>
 
@@ -20,7 +20,7 @@
                 </div>
                 <a class="blue-link" href="?action=register">Vous n'avez pas de compte ?</a>
                 <p><input type="submit" class="button" value="Enregister"></p>
-</form>
+            </form>
         </div>
         <!---->
     </div>

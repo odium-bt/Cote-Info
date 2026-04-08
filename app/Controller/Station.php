@@ -24,11 +24,10 @@ class Station
         $stationMdl = new StationModel($this->id);
 
         // Récupère de ma base les données à afficher dans l'article Station
-        $this->beach = $stationMdl->getBeach() ?? [];
+        $this->beach = $stationMdl->getBeach();
         $this->medias =  $stationMdl->getMedia();
         $this->comments = $stationMdl->getCommentsWithAuthors();
-        $this->articles = $stationMdl->getArticles();
-        $this->articleThumbnails = $stationMdl->getThumbnails($this->articles);
+        $this->articles = $stationMdl->getArticlePreviews();
 
         require ROOT . "/app/View/beach_view.php";
     }

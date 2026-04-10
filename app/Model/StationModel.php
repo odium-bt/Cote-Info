@@ -64,7 +64,7 @@ class StationModel extends Model
      */
     public function getArticlePreviews()
     {
-        // Cherche les ID news associés à la station
+        // Cherche les ID des articles de news associés à la station
         $newsIDs = $this->dbRequestAll(
             "SELECT id_news FROM rubrique WHERE id_station = ?",
             [$this->id]
@@ -79,39 +79,27 @@ class StationModel extends Model
             return [];
         }
 
-        // Cherche les articles dont les ID sont associés à la station
-        $placeholders = implode(', ', array_fill(0, count($articleIDs), '?'));
-        $articles = $this->dbRequestAll(
-            "SELECT `id_news`,`title`,`date_`,`id_thumbnail` FROM news WHERE id_news IN ($placeholders)",
-            $articleIDs
-        );
-        if ($articles === null) {
-            return [];
-        }
+        // Va chercher les infos dans la table news
+        $newsModel = new NewsModel;
+        $articles = $newsModel->getPreviews($articleIDs);
 
         $thumbnailIDs = array_column($articles, 'id_thumbnail');
         if (empty($thumbnailIDs)) {
             return $articles;
         }
-        // Va chercher les données des images thumbnails sur la table media
-        $thumbPlaceholders = implode(', ', array_fill(0, count($thumbnailIDs), '?'));
-        $thumbnails = $this->dbRequestAll(
-            "SELECT `id_media`,`path`,`alt`,`legend` FROM media WHERE id_media IN ($thumbPlaceholders)",
-            $thumbnailIDs
-        );
 
-        if ($thumbnails === null) {
-            $thumbnails = [];
-        }
+        // Va chercher les infos dans la table media
+        $mediaModel = new MediaModel;
+        $thumbnails = $mediaModel->getMedias($thumbnailIDs);
 
-
-        $thumbnailsById = [];
+        // Range les thumbnails par leur IDs dans $thumbnailsByID
+        $thumbnailsByID = [];
         foreach ($thumbnails as $thumbnail) {
-            $thumbnailsById[$thumbnail['id_media']] = $thumbnail;
+            $thumbnailsByID[$thumbnail['id_media']] = $thumbnail;
         }
         // Range les thumbnails dans leurs articles
         foreach ($articles as &$article) {
-            $article['thumbnail'] = $thumbnailsById[$article['id_thumbnail']] ?? null;
+            $article['thumbnail'] = $thumbnailsByID[$article['id_thumbnail']] ?? null;
         }
 
         return $articles;

@@ -4,9 +4,16 @@
         <article id="news_list" class="box">
             <h1 class="titre">Actualités</h1>
 
-            <section>
-
-            </section>
+            <?php
+            foreach ($this->articles as $article) {
+            ?>
+                <div class="news_article box">
+                    <img src="./public/images/beach/<?= $article['thumbnail']['path'] ?>" alt="<?= $article['thumbnail']['alt'] ?>">
+                    <h6><?= $article['title'] ?></h6>
+                </div>
+            <?php
+            }
+            ?>
         </article>
 
     </div>

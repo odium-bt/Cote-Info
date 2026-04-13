@@ -6,12 +6,7 @@ use CoteInfo\Model\NewsModel;
 /*
  * Classe News
  * Gère la page des actualités
- * Requête à la base de données :
- *  - liste des articles
- *  - rangés par ordre chronologique
- *  - 50 sont affichés à la fois
- *  - option pour afficher les 50 prochains
- *  - filtre par région
+ * Requête à la base de données une liste des articles
  */
 
 class News
@@ -22,8 +17,14 @@ class News
     {
         $newsModel = new NewsModel;
         $this->articles = $newsModel->getAll() ?? [];
+        $this->articles = $newsModel->getThumbnails($this->articles) ?? [];
 
-        var_dump($this->articles);
+        // Range les articles par ordre décroissant chronologique
+        usort($this->articles, function ($a, $b) {
+            return strtotime($b['date_']) - strtotime($a['date_']);
+        });
+
         require ROOT . "/app/View/news_view.php";
+        require ROOT . "/app/View/footer_view.php";
     }
 }

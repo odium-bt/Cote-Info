@@ -11,5 +11,6 @@ class About
     public function __construct()
     {
         require ROOT . "/app/View/about_view.php";
+        require ROOT . "/app/View/footer_view.php";
     }
 }

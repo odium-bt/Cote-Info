@@ -99,6 +99,7 @@ class Register
                 require ROOT . '/app/View/inscription_view.php'; // Retour au formulaire
             }
         }
+        require ROOT . "/app/View/footer_view.php";
         // ============
     }
 }

@@ -13,10 +13,13 @@ class Station
 {
     protected $id;
     protected array $beach;
+
     protected array $medias;
+
+
     protected array $comments;
     protected array $articles;
-    protected array $articleThumbnails;
+
 
     public function __construct()
     {
@@ -30,5 +33,6 @@ class Station
         $this->articles = $stationMdl->getArticlePreviews();
 
         require ROOT . "/app/View/beach_view.php";
+        require ROOT . "/app/View/footer_view.php";
     }
 }

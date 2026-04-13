@@ -2,15 +2,15 @@
 
 namespace CoteInfo\Controller;
 /*
- * Classe Home
- * Gère la page d'accueil
+ * Classe Contact
+ * Gère la page Contact
  */
 
-class Home
+class Contact
 {
     public function __construct()
     {
-        require ROOT . "/app/View/accueil_view.php";
+        require ROOT . "/app/View/contact_view.php";
         require ROOT . "/app/View/footer_view.php";
     }
 }

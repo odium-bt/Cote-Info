@@ -1,20 +1,23 @@
 /*
  * Script pour ma carte interactive
  * Fonctionnalités :
- * - Boutons
  * - Zoom sur les régions
- * - Affichage des noms des stations balnéaires
- * - Affichage d'infos dynamiques sur la carte (bonus)
+ * - Reset du niveau de zoom
+ * - Affichage dynamique des plages associées aux régions
  */
+
+const regions = document.querySelectorAll(".region-btn");
+const svg = document.getElementById("svgmap"); // élément DOM de la carte
+let currentRegion = null;
+let zoomLevel = 0;
 
 /*
  * Function zoomRegion()
  * paramètre : id de la région visée
- * résultat : zoom sur cette région
+ * résultat : - zoom sur cette région
  */
 function zoomRegion(regionId) {
-  const svg = document.getElementById("svgmap"); // élément DOM de la carte
-  const region = document.getElementById(regionId); // id de la région sur laquelle zoomer
+  const region = document.getElementById(regionId); // région sur laquelle zoomer
   const bbox = region.getBBox(); // get BBox = obtiens la bounding box de la région sélectionnée
 
   // définie le padding autour de la région sur laquelle on zoom
@@ -28,13 +31,18 @@ function zoomRegion(regionId) {
   const targetHeight = bbox.height + padding * 2;
 
   // Cache les boutons régionaux
-  const regions = document.querySelectorAll(".region-btn");
   regions.forEach((button) => {
     button.classList.add("hide");
   });
 
   // appelle la fonction d'animation du zoom
   animateViewBox(svg, targetX, targetY, targetWidth, targetHeight, 600); // modifier le temps pour changer la vitesse de l'animation
+
+  currentRegion = regionId;
+  zoomLevel = 1;
+
+  // Appelle fonction qui fait apparaître les boutons des stations
+  updateButtons();
 }
 
 /*
@@ -83,26 +91,41 @@ function animateViewBox(
 }
 
 /*
- * Function zoomRegion()
+ * Function resetZoom()
  * paramètre : /
  * résultat : Affiche la carte entière
  */
 function resetZoom() {
-  const svg = document.getElementById("svgmap");
   animateViewBox(svg, 0, 5.65, 869.53302, 857.7724, 500);
 
   // Affiche les boutons régionaux
-  const regions = document.querySelectorAll(".region-btn");
+
   regions.forEach((button) => {
     button.classList.remove("hide");
   });
+
+  currentRegion = null;
+  zoomLevel = 0;
+  updateButtons();
 }
 
 /*
- * Function loadBeaches
- * paramètre : id de la région
- * résultat : Affiche les stations balnéaires de la région
+ * Function updateButtons()
+ * paramètre : /
+ * résultat : cache ou affiche les boutons de la carte selon le niveau de zoom / la région affichée
  */
-function loadBeaches(regionId) {
-  fetch().then().then();
+function updateButtons() {
+  const stations = document.querySelectorAll(".beach");
+  stations.forEach((btn) => {
+    const beachRegion = btn.dataset.region;
+    const isCorrectRegion = !beachRegion || beachRegion === currentRegion;
+
+    if (zoomLevel === 0) {
+      btn.classList.add("hide");
+    }
+    // Si la carte est zoomée, enlève la classe "hide" sur les boutons de cette région
+    if (zoomLevel === 1 && isCorrectRegion === true) {
+      btn.classList.remove("hide");
+    }
+  });
 }

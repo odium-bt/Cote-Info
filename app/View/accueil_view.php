@@ -1,9 +1,11 @@
 <main class="content">
-    <h1 class="titre">Découvrez la météo des plages de France</h1>
-    <p>Cliquez sur une région pour consulter les prévisions météo des zones côtières et stations balnéaires</p>
+    <div class="map-intro">
+        <h1 class="titre">Découvrez la météo des plages de France</h1>
+        <p>Cliquez sur une région pour consulter les prévisions météo des zones côtières et stations balnéaires</p>
+        <p><a href="?action=addbeach">New beach</a></p>
 
-    <a href="?action=addbeach">New beach</a>
-    <a href="?action=station&id=1">Plage 1</a>
+    </div>
+
     <article id="map" class="box map">
         <h2 class="map__title titre">Carte interactive des régions côtières</h2>
 
@@ -25,49 +27,66 @@
             <path id="Auvergne-Rhône-Alpes" d="M763.84,608.16L760.31,606.75L746.04,611.85L743.93,606.82L737.05,608.85L735.3,616.98L743.3,618.63L745.44,632.24L730.58,631.35L718.34,641.16L710.03,641.26L707.51,651.25L698.03,655.16L694.62,661.53L695.76,668.33L685.31,665.73L683.48,677.38L687.69,680.85L696.8,681.24L698.31,694.73L700.37,697.14L694.96,694.55L688.38,701.6L680.32,697.91L678.45,692.39L664.86,690.72L658.67,683.64L642.54,691.14L640.51,683.12L631.27,681.55L631.19,687.12L621.54,680.27L613.96,680.02L606.99,682.96L604.94,687.64L596.41,680.94L586.93,668.24L584.55,658.99L581.23,656.78L578.4,645.78L570.53,633.82L564.53,630.24L553.3,636.79L545.62,622.29L535.69,627.07L529.54,627.61L523.83,637.39L519.51,652.06L516.51,648.72L516.53,639.85L513.26,638.42L511.34,630.38L503.14,624.06L494.27,633.09L491.29,644.95L486.18,651.48L477.37,652.44L475.65,649.62L465.27,652.78L462.45,647.16L465.26,638.48L459.87,630.48L457.88,620.82L463.34,618.41L466.76,597.5L477.86,586.53L479.67,579.37L485.95,583.35L488.45,565.75L484.67,561.74L488.73,557.33L488.85,550.81L479.8,539.76L491.06,531.26L494.08,519.58L490.63,514.65L491.68,507.95L486.08,495.88L474.01,489.77L472.55,482.35L477.92,472.94L494.93,469.37L491.94,459.06L500.74,453.23L510.66,450.59L515.43,445.97L522.83,445.78L524.61,450.05L534.1,457.35L538.75,453.38L543.95,456.6L548.88,453.68L553.3,459.7L559.29,450.25L567.47,459.06L570.44,470.8L578.96,475.71L587.69,478.26L586.88,492.54L580.44,495.41L580.38,502.26L589.68,506.62L594.6,503.77L601.62,504.19L606.53,507.81L613.68,502.38L614.87,494.38L621.46,497.11L633.21,497.96L639.94,505.95L650.79,472.73L658.49,476.1L668.2,473.71L670.46,478.64L683.9,492.47L690.73,497.02L697.94,491.63L703.22,497.76L712.87,497.38L725.95,482.72L733,487.5L728.46,495.44L720.29,502.07L721.22,509.03L730.22,509.52L741.4,501.26L736.4,492.86L738.54,488.18L756.4,478.77L767.33,479.01L776.57,481.68L773.26,488.64L779.55,495.86L775.48,503.28L775.02,509.67L781.8,510.93L790.26,525.07L791.54,530.35L784.63,537.72L776.55,538.69L775.66,549.38L782.91,556.48L788.57,557.62L788.59,570.52L795.26,573.9L800.3,579.62L795.96,587.45L797.63,594.26L788.68,597.67L778.43,606.53L773,603.45Z" fill="#dadada" stroke="#fff" stroke-width="0.5" />
 
             <!-- Boutons intégrés dans le SVG -->
-            <foreignObject x="70" y="295" width="120" height="50">
+            <!-- ==== Bretagne ==== -->
+            <foreignObject x="70" y="295" width="360" height="150">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Bretagne')" class="region-btn btn-1">Bretagne</button>
                 </body>
             </foreignObject>
+            <!-- Stations  -->
+            <foreignObject class="beach hide" data-region="Bretagne" x="70" y="330" width="120" height="100">
+                <!-- Plage de Conleau -->
 
-            <foreignObject x="180" y="380" width="150" height="50">
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=1" class="beach-btn btn-1">Plage de Conleau</a></button>
+                </body>
+            </foreignObject>
+
+            <foreignObject class="beach hide" data-region="Bretagne" x="150" y="210" width="120" height="100">
+                <!-- Plage du Sillon -->
+
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=12" class="beach-btn btn-1">Plage du Sillon</a></button>
+                </body>
+            </foreignObject>
+            <!-- ==== -->
+            <foreignObject x="180" y="380" width="450" height="150">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Pays-de-la-Loire')" class="region-btn btn-2">Pays de la Loire</button>
                 </body>
             </foreignObject>
 
-            <foreignObject x="250" y="570" width="140" height="65">
+            <foreignObject x="250" y="570" width="420" height="195">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Nouvelle-Aquitaine')" class="region-btn btn-3">Nouvelle-Aquitaine</button>
                 </body>
             </foreignObject>
 
-            <foreignObject x="260" y="200" width="110" height="50">
+            <foreignObject x="260" y="200" width="330" height="150">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Normandie')" class="region-btn btn-4">Normandie</button>
                 </body>
             </foreignObject>
 
-            <foreignObject x="430" y="70" width="120" height="65">
+            <foreignObject x="430" y="70" width="360" height="195">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Hauts-de-France')" class="region-btn btn-5">Hauts-de-France</button>
                 </body>
             </foreignObject>
 
-            <foreignObject x="620" y="700" width="200" height="65">
+            <foreignObject x="620" y="700" width="600" height="195">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Provence-Alpes-Cote-d-Azur')" class="region-btn btn-6">Provence-Alpes-Côte d'Azur</button>
                 </body>
             </foreignObject>
 
-            <foreignObject x="390" y="750" width="100" height="50">
+            <foreignObject x="390" y="750" width="300" height="150">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Occitanie')" class="region-btn btn-7">Occitanie</button>
@@ -77,7 +96,7 @@
 
         </div>
 
-        <p class="map-credit"><a class="blue-link" href="https://www.amcharts.com/svg-maps/?map=france">Carte de France par amCharts</a> est licensée sous <a class="blue-link" href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+        <p class="map-credit"><a class="blue-link" href="https://www.amcharts.com/svg-maps/?map=france">Carte de France par amCharts</a> est licensée sous <a class="blue-link" href="https://creativecommons.org/licenses/by-nc/4.0/">CC&nbsp;BY-NC&nbsp;4.0</a>.</p>
 
 
     </article>

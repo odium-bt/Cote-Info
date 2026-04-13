@@ -32,7 +32,11 @@ class Route
                 new Home;
                 break;
             case "news":
-                new News;
+                if (isset($_GET["id"])) {
+                    new NewsArticle;
+                } else {
+                    new News;
+                }
                 break;
             case "about":
                 new About;
@@ -43,6 +47,13 @@ class Route
             case "register":
                 new Register;
                 break;
+            case "user":
+                if (isset($_SESSION["user_id"])) {
+                    new Profile;
+                } else {
+                    new Login;
+                }
+                break;
             case "station":
                 // Si aucun ID station est trouvé, affiche la page 404
                 if (isset($_GET["id"])) {
@@ -51,11 +62,16 @@ class Route
                     new PageNotFound;
                 }
                 break;
+            case "contact":
+                new Contact;
+                break;
+            case "policy":
+                new Policy;
+                break;
             default:
                 // Si $_GET["action"] = action non reconnue
                 new PageNotFound;
                 break;
         }
-        require ROOT . "/app/View/footer_view.php";
     }
 }

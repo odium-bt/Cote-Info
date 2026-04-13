@@ -33,6 +33,18 @@ class UserModel extends Model
     }
 
     /*
+     * Fonction isAdmin
+     * paramètres : id
+     * résultat : true si admin, false si pas admin
+     */
+    public function isAdmin(int $id)
+    {
+        return $this->dbRequest(
+            "SELECT 'is_admin' FROM `users` WHERE id_user = ?",
+            [$id]
+        ) ?? false;
+    }
+    /*
      * Fonction getIdByEmail
      * paramètres : email
      * résultat : donne l'id de l'utilisateur
@@ -65,14 +77,14 @@ class UserModel extends Model
      */
     public function loginCheck(string $email, string $password)
     {
-        // Cherche l'utilisateur par email avec requête paramétrée (sécurité anti-injection)
+        // Cherche un mot de passe correspondant à l'email
         $user = $this->dbRequest(
             "SELECT password FROM " . $this->tableName . " WHERE email = ?",
             [$email]
         );
 
-        // Si aucun utilisateur trouvé ou il n'y a pas de mot de passe, échec
-        if ($user === null || !isset($user['password'])) {
+        // Si rien n'est trouvé, retourne false
+        if ($user === null) {
             return false;
         }
 

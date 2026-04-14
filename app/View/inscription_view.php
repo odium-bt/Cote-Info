@@ -55,9 +55,9 @@
 
                 <a class="blue-link" href="?action=login">Vous avez déjà un compte ?</a>
 
-                <p>
-                    <input type="submit" class="button" value="Valider">
-                </p>
+                <div class="submit">
+                    <input type="submit" class="button" value="Enregistrer">
+                </div>
             </form>
         </div>
         <!---->

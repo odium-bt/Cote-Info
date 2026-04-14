@@ -13,13 +13,18 @@
                         value="<?php echo $_POST["email"] ?? ''; ?>" required>
                     <?php if (isset($this->errors['email'])) echo ("<br><span class='error'>" . $this->errors['email'] . "</span>"); ?>
                 </div>
+
                 <div class="form-group">
                     <label for="password">Mot de passe : </label><br>
                     <input type="password" name="password" id="password" required>
                     <?php if (isset($this->errors["password"])) echo ("<br><span class='error'>" . $this->errors["password"] . "</span>"); ?>
                 </div>
+
                 <a class="blue-link" href="?action=register">Vous n'avez pas de compte ?</a>
-                <p><input type="submit" class="button" value="Enregister"></p>
+
+                <div class="submit">
+                    <input type="submit" class="button" value="Valider">
+                </div>
             </form>
         </div>
         <!---->

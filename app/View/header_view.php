@@ -16,21 +16,20 @@
         <div class="logo">
             <a href="?action=home"><img src="./public/images/logo1.png" alt="Logo Côte Info"></a>
         </div>
-        <i id="burger-menu" class="fa-solid fa-bars"></i>
-        <nav>
+
+        <i id="burger" class="fa-solid fa-bars box"></i>
+
+        <nav id="header-nav">
             <ul>
-                <a href="?action=home">
-                    <li id="map" class="active"><i class="fa-regular fa-map"></i>&nbsp;Carte</li>
-                </a>
-                <a href="?action=news">
-                    <li id="news"><i class="fa-regular fa-newspaper"></i>&nbsp;Actualités</li>
-                </a>
-                <a href="?action=about">
-                    <li id="about"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;A&nbsp;propos</li>
-                </a>
-                <a href="?action=login">
-                    <li id="login"><i class="fa-regular fa-circle-user"></i>&nbsp;Connexion</li>
-                </a>
+                <hr>
+                <li id="map" class="active"><a href="?action=home"><i class="fa-regular fa-map"></i>&nbsp;Carte</a></li>
+                <li id="news"><a href="?action=news"><i class="fa-regular fa-newspaper"></i>&nbsp;Actualités</a></li>
+                <li id="about"><a href="?action=about"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;A&nbsp;propos</a></li>
+                <?php if (!isset($_SESSION['user_id'])) { ?>
+                    <li id="login"><a href="?action=login"><i class="fa-regular fa-circle-user"></i>&nbsp;Connexion</a></li>
+                <?php } else { ?>
+                    <li id="profile"><a id="profile" href="?action=user"><i class="fa-regular fa-circle-user"></i>&nbsp;Espace&nbsp;utilisateur</a></li>
+                <?php } ?>
             </ul>
         </nav>
         <div class="searchbar">

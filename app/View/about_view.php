@@ -1,7 +1,7 @@
 <main class="content">
     <div class="flex center">
 
-        <article class="box">
+        <article class="padding-50 box">
             <h1 class="titre">A propos</h1>
 
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.

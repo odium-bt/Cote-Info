@@ -11,6 +11,5 @@ class Policy
     public function __construct()
     {
         require ROOT . "/app/View/policy_view.php";
-        require ROOT . "/app/View/footer_view.php";
     }
 }

@@ -25,6 +25,5 @@ class News
         });
 
         require ROOT . "/app/View/news_view.php";
-        require ROOT . "/app/View/footer_view.php";
     }
 }

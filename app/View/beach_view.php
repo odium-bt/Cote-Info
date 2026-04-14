@@ -1,3 +1,4 @@
+<?php require ROOT . '/app/View/header_view.php'; ?>
 <main class="content">
     <div class="flex">
         <div class="beach_article">
@@ -123,12 +124,14 @@
             <?php
             foreach ($this->articles as $article) {
             ?>
-                <div class="news_article beach_preview box">
-                    <img src="./public/images/beach/<?= $article['thumbnail']['path'] ?>" loading="lazy" alt="<?= $article['thumbnail']['alt'] ?>">
-                    <div class="news_article__title">
-                        <h6><?= $article['title'] ?></h6>
+                <a href="?action=news&id=<?= $article['id_news'] ?>">
+                    <div class="news_article beach_preview box">
+                        <img src="./public/images/beach/<?= $article['thumbnail']['path'] ?>" loading="lazy" alt="<?= $article['thumbnail']['alt'] ?>">
+                        <div class="news_article__title">
+                            <h6><?= $article['title'] ?></h6>
+                        </div>
                     </div>
-                </div>
+                </a>
             <?php
             }
             ?>
@@ -139,3 +142,4 @@
     </div>
 
 </main>
+<?php require ROOT . '/app/View/footer_view.php'; ?>

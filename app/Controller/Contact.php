@@ -11,6 +11,5 @@ class Contact
     public function __construct()
     {
         require ROOT . "/app/View/contact_view.php";
-        require ROOT . "/app/View/footer_view.php";
     }
 }

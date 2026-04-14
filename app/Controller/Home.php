@@ -11,6 +11,5 @@ class Home
     public function __construct()
     {
         require ROOT . "/app/View/accueil_view.php";
-        require ROOT . "/app/View/footer_view.php";
     }
 }

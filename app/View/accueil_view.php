@@ -1,3 +1,4 @@
+<?php require ROOT . '/app/View/header_view.php'; ?>
 <main class="content">
     <div class="map-intro">
         <h1 class="titre">Découvrez la météo des plages de France</h1>
@@ -51,54 +52,121 @@
                 </body>
             </foreignObject>
             <!-- ==== -->
+            <!-- ==== Pays-de-la-Loire ==== -->
             <foreignObject x="180" y="380" width="450" height="150">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Pays-de-la-Loire')" class="region-btn btn-2">Pays de la Loire</button>
                 </body>
             </foreignObject>
+            <!-- Stations  -->
 
+            <!-- ==== -->
+            <!-- ==== Nouvelle-Aquitaine ==== -->
             <foreignObject x="250" y="570" width="420" height="195">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Nouvelle-Aquitaine')" class="region-btn btn-3">Nouvelle-Aquitaine</button>
                 </body>
             </foreignObject>
+            <!-- Stations  -->
+            <foreignObject class="beach hide" data-region="Nouvelle-Aquitaine" x="240" y="640" width="130" height="80">
 
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=16" class="beach-btn btn-3">Plage d'Arcachon</a></button>
+                </body>
+            </foreignObject>
+            <foreignObject class="beach hide" data-region="Nouvelle-Aquitaine" x="260" y="690" width="140" height="80">
+
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=15" class="beach-btn btn-3">Plage de la Côte des Basques</a></button>
+                </body>
+            </foreignObject>
+            <!-- ==== -->
+
+            <!-- ==== Normandie ==== -->
             <foreignObject x="260" y="200" width="330" height="150">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Normandie')" class="region-btn btn-4">Normandie</button>
                 </body>
             </foreignObject>
+            <!-- Stations  -->
+            <foreignObject class="beach hide" data-region="Normandie" x="300" y="110" width="120" height="100">
 
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=13" class="beach-btn btn-4">Plage d'Etretat</a></button>
+                </body>
+            </foreignObject>
+            <foreignObject class="beach hide" data-region="Normandie" x="270" y="160" width="120" height="100">
+
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=14" class="beach-btn btn-4">Plage de Deauville</a></button>
+                </body>
+            </foreignObject>
+            <!-- ==== -->
+
+            <!-- ==== Hauts-de-France ==== -->
             <foreignObject x="430" y="70" width="360" height="195">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Hauts-de-France')" class="region-btn btn-5">Hauts-de-France</button>
                 </body>
             </foreignObject>
+            <!-- Stations  -->
+            <!-- ==== -->
 
+            <!-- ==== Provence-Alpes-Côte d'Azur ==== -->
             <foreignObject x="620" y="700" width="600" height="195">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Provence-Alpes-Cote-d-Azur')" class="region-btn btn-6">Provence-Alpes-Côte d'Azur</button>
                 </body>
             </foreignObject>
+            <!-- Stations  -->
+            <foreignObject class="beach hide" data-region="Provence-Alpes-Cote-d-Azur" x="730" y="730" width="120" height="100">
 
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=19" class="beach-btn btn-6">Plage de Nice</a></button>
+                </body>
+            </foreignObject>
+            <foreignObject class="beach hide" data-region="Provence-Alpes-Cote-d-Azur" x="670" y="770" width="140" height="100">
+
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=20" class="beach-btn btn-6">Plage de Pampelonne</a></button>
+                </body>
+            </foreignObject>
+            <!-- ==== -->
+
+            <!-- ==== Occitanie ==== -->
             <foreignObject x="390" y="750" width="300" height="150">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button onclick="zoomRegion('Occitanie')" class="region-btn btn-7">Occitanie</button>
                 </body>
             </foreignObject>
+            <!-- Stations  -->
+            <foreignObject class="beach hide" data-region="Occitanie" x="430" y="790" width="120" height="100">
+
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=17" class="beach-btn btn-7">Plage de Palavas-les-Flots</a></button>
+                </body>
+            </foreignObject>
+            <foreignObject class="beach hide" data-region="Occitanie" x="510" y="840" width="120" height="100">
+
+                <body xmlns="http://www.w3.org/1999/xhtml">
+                    <button><a href="?action=station&id=18" class="beach-btn btn-7">Plage de Collioure</a></button>
+                </body>
+            </foreignObject>
+            <!-- ==== -->
         </svg>
 
         </div>
 
-        <p class="map-credit"><a class="blue-link" href="https://www.amcharts.com/svg-maps/?map=france">Carte de France par amCharts</a> est licensée sous <a class="blue-link" href="https://creativecommons.org/licenses/by-nc/4.0/">CC&nbsp;BY-NC&nbsp;4.0</a>.</p>
+        <p class="credit"><a class="blue-link" href="https://www.amcharts.com/svg-maps/?map=france">Carte de France par amCharts</a> est licensée sous <a class="blue-link" href="https://creativecommons.org/licenses/by-nc/4.0/">CC&nbsp;BY-NC&nbsp;4.0</a>.</p>
 
 
     </article>
 
 </main>
+<?php require ROOT . '/app/View/footer_view.php'; ?>

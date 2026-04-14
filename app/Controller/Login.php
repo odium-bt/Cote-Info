@@ -61,10 +61,9 @@ class Login
         else {
             $_SESSION['user_id'] = $user->getIdByEmail($this->email);
             $_SESSION['is_admin'] = $user->isAdmin($_SESSION['user_id']);
-            require ROOT . '/app/View/connexion-succes_view.php'; // Affiche page succès
             session_regenerate_id(true);
+            require ROOT . '/app/View/connexion-succes_view.php'; // Affiche page succès
         }
-        require ROOT . "/app/View/footer_view.php";
         // ============        
     }
 

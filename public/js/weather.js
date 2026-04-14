@@ -12,8 +12,12 @@ window.onload = function () {
   fetch(URL)
     .then((response) => response.json()) // récupère la data json de la réponse
     .then((response) => display(response)) // envoie la data dans la fonction de màj du graphique
-    .catch((error) => console.log("Message d'erreur :", error));
-  // Remplacer l'event error par un message dans errorMsg
+    .catch((error) => {
+      const msg = "Erreur de chargement de la météo, réessayez plus tard.";
+      document.getElementById("error-msg").textContent = msg;
+
+      console.log("Erreur météo : " + error);
+    });
 };
 
 /*

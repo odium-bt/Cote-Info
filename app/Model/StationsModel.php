@@ -6,13 +6,13 @@ use CoteInfo\Model\UserModel;
 
 /*
  * Classe StationModel
- * Gère les requêtes BDD pour les articles stations balnéaires
+ * Gère les requêtes BDD pour les stations balnéaires
  */
 
-class StationModel extends Model
+class StationsModel extends Model
 {
     protected $id;
-    public function __construct($id)
+    public function __construct($id = null)
     {
         $this->tableName = "beaches";
         $this->idName = 'id_station';
@@ -66,7 +66,7 @@ class StationModel extends Model
     {
         // Cherche les ID des articles de news associés à la station
         $newsIDs = $this->dbRequestAll(
-            "SELECT id_news FROM rubrique WHERE id_station = ?",
+            "SELECT id_news FROM news_station WHERE id_station = ?",
             [$this->id]
         );
 

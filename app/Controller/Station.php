@@ -2,7 +2,7 @@
 
 namespace CoteInfo\Controller;
 
-use CoteInfo\Model\StationModel;
+use CoteInfo\Model\StationsModel;
 /*
  * Classe Station
  * Gère les articles des stations balnéaires
@@ -24,15 +24,14 @@ class Station
     public function __construct()
     {
         $this->id = $_GET['id'];
-        $stationMdl = new StationModel($this->id);
+        $stationsMdl = new StationsModel($this->id);
 
         // Récupère de ma base les données à afficher dans l'article Station
-        $this->beach = $stationMdl->getBeach();
-        $this->medias =  $stationMdl->getMedia();
-        $this->comments = $stationMdl->getCommentsWithAuthors();
-        $this->articles = $stationMdl->getArticlePreviews();
+        $this->beach = $stationsMdl->getBeach();
+        $this->medias =  $stationsMdl->getMedia();
+        $this->comments = $stationsMdl->getCommentsWithAuthors();
+        $this->articles = $stationsMdl->getArticlePreviews();
 
         require ROOT . "/app/View/beach_view.php";
-        require ROOT . "/app/View/footer_view.php";
     }
 }

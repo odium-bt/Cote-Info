@@ -28,4 +28,17 @@ class MediaModel extends Model
             $ids
         ) ?? [];
     }
+
+    /*
+     * Fonction getMediaID
+     * paramètre : nom du fichier
+     * résultat : ID du fichier en base
+     */
+    public function getMediaID($filename)
+    {
+        return $this->dbRequest(
+            "SELECT `id_media` FROM `media` WHERE `path` = ?",
+            [$filename]
+        );
+    }
 }

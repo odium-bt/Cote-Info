@@ -1,5 +1,6 @@
+<?php require ROOT . '/app/View/header_view.php'; ?>
 <main class="content">
-    <article class="policy">
+    <article class="policy box padding-50">
         <h1>Politique de Confidentialité</h1>
 
         <h2>1. Introduction</h2>
@@ -102,3 +103,4 @@
         </div>
     </article>
 </main>
+<?php require ROOT . '/app/View/footer_view.php'; ?>

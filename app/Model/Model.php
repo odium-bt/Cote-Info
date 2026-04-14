@@ -29,14 +29,18 @@ abstract class Model
      *              - array de paramètres (optionnel)
      * résultat : Exécute le statement PDO et retourne le résultat sous forme de tableau associatif
      */
-    protected function dbRequest(string $sql, array $params = [])
+    protected function dbRequest(string $sql, array $params = [], bool $r = false)
     {
         try {
             $stmt = $this->dbConnector->prepare($sql);
             $stmt->execute($params ?? null);
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($r === false) {
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return empty($result) ? null : $result;
+                return empty($result) ? null : $result;
+            } else {
+                return $this->dbConnector->lastInsertId();
+            }
         } catch (PDOException $e) {
             die($e->getMessage() . "<br>Erreur de connexion PDO");
         }
@@ -94,11 +98,11 @@ abstract class Model
         $fields = "(" . implode(", ", $fields) . ")";
         $placeholders = str_repeat('?, ', count($values) - 1) . '?';
 
-        // Insère les valeurs dans les champs correspondants dans une nouvelle entrée en base
-        $this->dbRequest(
+        // Insère les valeurs dans les champs correspondants dans une nouvelle entrée en base et retourne le dernier ID inséré
+        return $this->dbRequest(
             "INSERT INTO `" . $this->tableName . "` $fields VALUES ($placeholders)",
-            $values
+            $values,
+            true
         );
-        return true;
     }
 }

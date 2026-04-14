@@ -14,7 +14,7 @@
     <header class="box">
 
         <div class="logo">
-            <a href="?action=home"><img src="./public/images/logo1.png" alt="Logo Côte Info"></a>
+            <a href="?action=home"><img src="./public/images/logo.webp" alt="Logo Côte Info"></a>
         </div>
 
         <i id="burger" class="fa-solid fa-bars box"></i>
@@ -22,13 +22,13 @@
         <nav id="header-nav">
             <ul>
                 <hr>
-                <li id="map" class="active"><a href="?action=home"><i class="fa-regular fa-map"></i>&nbsp;Carte</a></li>
-                <li id="news"><a href="?action=news"><i class="fa-regular fa-newspaper"></i>&nbsp;Actualités</a></li>
-                <li id="about"><a href="?action=about"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;A&nbsp;propos</a></li>
+                <li id="map" class="<?= $_GET['action'] === 'home' ? 'active' : '' ?>"><a href="?action=home"><i class="fa-regular fa-map"></i>&nbsp;Carte</a></li>
+                <li id="news" class="<?= $_GET['action'] === 'news' ? 'active' : '' ?>"><a href="?action=news"><i class="fa-regular fa-newspaper"></i>&nbsp;Actualités</a></li>
+                <li id="about" class="<?= $_GET['action'] === 'about' ? 'active' : '' ?>"><a href="?action=about"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;A&nbsp;propos</a></li>
                 <?php if (!isset($_SESSION['user_id'])) { ?>
-                    <li id="login"><a href="?action=login"><i class="fa-regular fa-circle-user"></i>&nbsp;Connexion</a></li>
+                    <li id="login" class="<?= $_GET['action'] === 'login' ? 'active' : '' ?>"><a href="?action=login"><i class="fa-regular fa-circle-user"></i>&nbsp;Connexion</a></li>
                 <?php } else { ?>
-                    <li id="profile"><a id="profile" href="?action=user"><i class="fa-regular fa-circle-user"></i>&nbsp;Espace&nbsp;utilisateur</a></li>
+                    <li id="profile" class="<?= $_GET['action'] === 'user' ? 'active' : '' ?>"><a id="profile" href="?action=user"><i class="fa-regular fa-circle-user"></i>&nbsp;Espace&nbsp;utilisateur</a></li>
                 <?php } ?>
             </ul>
         </nav>

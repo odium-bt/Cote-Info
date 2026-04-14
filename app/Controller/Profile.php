@@ -13,18 +13,18 @@ class Profile
 {
     protected int $userID;
     protected bool $isAdmin;
+
+    protected array $user;
+
     public function __construct()
     {
-        $this->userID = $_SESSION['user_id'] ?? null;
-        $this->isAdmin = $_SESSION['is_admin'] ?? false;
-
         $userModel = new UserModel;
 
-        if ($this->isAdmin === false) {
-            require ROOT . "/app/View/user_view.php";
-        } else if ($this->isAdmin === true) {
-            require ROOT . "/app/View/admin_view.php";
-        }
-        require ROOT . "/app/View/footer_view.php";
+        $this->userID = $_SESSION['user_id'] ?? null;
+        $this->isAdmin = $userModel->isAdmin($this->userID) ?? false;
+
+        $this->user = $userModel->getById($this->userID);
+
+        require ROOT . "/app/View/user_view.php";
     }
 }

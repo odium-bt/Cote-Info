@@ -8,7 +8,7 @@ namespace CoteInfo\Controller;
 
 class Route
 {
-    public $action;
+    public string $action;
 
     public function __construct()
     {
@@ -25,8 +25,6 @@ class Route
         }
         $_SESSION['last_activity'] = time();
 
-
-        require ROOT . "/app/View/header_view.php";
         switch ($this->action) {
             case "home":
                 new Home;
@@ -67,6 +65,9 @@ class Route
                 break;
             case "policy":
                 new Policy;
+                break;
+            case "write":
+                new NewsWrite;
                 break;
             default:
                 // Si $_GET["action"] = action non reconnue

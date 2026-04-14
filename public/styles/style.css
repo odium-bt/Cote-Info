@@ -63,9 +63,10 @@ main {
 }
 
 .content {
-  max-width: 1200px;
   width: 100%;
-  margin: 40px auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
 h1 {
@@ -188,9 +189,9 @@ header .logo img {
 }
 #header-nav ul li {
   width: 95%;
-  height: 80px;
+  height: 60px;
   margin: 7px;
-  border-radius: 10px;
+  border-radius: 15px;
   white-space: nowrap;
 }
 #header-nav ul li a {
@@ -203,7 +204,6 @@ header .logo img {
 }
 #header-nav ul li.active {
   background-color: #358fe2 !important;
-  overflow: hidden;
 }
 #header-nav ul li.active a {
   color: white;
@@ -433,31 +433,6 @@ footer h5 {
   flex-direction: column;
 }
 
-/* - News previews - */
-.news_article {
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.news_article img {
-  width: 100%;
-  max-width: 900px;
-  aspect-ratio: 16/9;
-  border-radius: 10px 10px 0 0;
-}
-.news_article__title {
-  width: 100%;
-  height: 50px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 10px 30px;
-  margin: 0;
-}
-.news_article__title h6 {
-  font-size: 12px;
-}
-
 .beach_preview:nth-child(n+4) {
   display: none;
 }
@@ -528,22 +503,50 @@ footer h5 {
   aspect-ratio: 1/1;
 }
 
-/* ===== News / Actualités ===== */
+/* ===== News - Actualités ===== */
 .news_list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* ==== Article d'actualités ==== */
-.article_news {
-  width: 80%;
+/* ===== News - Article ===== */
+/* - News previews - */
+.news_article {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.news_article img {
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16/9;
+  border-radius: 10px 10px 0 0;
+}
+.news_article__title {
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 2% 10%;
+  margin: 0;
+}
+.news_article__title h6 {
+  font-size: 12px;
+}
+
+/* ===== News - Rédaction ===== */
+#article_write textarea {
+  width: 100%;
+}
+#article_write input {
+  margin: 20px 0;
 }
 
 /* ===== Login/Register ===== */
 /* -- Forms -- */
 .form {
   padding: 5em 10em;
-  width: 800px;
 }
 .form a {
   font-size: 12px;

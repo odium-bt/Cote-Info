@@ -39,10 +39,12 @@ class UserModel extends Model
      */
     public function isAdmin(int $id)
     {
-        return $this->dbRequest(
-            "SELECT 'is_admin' FROM `users` WHERE id_user = ?",
+        $result = $this->dbRequest(
+            "SELECT `is_admin` FROM `users` WHERE id_user = ?",
             [$id]
-        ) ?? false;
+        );
+
+        return is_array($result) && isset($result['is_admin']) ? (bool)$result['is_admin'] : false;
     }
     /*
      * Fonction getIdByEmail
@@ -51,10 +53,12 @@ class UserModel extends Model
      */
     public function getIdByEmail(string $email)
     {
-        return $this->dbRequest(
-            "SELECT " . $this->idName . " FROM `" . $this->tableName . "` WHERE email = ?",
+        $result = $this->dbRequest(
+            "SELECT `" . $this->idName . "` FROM `" . $this->tableName . "` WHERE email = ?",
             [$email]
         );
+
+        return is_array($result) && isset($result[$this->idName]) ? (int)$result[$this->idName] : null;
     }
 
     /*
@@ -85,6 +89,11 @@ class UserModel extends Model
 
         // Si rien n'est trouvé, retourne false
         if ($user === null) {
+            return false;
+        }
+
+        // Le résultat doit être un tableau contenant la clé 'password'
+        if (!is_array($user) || !isset($user['password'])) {
             return false;
         }
 

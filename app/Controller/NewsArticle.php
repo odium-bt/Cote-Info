@@ -20,6 +20,5 @@ class NewsArticle
         $this->article = $newsModel->getById($this->id) ?? [];
 
         require ROOT . "/app/View/news-article_view.php";
-        require ROOT . "/app/View/footer_view.php";
     }
 }

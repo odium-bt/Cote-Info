@@ -21,7 +21,7 @@ class CommentsModel extends Model
      * paramètre : id de la station
      * résultat : commentaires associés à la station
      */
-    public function getCommentsByStation($stationID)
+    public function getCommentsByStation(int $stationID)
     {
         if (empty($stationID)) {
             return [];
@@ -31,5 +31,18 @@ class CommentsModel extends Model
             "SELECT * FROM comments WHERE id_station = ?",
             [$stationID]
         ) ?? [];
+    }
+
+    /*
+     * Fonction saveComment
+     * paramètre : id utilisateur
+     * résultat : enregistre un nouveau commentaire
+     */
+    public function saveComment(string $content, int $idStation, int $idUser)
+    {
+        $fields = [`content`, `id_station`, `id_user`];
+        $values = [$content, $idStation, $idUser];
+
+        return $this->save($fields, $values);
     }
 }

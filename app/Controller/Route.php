@@ -52,6 +52,11 @@ class Route
                     new Login;
                 }
                 break;
+            case "logout":
+                unset($_SESSION["user_id"]);
+                unset($_SESSION["is_admin"]);
+                new Home;
+                break;
             case "station":
                 // Si aucun ID station est trouvé, affiche la page 404
                 if (isset($_GET["id"])) {

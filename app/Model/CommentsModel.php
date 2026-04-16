@@ -40,9 +40,51 @@ class CommentsModel extends Model
      */
     public function saveComment(string $content, int $idStation, int $idUser)
     {
-        $fields = [`content`, `id_station`, `id_user`];
+        $fields = ['content', 'id_station', 'id_user'];
         $values = [$content, $idStation, $idUser];
 
         return $this->save($fields, $values);
+    }
+
+    /*
+     * Fonction setDeleted
+     * paramètre : id utilisateur
+     * résultat : enregistre un nouveau commentaire
+     */
+    public function setDeleted(int $idComment, int $idUser)
+    {
+        $comment = $this->getById($idComment);
+
+        if ($idUser === $comment["id_user" || $_SESSION["is_admin" === true]]) { // Vérifie que l'utilisateur à l'origine de la requête soit l'auteur du commentaire OU est admin
+            // Marque le commentaire comme supprimé
+            $this->dbRequest(
+                "UPDATE `comments` SET `is_deleted` = 1 WHERE `id_comment` = ?",
+                [$idComment]
+            );
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Fonction setNotDeleted
+     * paramètre : id utilisateur
+     * résultat : enregistre un nouveau commentaire
+     */
+    public function setNotDeleted(int $idComment, int $idUser)
+    {
+        $comment = $this->getById($idComment);
+
+        if ($idUser === $comment["id_user"] || $_SESSION["is_admin" === true]) { // Vérifie que l'utilisateur à l'origine de la requête soit l'auteur du commentaire OU est admin
+            // Marque le commentaire comme non supprimé
+            $this->dbRequest(
+                "UPDATE `comments` SET `is_deleted` = 1 WHERE `id_comment` = ?",
+                [$idComment]
+            );
+            return true;
+        } else {
+            return false;
+        }
     }
 }

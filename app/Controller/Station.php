@@ -3,6 +3,7 @@
 namespace CoteInfo\Controller;
 
 use CoteInfo\Model\StationsModel;
+use CoteInfo\Model\CommentsModel;
 /*
  * Classe Station
  * Gère les articles des stations balnéaires
@@ -18,8 +19,11 @@ class Station
 
 
     protected array $comments;
+    protected int $note;
+
     protected array $articles;
 
+    protected string $newComment;
 
     public function __construct()
     {
@@ -31,6 +35,17 @@ class Station
         $this->medias =  $stationsMdl->getMedia();
         $this->comments = $stationsMdl->getCommentsWithAuthors();
         $this->articles = $stationsMdl->getArticlePreviews();
+
+        // Gestion d'envois de commentaires
+        if (!empty($_POST) && isset($_SESSION['user_id'])) {
+
+            $this->newComment = htmlspecialchars(trim($_POST['comment_content'])) ?? null;
+
+            if (!null === $this->newComment) {
+                $commentsModel = new CommentsModel;
+                $commentsModel->saveComment($this->newComment, $this->id, $_SESSION['user_id']);
+            }
+        }
 
         require ROOT . "/app/View/beach_view.php";
     }

@@ -21,6 +21,7 @@ class Route
     {
         // Ferme la session de l'utilisateur si cela fait trop longtemps depuis la dernière activité
         if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > 1800) {
+            session_unset();
             session_destroy();
         }
         $_SESSION['last_activity'] = time();
@@ -53,8 +54,8 @@ class Route
                 }
                 break;
             case "logout":
-                unset($_SESSION["user_id"]);
-                unset($_SESSION["is_admin"]);
+                session_unset();
+                session_destroy();
                 new Home;
                 break;
             case "station":
@@ -72,7 +73,11 @@ class Route
                 new Policy;
                 break;
             case "write":
-                new NewsWrite;
+                if ($_SESSION["is_admin"] === true) {
+                    new NewsWrite;
+                } else {
+                    new PermissionDenied;
+                }
                 break;
             default:
                 // Si $_GET["action"] = action non reconnue

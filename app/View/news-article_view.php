@@ -1,6 +1,6 @@
 <?php require ROOT . '/app/View/header_view.php'; ?>
 <main class="content">
-    <div class="flex center">
+    <div class="flex justify-center">
 
         <article class="article_news padding-50 box">
 

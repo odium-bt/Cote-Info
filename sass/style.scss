@@ -83,13 +83,22 @@ button {
   font-size: 18px;
   width: 8em;
   height: 2.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .flex {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  &.column {
+    flex-direction: column;
+  }
+  &.align-center {
+    align-items: center;
+  }
+  &.justify-center {
+    justify-content: center;
+  }
   &.between {
     justify-content: space-between;
   }
@@ -122,7 +131,9 @@ button {
   pointer-events: none;
   display: none;
 }
-
+button {
+  background-color: inherit;
+}
 /* ===== Header ===== */
 header {
   display: flex;
@@ -364,6 +375,46 @@ footer {
 }
 
 /* ===== Station ===== */
+#station {
+  flex-direction: column;
+  align-items: center;
+}
+.beach_header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  h1 {
+    margin-bottom: 0;
+  }
+}
+
+.beach_article {
+  width: 80%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* - Note - */
+.rating {
+  display: flex;
+  align-items: center;
+  i {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc;
+    &:active {
+      color: gold;
+    }
+  }
+}
+
 /* - Weather card - */
 .weather {
   width: 100%;
@@ -400,32 +451,6 @@ footer {
 }
 
 /* --- */
-.beach_article {
-  width: 80%;
-}
-.info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h1 {
-    width: 100%;
-  }
-}
-
-.side_bar {
-  width: 75%;
-  display: flex;
-  flex-direction: column;
-}
-
-.beach_preview {
-  // Cache les articles sauf les 3 premiers
-  &:nth-child(n + 4) {
-    display: none;
-  }
-}
-
 /* - Slider - */
 #slider {
   width: 100%;
@@ -444,6 +469,12 @@ footer {
     font-size: 20px;
     padding: 8px;
     border-radius: 10px;
+    &:hover {
+      background-color: rgb(231, 231, 231);
+    }
+    &:active {
+      background-color: rgb(153, 153, 153);
+    }
   }
 }
 .slide {
@@ -471,6 +502,20 @@ footer {
   font-size: 12px;
   text-align: center;
 }
+/* - Side bar - */
+.side_bar {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.beach_preview {
+  // Cache les articles sauf les 3 premiers
+  &:nth-child(n + 4) {
+    display: none;
+  }
+}
+
 /* - Comments section - */
 
 .comment {
@@ -478,7 +523,7 @@ footer {
   border: 1px solid rgba(0, 0, 0, 0.349);
 
   &__info {
-    width: 80%;
+    width: 97%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -487,12 +532,21 @@ footer {
       display: flex;
       align-items: center;
       .avatar {
-        width: 100%;
-        max-width: 60px;
+        width: 60px;
         aspect-ratio: 1 / 1;
       }
     }
+    &__note {
+      display: none;
+      font-size: 12px;
+    }
   }
+}
+.comment_write {
+  border: 1px solid rgba(0, 0, 0, 0.534);
+}
+#comment_content {
+  width: 100%;
 }
 /* ===== News - Actualités ===== */
 
@@ -568,7 +622,39 @@ input {
   display: flex;
   justify-content: center;
 }
+/* ===== Utilisateur ===== */
+.user {
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
 
+#user_nav {
+  border-radius: 10px 10px 0 0;
+
+  nav ul {
+    display: flex;
+    padding: 10px;
+    li {
+      padding: 5px 10px;
+      a {
+        color: black;
+        &:active {
+          color: $primaryColor;
+        }
+      }
+    }
+  }
+}
+.tab_icon {
+  font-size: 24px;
+}
+.tab_text {
+  display: none;
+}
+#user_box {
+  border-radius: 0 10px 10px 10px;
+}
 /* ===== Privacy Policy ===== */
 .policy {
   h2 {
@@ -617,6 +703,7 @@ input {
     }
   }
   /* = Station = */
+
   /* - Weather - */
   .stats {
     grid-template-columns: repeat(2, 1fr);
@@ -634,6 +721,10 @@ input {
   .slide {
     margin: 0 0.5rem;
   }
+  /* - Comments - */
+  .comment__info__note {
+    display: block;
+  }
   /* = News = */
   .news_article__title h6 {
     font-size: 13px;
@@ -642,13 +733,10 @@ input {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
 @media (min-width: 930px) {
   body {
     font-size: 18px;
-  }
-  .flex {
-    flex-direction: row;
-    align-items: start;
   }
   /* - Head - */
   header {
@@ -673,9 +761,23 @@ input {
       flex-direction: row;
       background: none;
       gap: 10px;
+      li a {
+        font-size: 15px;
+      }
     }
   }
   /* = Station = */
+  #station {
+    flex-direction: row;
+    align-items: start;
+  }
+  .beach_header {
+    flex-direction: row;
+    gap: 0;
+    i {
+      font-size: 24px;
+    }
+  }
   /* - Side bar - */
   .side_bar {
     width: 30%;
@@ -690,10 +792,28 @@ input {
   .news_article__title h6 {
     font-size: 14px;
   }
+  /* = User = */
+  .user {
+    flex-direction: row;
+  }
+  #user_nav {
+    border-radius: 10px 0 0 10px;
+    nav ul {
+      flex-direction: column;
+    }
+  }
+  .tab_icon {
+    display: none;
+  }
+  .tab_text {
+    display: block;
+  }
 }
-
 @media (min-width: 1300px) {
   header {
     padding: 0 10em;
+  }
+  #header-nav ul li a {
+    font-size: 16px;
   }
 }

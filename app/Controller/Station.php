@@ -4,6 +4,7 @@ namespace CoteInfo\Controller;
 
 use CoteInfo\Model\StationsModel;
 use CoteInfo\Model\CommentsModel;
+use CoteInfo\Model\NotesModel;
 /*
  * Classe Station
  * Gère les articles des stations balnéaires
@@ -12,6 +13,8 @@ use CoteInfo\Model\CommentsModel;
 
 class Station
 {
+    protected array $errors = [];
+
     protected $id;
     protected array $beach;
 
@@ -19,7 +22,10 @@ class Station
 
 
     protected array $comments;
-    protected int $note;
+    // $comments = {0=>["id_comment"]=>int, ["content"]=>string, ["date_"]=>string,["is_deleted"]=>bool, 
+    // ["id_note"]=>int,["id_station"]=>int, ["id_user"]=> int, ["author"]=>array{["id_user"],["username"],["avatar"]}}
+
+    protected int $note = 0;
 
     protected array $articles;
 
@@ -27,25 +33,79 @@ class Station
 
     public function __construct()
     {
-        $this->id = $_GET['id'];
+        $this->id = $_GET['id']; // ID station
         $stationsMdl = new StationsModel($this->id);
 
-        // Récupère de ma base les données à afficher dans l'article Station
-        $this->beach = $stationsMdl->getBeach();
-        $this->medias =  $stationsMdl->getMedia();
-        $this->comments = $stationsMdl->getCommentsWithAuthors();
-        $this->articles = $stationsMdl->getArticlePreviews();
+        $this->beach = $stationsMdl->getBeach(); // Données station
+        $this->medias =  $stationsMdl->getMedia(); // Médias station
 
-        // Gestion d'envois de commentaires
-        if (!empty($_POST) && isset($_SESSION['user_id'])) {
+        $this->articles = $stationsMdl->getArticlePreviews(); // Articles
+        // Range les articles par ordre décroissant chronologique
+        usort($this->articles, function ($a, $b) {
+            return strtotime($b['date_']) - strtotime($a['date_']);
+        });
 
-            $this->newComment = htmlspecialchars(trim($_POST['comment_content'])) ?? null;
-
-            if (!null === $this->newComment) {
-                $commentsModel = new CommentsModel;
-                $commentsModel->saveComment($this->newComment, $this->id, $_SESSION['user_id']);
+        // Note
+        if (isset($_POST['note'])) {
+            if (filter_var($_POST['note'], FILTER_VALIDATE_INT) !== false && $_POST['note'] >= 1 && $_POST['note'] <= 5) {
+                $this->note =  $_POST['note'];
+            } else {
+                $this->errors['note'] = "Note sélectionnée invalide.";
             }
         }
+
+        // Gestion d'envois de notes
+        if ($this->note !== 0 && isset($_SESSION['user_id'])) {
+            if (!isset($notesModel)) {
+                $notesModel = new NotesModel;
+            }
+            $notesModel->saveNote($this->note, $this->id, $_SESSION['user_id']);
+        }
+
+        // Gestion d'envois de commentaires
+        if (!empty($_POST['comment_content'])) {
+            if (!isset($_SESSION['user_id'])) {
+                $this->errors['comment'] = "Vous n'êtes pas connecté.";
+            } else {
+
+                $this->newComment = htmlspecialchars(trim($_POST['comment_content'])); // Nouveau commentaire
+
+                if ($this->newComment === null) {
+                    $this->errors['comment'] = "Le commentaire ne doit pas être vide.";
+                } else if (strlen($this->newComment) < 3) {
+                    $this->errors['comment'] = "Le commentaire doit avoir plus de 3 caractères.";
+                } else if (strlen($this->newComment) > 600) {
+                    $this->errors['comment'] = "Le commentaire doit faire moins de 600 caractères.";
+                } else {
+                    if (!isset($commentsModel)) {
+                        $commentsModel = new CommentsModel;
+                    }
+                    $commentID = $commentsModel->saveComment($this->newComment, $this->id, $_SESSION['user_id']);
+                }
+            }
+        }
+
+        // Gestion de suppression de commentaires
+        if (isset($_GET["delete"])) {
+            if (!isset($commentsModel)) {
+                $commentsModel = new CommentsModel;
+            }
+            // Si l'utilisateur a la permission, défini "set_deleted" à true pour le commentaire sélectionné
+            $commentsModel->setDeleted($_GET["delete"], $_SESSION['user_id']);
+        }
+
+        // Gestion de reports de commentaires
+
+        $this->comments = $stationsMdl->getCommentsWithAuthorsAndNotes(); // Commentaires
+        // Range les commentaires par ordre décroissant chronologique
+        usort($this->comments, function ($a, $b) {
+            return strtotime($b['date_']) - strtotime($a['date_']);
+        });
+
+        if (!isset($notesModel)) {
+            $notesModel = new NotesModel;
+        }
+
 
         require ROOT . "/app/View/beach_view.php";
     }

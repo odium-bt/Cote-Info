@@ -25,20 +25,22 @@ abstract class Model
 
     /*
      * Fonction dbRequest
-     * paramètres : - requête sql  
+     * paramètres : - requête sql
      *              - array de paramètres (optionnel)
+     *              - booléen (optionnel)
      * résultat : Exécute le statement PDO et retourne le résultat sous forme de tableau associatif
+     *            Si $r = true (méthode save()), retourne l'ID du dernier élément inséré
      */
     protected function dbRequest(string $sql, array $params = [], bool $r = false)
     {
         try {
             $stmt = $this->dbConnector->prepare($sql);
             $stmt->execute($params ?? null);
-            if ($r === false) {
-                $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            if ($r === false) { // retourne tableau associatif
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 return empty($result) ? null : $result;
-            } else {
+            } else {            // retourne ID de la dernière ligne insérée
                 return $this->dbConnector->lastInsertId();
             }
         } catch (PDOException $e) {

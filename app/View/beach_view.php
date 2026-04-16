@@ -1,21 +1,37 @@
 <?php require ROOT . '/app/View/header_view.php'; ?>
 <main class="content">
-    <div class="flex">
+    <div id="station" class="flex">
         <div class="beach_article">
             <!-- == Article == -->
             <article class="info box padding-30 margin-side-20 margin-bottom-30">
 
 
-                <!-- Titre -->
-                <h1 class="titre"><?= $this->beach['label'] ?></h1>
-
+                <div class="beach_header margin-bottom-30">
+                    <!-- Titre -->
+                    <h1 class="titre"><?= $this->beach['label'] ?></h1>
+                    <!-- Note -->
+                    <?php if (!isset($_SESSION['user_id'])) { ?>
+                        <a href="?action=login">
+                        <?php } ?>
+                        <div class="rating" id="rating">
+                            <form action="?action=station&id=<?= $this->id ?>" method="post">
+                                <button type="submit" name="note" value="1"><i class="fa-regular fa-star"></i></button>
+                                <button type="submit" name="note" value="2"><i class="fa-regular fa-star"></i></button>
+                                <button type="submit" name="note" value="3"><i class="fa-regular fa-star"></i></button>
+                                <button type="submit" name="note" value="4"><i class="fa-regular fa-star"></i></button>
+                                <button type="submit" name="note" value="5"><i class="fa-regular fa-star"></i></button>
+                            </form>
+                        </div>
+                        <?php if (isset($_SESSION['user_id'])) { ?>
+                        </a>
+                    <?php } ?>
+                </div>
                 <!-- météo -->
                 <div class="weather">
                     <div class="weather-card box padding-30">
                         <div class="weather_card__main">
                             <div id="temp"></div>
                             <div id="temp_graph"></div>
-
                             <div class="stats">
                                 <div class="stat">☀️ UV <strong><span id="uv"></span></strong></div>
                                 <div class="stat">💨 Vent <strong><span id="wind"></span></strong></div>
@@ -82,9 +98,9 @@
             <section class="comments box padding-30 margin-side-20 margin-bottom-30">
                 <h3 class="titre margin-bottom-30">Commentaires</h3>
                 <?php if (isset($_SESSION['user_id'])) { ?>
-                    <form class="comment_write margin-bottom-30" action="?action=beach&id=<?= $this->id ?>" method="post">
+                    <form class="comment_write margin-bottom-30 padding-30 box" action="?action=station&id=<?= $this->id ?>" method="post">
                         <h6>Envoyer un commentaire :</h6>
-                        <input id="comment_content" class="margin-bottom-30" type="textarea">
+                        <textarea id="comment_content" name="comment_content" class="margin-bottom-30"></textarea>
                         <input type="submit" class="button" value="Envoyer">
                     </form>
                 <?php } else {
@@ -98,20 +114,42 @@
                 ?>
                     <p>Il n'y a aucun commentaire ici pour l'instant...</p>
                     <?php } else {
-                    foreach ($this->comments as $key => $value) {
+                    foreach ($this->comments as $comment) {
                     ?>
                         <!-- section -->
                         <div class="comment box padding-10">
                             <!-- avatar, nom, date, contenu, note -->
                             <div class="comment__info">
                                 <div class="comment__info__author">
-                                    <img class="avatar padding-10" src="./public/images/avatars/<?= $value['author']['avatar'] ?>" onerror="this.onerror=null; this.src='./public/images/avatars/default.png';">
-                                    <p class="padding-10"><?= $value['author']['username'] ?></p>
+                                    <img class="avatar padding-10" src="./public/images/avatars/<?= $comment['author']['avatar'] ?>" onerror="this.onerror=null; this.src='./public/images/avatars/default.png';">
+                                    <p class="padding-10"><?= $comment['author']['username'] ?></p>
                                 </div>
-                                <p class="padding-10"><?= $value['date_'] ?></p>
+                                <div class="comment__info__note">
+                                    <?php
+                                    // Si l'utilisateur a mis une note, affiche des étoiles remplies ou non selon sa note
+                                    if ($comment['note'] !== null) {
+                                        for ($i = 1; $i <= 5; $i++):
+                                    ?>
+                                            <i class="<?= ($i <= $comment['note']) ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
+                                    <?php
+                                        endfor;
+                                    };
+                                    ?>
+                                </div>
+                                <p class="padding-10"><?= $comment['date_'] ?></p>
+                                <?php if (isset($_SESSION['user_id'])) { ?>
+                                    <div>
+                                        <?php if ($_SESSION['is_admin'] === false && $comment['id_user'] !== $_SESSION['user_id']) { ?>
+                                            <button><i class="fa-solid fa-flag"></i></i></button>
+                                        <?php }; ?>
+                                        <?php if ($comment['id_user'] === $_SESSION['user_id'] || $_SESSION['is_admin'] === true) { ?>
+                                            <a href="?action=station&id=<?= $this->id ?>&delete=<?= $comment["id_comment"] ?>"><button id="delete"><i class="fa-solid fa-trash"></i></button></a>
+                                        <?php }; ?>
+                                    </div>
+                                <?php } ?>
                             </div>
                             <div class=" comment__content padding-10">
-                                <p><?= $value['content'] ?></p>
+                                <p><?= $comment['content'] ?></p>
                             </div>
                         </div>
                 <?php }

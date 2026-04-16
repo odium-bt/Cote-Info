@@ -100,12 +100,21 @@ button {
   font-size: 18px;
   width: 8em;
   height: 2.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .flex {
   display: flex;
+}
+.flex.column {
   flex-direction: column;
+}
+.flex.align-center {
   align-items: center;
+}
+.flex.justify-center {
   justify-content: center;
 }
 .flex.between {
@@ -138,6 +147,10 @@ button {
   visibility: hidden;
   pointer-events: none;
   display: none;
+}
+
+button {
+  background-color: inherit;
 }
 
 /* ===== Header ===== */
@@ -379,6 +392,47 @@ footer h5 {
 }
 
 /* ===== Station ===== */
+#station {
+  flex-direction: column;
+  align-items: center;
+}
+
+.beach_header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+.beach_header h1 {
+  margin-bottom: 0;
+}
+
+.beach_article {
+  width: 80%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* - Note - */
+.rating {
+  display: flex;
+  align-items: center;
+}
+.rating i {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+}
+.rating i:active {
+  color: gold;
+}
+
 /* - Weather card - */
 .weather {
   width: 100%;
@@ -414,29 +468,6 @@ footer h5 {
 }
 
 /* --- */
-.beach_article {
-  width: 80%;
-}
-
-.info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.info h1 {
-  width: 100%;
-}
-
-.side_bar {
-  width: 75%;
-  display: flex;
-  flex-direction: column;
-}
-
-.beach_preview:nth-child(n+4) {
-  display: none;
-}
-
 /* - Slider - */
 #slider {
   width: 100%;
@@ -455,6 +486,12 @@ footer h5 {
   font-size: 20px;
   padding: 8px;
   border-radius: 10px;
+}
+#slider button:hover {
+  background-color: rgb(231, 231, 231);
+}
+#slider button:active {
+  background-color: rgb(153, 153, 153);
 }
 
 .slide {
@@ -482,13 +519,24 @@ footer h5 {
   text-align: center;
 }
 
+/* - Side bar - */
+.side_bar {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.beach_preview:nth-child(n+4) {
+  display: none;
+}
+
 /* - Comments section - */
 .comment {
   margin: 10px 0;
   border: 1px solid rgba(0, 0, 0, 0.349);
 }
 .comment__info {
-  width: 80%;
+  width: 97%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -498,9 +546,20 @@ footer h5 {
   align-items: center;
 }
 .comment__info__author .avatar {
-  width: 100%;
-  max-width: 60px;
+  width: 60px;
   aspect-ratio: 1/1;
+}
+.comment__info__note {
+  display: none;
+  font-size: 12px;
+}
+
+.comment_write {
+  border: 1px solid rgba(0, 0, 0, 0.534);
+}
+
+#comment_content {
+  width: 100%;
 }
 
 /* ===== News - Actualités ===== */
@@ -575,6 +634,42 @@ input {
   justify-content: center;
 }
 
+/* ===== Utilisateur ===== */
+.user {
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+#user_nav {
+  border-radius: 10px 10px 0 0;
+}
+#user_nav nav ul {
+  display: flex;
+  padding: 10px;
+}
+#user_nav nav ul li {
+  padding: 5px 10px;
+}
+#user_nav nav ul li a {
+  color: black;
+}
+#user_nav nav ul li a:active {
+  color: #358fe2;
+}
+
+.tab_icon {
+  font-size: 24px;
+}
+
+.tab_text {
+  display: none;
+}
+
+#user_box {
+  border-radius: 0 10px 10px 10px;
+}
+
 /* ===== Privacy Policy ===== */
 .policy h2 {
   margin-bottom: 10px;
@@ -634,6 +729,10 @@ input {
   .slide {
     margin: 0 0.5rem;
   }
+  /* - Comments - */
+  .comment__info__note {
+    display: block;
+  }
   /* = News = */
   .news_article__title h6 {
     font-size: 13px;
@@ -645,10 +744,6 @@ input {
 @media (min-width: 930px) {
   body {
     font-size: 18px;
-  }
-  .flex {
-    flex-direction: row;
-    align-items: start;
   }
   /* - Head - */
   header {
@@ -673,7 +768,21 @@ input {
     background: none;
     gap: 10px;
   }
+  #header-nav ul li a {
+    font-size: 15px;
+  }
   /* = Station = */
+  #station {
+    flex-direction: row;
+    align-items: start;
+  }
+  .beach_header {
+    flex-direction: row;
+    gap: 0;
+  }
+  .beach_header i {
+    font-size: 24px;
+  }
   /* - Side bar - */
   .side_bar {
     width: 30%;
@@ -688,10 +797,29 @@ input {
   .news_article__title h6 {
     font-size: 14px;
   }
+  /* = User = */
+  .user {
+    flex-direction: row;
+  }
+  #user_nav {
+    border-radius: 10px 0 0 10px;
+  }
+  #user_nav nav ul {
+    flex-direction: column;
+  }
+  .tab_icon {
+    display: none;
+  }
+  .tab_text {
+    display: block;
+  }
 }
 @media (min-width: 1300px) {
   header {
     padding: 0 10em;
+  }
+  #header-nav ul li a {
+    font-size: 16px;
   }
 }
 

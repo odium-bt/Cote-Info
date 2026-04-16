@@ -67,7 +67,7 @@ class NewsModel extends Model
      */
     public function newArticle(string $title, string $content, int $id_user, int $id_thumbnail)
     {
-        $fields = [`title`, `content`, `id_user`, `id_thumbnail`];
+        $fields = ['title', 'content', 'id_user', 'id_thumbnail'];
         $values = [$title, $content, $id_user, $id_thumbnail];
 
         return $this->save($fields, $values);
@@ -80,7 +80,7 @@ class NewsModel extends Model
      */
     public function connect(array $stationIDs, int $articleID)
     {
-        $fields = [`id_station`, `id_news`];
+        $fields = ['id_station', 'id_news'];
         $values = [];
         foreach ($stationIDs as $value) {
             array_push($values, array($value, $articleID));

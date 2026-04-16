@@ -3,6 +3,7 @@
 namespace CoteInfo\Model;
 
 use CoteInfo\Model\UserModel;
+use CoteInfo\Model\NotesModel;
 
 /*
  * Classe StationModel
@@ -110,7 +111,7 @@ class StationsModel extends Model
      * paramètre : /
      * résultat : commentaires de la page avec les auteurs associés
      */
-    public function getCommentsWithAuthors()
+    public function getCommentsWithAuthorsAndNotes()
     {
         // Appelle CommentsModel pour récupérer les commentaires associés à la page
         $commentsModel = new CommentsModel();
@@ -119,13 +120,17 @@ class StationsModel extends Model
             return [];
         }
 
-        // $comments = array (?){[0]=> {["id_news"]=>(2)["title"]=>(9)} [1]=>{etc}}
+        // $comments = {[0]=>{["id_comment"]=>int["content"]=>string["date"]=>string["id_station"]=>int["id_user"]=>int} [1]=>{etc}}
+
 
         // Assigne une variable avec les id des auteurs
         $userIds = array_column($comments, 'id_user');
+
         // Appelle UserModel pour récupérer les noms et avatars des auteurs des commentaires
         $userModel = new UserModel();
         $authors = $userModel->getAuthors($userIds);
+
+
 
         // Indexe les utilisateurs par leur id
         $authorsById = [];
@@ -136,6 +141,18 @@ class StationsModel extends Model
         // Fustionne les données des auteurs avec leurs commentaires
         foreach ($comments as &$comment) {
             $comment['author'] = $authorsById[$comment['id_user']] ?? null;
+        }
+
+        // Ajoute la note donnée à la station par les utilisateurs
+        $notesModel = new NotesModel();
+        foreach ($comments as &$comment) {
+            $noteID = $notesModel->getNoteByUserAndStation($comment['id_user'], $comment['id_station']);
+            if ($noteID !== null) {
+                $note = $notesModel->getNote($noteID);
+                $comment['note'] = $note['value_'] ?? null;
+            } else {
+                $comment['note'] = null;
+            }
         }
 
         return $comments;

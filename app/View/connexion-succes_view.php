@@ -1,6 +1,6 @@
 <?php require ROOT . '/app/View/header_view.php'; ?>
 <main class="content">
-    <div class="flex center">
+    <div class="flex justify-center">
 
         <div class="box padding-30 margin-side-20">
             <h1 class="titre">

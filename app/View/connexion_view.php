@@ -1,6 +1,6 @@
 <?php require ROOT . '/app/View/header_view.php'; ?>
 <main class="content">
-    <div class="flex center">
+    <div class="flex justify-center">
         <!-- Formulaire de connexion -->
         <div class="box">
             <form class="form" action="?action=login" method="post">
@@ -21,7 +21,7 @@
                     <?php if (isset($this->errors["password"])) echo ("<br><span class='error'>" . $this->errors["password"] . "</span>"); ?>
                 </div>
 
-                <a class="blue-link" href="?action=register">Vous n'avez pas de compte ?</a>
+                <a class="blue-link" href="?action=register">Vous n'avez pas de compte&nbsp;?</a>
 
                 <div class="submit">
                     <input type="submit" class="button" value="Valider">

@@ -41,7 +41,7 @@ function display(data) {
   const rain = data.hourly.precipitation_probability[index];
   const uv = data.hourly.uv_index[index];
   const cloud = data.hourly.cloud_cover[index];
-  console.log(data);
+
   document.querySelector("#temp").textContent = temperature + "°C";
   document.querySelector("#wind").textContent = wind + "km/h";
   document.querySelector("#rain").textContent = rain + "%";

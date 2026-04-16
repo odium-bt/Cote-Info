@@ -47,7 +47,9 @@
             longitude: "<?= $this->beach['longitude'] ?>"
         };
     </script>
-    <script src="./public/js/slider.js"></script>
+    <?php if (!empty($this->medias)) { ?>
+        <script src="./public/js/slider.js"></script>
+    <?php } ?>
     <script src="./public/js/weather.js"></script>
 <?php } ?>
 </body>

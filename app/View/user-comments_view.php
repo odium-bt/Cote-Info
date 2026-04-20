@@ -4,7 +4,7 @@
  <?php
     $comments = $this->getComments();
     if (empty($comments)) {
-    ?> <p class="padding-30">Vous n'avez pas encore posté de commentaires, commencez par poster un commentaire et il apparaîtra ici...</p>
+    ?> <p class="padding-30">Vous n'avez pas encore posté de commentaires, commencez par poster un commentaire et il apparaîtra ici.</p>
  <?php }
     foreach ($comments as $comment) {
     ?>

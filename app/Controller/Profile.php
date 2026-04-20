@@ -6,6 +6,8 @@ use CoteInfo\Model\UserModel;
 use CoteInfo\Model\CommentsModel;
 use CoteInfo\Model\NotesModel;
 use CoteInfo\Model\NewsModel;
+use CoteInfo\Model\ReportsModel;
+use PDOException;
 /*
  * Classe Profile
  * Gère la page du profil utilisateur
@@ -21,6 +23,10 @@ class Profile
 
     protected array $user;
 
+    protected array $reports;
+    protected array $reportedComments;
+    protected bool $reportDeleteStatus;
+
     public function __construct()
     {
         $userModel = new UserModel;
@@ -32,6 +38,15 @@ class Profile
         // Changement d'avatar
         if (isset($_FILES['new-avatar'])) {
             $newAvatar = $this->replaceAvatar($_FILES['new-avatar']);
+        }
+
+        if (isset($_GET['tab']) && $_GET['tab'] === 'reports') {
+            $this->reportedComments = $this->getReports();
+        }
+
+
+        if (isset($_GET['delete'])) {
+            $this->reportDeleteStatus = $this->setReportAsDeleted($_GET['delete']);
         }
 
         require ROOT . "/app/View/user_view.php";
@@ -58,6 +73,51 @@ class Profile
         $comments = $notesModel->linkNotes($comments, $notes);
 
         return $comments;
+    }
+
+    /*
+     * Fonction getReports
+     * paramètre : /
+     * résultat : commentaires signalés
+     */
+    protected function getReports()
+    {
+        if (!isset($reportsModel)) {
+            $reportsModel = new ReportsModel;
+        }
+
+        $this->reports = $reportsModel->getAll() ?? [];
+
+        if (!isset($commentsModel)) {
+            $commentsModel = new CommentsModel;
+        }
+        $commentIDs = array_column($this->reports, 'id_comment'); // créé un array avec les ID des commentaires signalés
+        $comments = $commentsModel->getAllByIDExceptDeleted($commentIDs); // récupère les commentaires signalés
+
+        // Ajout des notes associées aux commentaires
+        if (!isset($notesModel)) {
+            $notesModel = new NotesModel();
+        }
+        $notes = $notesModel->getNoteForComments($comments); // récupère les notes associées
+        $comments = $notesModel->linkNotes($comments, $notes); // ajoute les notes à l'array $comments
+
+        return $comments;
+    }
+
+    /*
+     * Fonction setReportAsDeleted
+     * paramètre : id commentaire
+     * résultat : marque un commentaire signalé comme supprimé
+     */
+    protected function setReportAsDeleted(int $ID)
+    {
+        // Est-ce que le commentaire est signalé
+        if (!in_array($ID, array_column($this->reports, 'id_comment'))) {
+            return false;
+        }
+        // Appelle fonction qui marque comme supprimé
+        $commentsModel = new CommentsModel;
+        return $commentsModel->setDeleted($ID);
     }
 
     /*

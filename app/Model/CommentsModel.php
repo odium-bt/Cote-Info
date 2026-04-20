@@ -36,6 +36,25 @@ class CommentsModel extends Model
     }
 
     /*
+     * Fonction getAllByIDExceptDeleted
+     * paramètre : id des commentaires
+     * résultat : commentaires sauf supprimés
+     */
+    public function getAllByIDExceptDeleted(array $IDs)
+    {
+        if (empty($userID)) {
+            return [];
+        }
+        $placeholders = implode(',', array_fill(0, count($IDs), '?'));
+
+        return $this->dbRequestAll(
+            "SELECT * FROM comments WHERE id_comment IN ($placeholders) AND is_deleted = 0",
+            $IDs
+        );
+    }
+
+
+    /*
      * Fonction getCommentsByUser
      * paramètre : id de l'utilisateur
      * résultat : commentaires postés par l'utilisateur
@@ -70,7 +89,7 @@ class CommentsModel extends Model
      * paramètre : ID commentaire et ID utilisateur
      * résultat : Marque le commentaire comme supprimé
      */
-    public function setDeleted(int $IDcomment, int $IDuser)
+    public function setDeleted(int $IDcomment, int $IDuser = 0)
     {
         $comment = $this->getById($IDcomment);
         if ($IDuser === $comment["id_user"] || $_SESSION["is_admin"] === true) { // Vérifie que l'utilisateur à l'origine de la requête soit l'auteur du commentaire OU est admin

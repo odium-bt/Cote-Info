@@ -37,22 +37,34 @@
 </footer>
 <script src="./public/js/nav.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<?php if (!isset($_GET['action']) || $_GET['action'] === 'home') { ?>
+<?php if (isset($_GET['action'])) {
+    switch ($_GET['action']) {
+        case 'home': ?>
+            <script src="./public/js/map.js"></script>
+        <?php
+            break;
+        case 'station':
+        ?> <script>
+                const pageData = {
+                    latitude: "<?= $this->beach['latitude'] ?>",
+                    longitude: "<?= $this->beach['longitude'] ?>"
+                };
+            </script>
+            <?php if (!empty($this->medias)) { ?>
+                <script src="./public/js/slider.js"></script>
+            <?php } ?>
+            <script src="./public/js/weather.js"></script>
+        <?php
+            break;
+        case 'write':
+        ?> <script src="./public/js/station_request.js"></script>
+    <?php
+            break;
+    }
+} else { ?>
     <script src="./public/js/map.js"></script>
-<?php } ?>
-<?php if (isset($_GET['action']) && $_GET['action'] === 'station') { ?>
-    <script>
-        const pageData = {
-            latitude: "<?= $this->beach['latitude'] ?>",
-            longitude: "<?= $this->beach['longitude'] ?>"
-        };
-    </script>
-    <!-- <script src="./public/js/note.js"></script> -->
-    <?php if (!empty($this->medias)) { ?>
-        <script src="./public/js/slider.js"></script>
-    <?php } ?>
-    <script src="./public/js/weather.js"></script>
-<?php } ?>
+<?php
+} ?>
 </body>
 
 </html>

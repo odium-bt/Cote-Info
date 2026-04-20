@@ -2,6 +2,9 @@
 
  <?php
     $articles = $this->getArticles();
+    if (empty($articles)) {
+    ?> <p class="padding-30">Vous n'avez pas encore rédigé d'article. Les articles que vous rédigez apparaîtront ici.</p>
+ <?php }
     ?>
 
  <div class="news_list">

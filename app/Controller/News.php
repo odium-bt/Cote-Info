@@ -40,12 +40,6 @@ class News
             return false;
         }
         $userMdl = new UserModel;
-        $isAdmin = $userMdl->isAdmin($_SESSION['user_id']);
-        if ($isAdmin === true) {
-            $_SESSION['is_admin'] = true;
-        } else {
-            $_SESSION['is_admin'] = false;
-        }
-        return $isAdmin;
+        return $userMdl->isCurrentAdmin();
     }
 }

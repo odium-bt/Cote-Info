@@ -14,13 +14,12 @@ abstract class Model
 {
     protected string $tableName;
     protected string $idName;
-    protected Database $db;
     protected PDO $dbConnector;
 
     protected function __construct()
     {
-        $this->db = Database::getInstance();
-        $this->dbConnector = $this->db->getConnection();
+        // Obtiens la connection PDO
+        $this->dbConnector = Database::getInstance()->getConnection();
     }
 
     /*
@@ -35,7 +34,7 @@ abstract class Model
     {
         try {
             $stmt = $this->dbConnector->prepare($sql);
-            $stmt->execute($params ?? null);
+            $stmt->execute($params);
 
             if ($r === false) { // retourne tableau associatif
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -44,7 +43,11 @@ abstract class Model
                 return $this->dbConnector->lastInsertId();
             }
         } catch (PDOException $e) {
-            throw new \Exception("Erreur PDO : " . $e->getMessage());
+            error_log("SQL: " . $sql);
+            error_log("Params: " . json_encode($params));
+            error_log($e->getMessage());
+
+            throw $e;
         }
     }
 
@@ -58,12 +61,16 @@ abstract class Model
     {
         try {
             $stmt = $this->dbConnector->prepare($sql);
-            $stmt->execute($params ?? null);
+            $stmt->execute($params);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return empty($result) ? null : $result;
         } catch (PDOException $e) {
-            throw new \Exception("Erreur PDO : " . $e->getMessage());
+            error_log("SQL: " . $sql);
+            error_log("Params: " . json_encode($params));
+            error_log($e->getMessage());
+
+            throw $e;
         }
     }
 
@@ -77,6 +84,9 @@ abstract class Model
         try {
             return $this->dbRequestAll("SELECT * FROM " . $this->tableName) ?? [];
         } catch (PDOException $e) {
+            error_log($e->getMessage());
+
+            echo "<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>";
             return [];
         }
     }
@@ -86,7 +96,7 @@ abstract class Model
      * paramètres : id
      * résultat : Retourne l'élément avec l'id donné
      */
-    public function getById($id)
+    public function getById(int $id)
     {
         try {
             return $this->dbRequest(
@@ -94,6 +104,34 @@ abstract class Model
                 [$id]
             );
         } catch (PDOException $e) {
+            error_log($e->getMessage());
+
+            echo "<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>";
+            return [];
+        }
+    }
+
+    /*
+     * Fonction getAllById
+     * paramètres : id
+     * résultat : Retourne l'élément avec l'id donné
+     */
+    public function getAllById(array $IDs)
+    {
+        if (empty($IDs)) {
+            return [];
+        }
+        $placeholders = implode(',', array_fill(0, count($IDs), '?'));
+
+        try {
+            return $this->dbRequestAll(
+                "SELECT * FROM `" . $this->tableName . "` WHERE `$this->idName` IN ($placeholders)",
+                $IDs
+            );
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+
+            echo "<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>";
             return [];
         }
     }
@@ -106,7 +144,7 @@ abstract class Model
     public function save(array $fields, array $values)
     {
         $fields = "(" . implode(", ", $fields) . ")";
-        $placeholders = str_repeat('?, ', count($values) - 1) . '?';
+        $placeholders = implode(',', array_fill(0, count($values), '?'));
 
         // Insère les valeurs dans les champs correspondants dans une nouvelle entrée en base et retourne le dernier ID inséré
         try {
@@ -116,6 +154,9 @@ abstract class Model
                 true
             );
         } catch (PDOException $e) {
+            error_log($e->getMessage());
+
+            echo "<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>";
             return null;
         }
     }

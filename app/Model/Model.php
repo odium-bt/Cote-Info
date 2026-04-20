@@ -44,7 +44,7 @@ abstract class Model
                 return $this->dbConnector->lastInsertId();
             }
         } catch (PDOException $e) {
-            die($e->getMessage() . "<br>Erreur de connexion PDO");
+            throw new \Exception("Erreur PDO : " . $e->getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ abstract class Model
 
             return empty($result) ? null : $result;
         } catch (PDOException $e) {
-            die($e->getMessage() . "<br>Erreur de connexion PDO");
+            throw new \Exception("Erreur PDO : " . $e->getMessage());
         }
     }
 
@@ -74,7 +74,11 @@ abstract class Model
      */
     public function getAll()
     {
-        return $this->dbRequestAll("SELECT * FROM " . $this->tableName) ?? [];
+        try {
+            return $this->dbRequestAll("SELECT * FROM " . $this->tableName) ?? [];
+        } catch (PDOException $e) {
+            return [];
+        }
     }
 
     /*
@@ -84,16 +88,20 @@ abstract class Model
      */
     public function getById($id)
     {
-        return $this->dbRequest(
-            "SELECT * FROM `" . $this->tableName . "` WHERE `$this->idName` = ?",
-            [$id]
-        );
+        try {
+            return $this->dbRequest(
+                "SELECT * FROM `" . $this->tableName . "` WHERE `$this->idName` = ?",
+                [$id]
+            );
+        } catch (PDOException $e) {
+            return [];
+        }
     }
 
     /*
      * Fonction save
      * paramètres : champs à remplir, valeurs à remplir
-     * résultat : Sauvegarde les éléments dans la base de données
+     * résultat : Sauvegarde les éléments dans la base de données, retourne la dernière ligne entrée
      */
     public function save(array $fields, array $values)
     {
@@ -101,10 +109,14 @@ abstract class Model
         $placeholders = str_repeat('?, ', count($values) - 1) . '?';
 
         // Insère les valeurs dans les champs correspondants dans une nouvelle entrée en base et retourne le dernier ID inséré
-        return $this->dbRequest(
-            "INSERT INTO `" . $this->tableName . "` $fields VALUES ($placeholders)",
-            $values,
-            true
-        );
+        try {
+            return $this->dbRequest(
+                "INSERT INTO `" . $this->tableName . "` $fields VALUES ($placeholders)",
+                $values,
+                true
+            );
+        } catch (PDOException $e) {
+            return null;
+        }
     }
 }

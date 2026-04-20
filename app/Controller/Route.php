@@ -1,6 +1,8 @@
 <?php
 
 namespace CoteInfo\Controller;
+
+use CoteInfo\Model\StationsModel;
 /*
  * Classe Route
  * Gère le routage par la méthode $_GET["action"]
@@ -58,6 +60,9 @@ class Route
                 session_destroy();
                 new Home;
                 break;
+            case "deletion":
+                new Deletion;
+                break;
             case "station":
                 // Si aucun ID station est trouvé, affiche la page 404
                 if (isset($_GET["id"])) {
@@ -66,18 +71,25 @@ class Route
                     new PageNotFound;
                 }
                 break;
-            case "contact":
-                new Contact;
-                break;
             case "policy":
                 new Policy;
                 break;
             case "write":
-                if ($_SESSION["is_admin"] === true) {
-                    new NewsWrite;
-                } else {
+                if (!isset($_SESSION["user_id"]) || ($_SESSION["is_admin"] ?? false) !== true) {
                     new PermissionDenied;
+                    return;
                 }
+                new NewsWrite;
+                break;
+            case "getStationsByRegion":
+                // Dis au site que la réponse va être en json et pas HTML
+                header('Content-Type: application/json');
+                $regionId = intval($_GET['id_region'] ?? 0);
+                $stationsModel = new StationsModel();
+                $stations = $stationsModel->getStationsByRegion($regionId);
+                // Retourne les données au script JS
+                echo json_encode($stations);
+                exit;
                 break;
             default:
                 // Si $_GET["action"] = action non reconnue

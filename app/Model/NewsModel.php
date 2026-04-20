@@ -1,6 +1,8 @@
 <?php
 
 namespace CoteInfo\Model;
+
+use PDOException;
 /*
  * Classe NewsModel
  * Gère les requêtes BDD pour les articles d'actualités
@@ -16,13 +18,40 @@ class NewsModel extends Model
     }
 
     /*
+     * Fonction getArticleIDsByUser
+     * paramètre : ID utilisateur
+     * résultat : tableau contenant l'ID des articles de l'utilisateur
+     */
+    public function getArticleIDsByUser(int $userID)
+    {
+        return $this->dbRequestAll(
+            "SELECT `id_news` FROM news WHERE id_user = ?",
+            [$userID]
+        ) ?? [];
+    }
+
+    /*
      * Fonction getPreviews
      * paramètre : tableau d'IDs d'articles
      * résultat : tableau contenant l'id, le titre, la date et l'id thumbnail des articles demandés, avec une limite de 6, par ordre décroissant de nouveauté
      */
     public function getPreviews(array $ids)
     {
-        // Cherche les articles dont les ID sont associés à la station
+        $placeholders = implode(', ', array_fill(0, count($ids), '?'));
+
+        return $this->dbRequestAll(
+            "SELECT `id_news`,`title`,`date_`,`id_thumbnail` FROM news WHERE id_news IN ($placeholders) ORDER BY date_ DESC",
+            $ids
+        ) ?? [];
+    }
+
+    /*
+     * Fonction getBeachPreviews
+     * paramètre : tableau d'IDs d'articles
+     * résultat : tableau contenant l'id, le titre, la date et l'id thumbnail des articles demandés, avec une limite de 6, par ordre décroissant de nouveauté
+     */
+    public function getBeachPreviews(array $ids)
+    {
         $placeholders = implode(', ', array_fill(0, count($ids), '?'));
 
         return $this->dbRequestAll(
@@ -32,9 +61,9 @@ class NewsModel extends Model
     }
 
     /*
-     * Fonction getPreviews
+     * Fonction getThumbnails
      * paramètre : tableau d'ids
-     * résultat : tableau contenant l'id, le titre, la date et l'id thumbnail des articles demandés
+     * résultat : tableau contenant l'id, le nom de fichier, l'alt et la légende des articles et les range dans le tableau articles
      */
     public function getThumbnails(array $articles)
     {
@@ -73,6 +102,11 @@ class NewsModel extends Model
         return $this->save($fields, $values);
     }
 
+
+
+
+
+
     /*
      * Fonction connect
      * paramètre : ID des stations liées à l'article, ID de l'article
@@ -80,12 +114,11 @@ class NewsModel extends Model
      */
     public function connect(array $stationIDs, int $articleID)
     {
-        $fields = ['id_station', 'id_news'];
-        $values = [];
-        foreach ($stationIDs as $value) {
-            array_push($values, array($value, $articleID));
-        };
-
-        $this->save($fields, $values);
+        foreach ($stationIDs as $stationID) {
+            $this->dbRequest(
+                "INSERT INTO news_station (id_station, id_news) VALUES (?, ?)",
+                [intval($stationID), $articleID]
+            );
+        }
     }
 }

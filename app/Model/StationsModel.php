@@ -2,6 +2,7 @@
 
 namespace CoteInfo\Model;
 
+use PDOException;
 use CoteInfo\Model\UserModel;
 use CoteInfo\Model\NotesModel;
 
@@ -40,12 +41,12 @@ class StationsModel extends Model
     public function getMedia()
     {
         // Cherche les ID médias associés à la station
+
         $mediaIDs = $this->dbRequestAll(
             "SELECT id_media FROM station_images WHERE id_station = ?",
             [$this->id]
         );
-
-        if ($mediaIDs === null) {
+        if (empty($mediaIDs)) {
             return [];
         }
 
@@ -55,7 +56,7 @@ class StationsModel extends Model
         return $this->dbRequestAll(
             "SELECT * FROM media WHERE id_media IN ($placeholders)",
             $values
-        ) ?? [];
+        );
     }
 
     /*
@@ -66,12 +67,13 @@ class StationsModel extends Model
     public function getArticlePreviews()
     {
         // Cherche les ID des articles de news associés à la station
+
         $newsIDs = $this->dbRequestAll(
             "SELECT id_news FROM news_station WHERE id_station = ?",
             [$this->id]
         );
 
-        if ($newsIDs === null) {
+        if (empty($newsIDs)) {
             return [];
         }
 
@@ -82,7 +84,7 @@ class StationsModel extends Model
 
         // Va chercher les infos dans la table news
         $newsModel = new NewsModel;
-        $articles = $newsModel->getPreviews($articleIDs);
+        $articles = $newsModel->getBeachPreviews($articleIDs);
 
         $thumbnailIDs = array_column($articles, 'id_thumbnail');
         if (empty($thumbnailIDs)) {
@@ -102,14 +104,15 @@ class StationsModel extends Model
         foreach ($articles as &$article) {
             $article['thumbnail'] = $thumbnailsByID[$article['id_thumbnail']] ?? null;
         }
+        unset($article);
 
         return $articles;
     }
 
     /*
-     * Fonction getCommentsWithAuthors
+     * Fonction getCommentsWithAuthorsAndNotes
      * paramètre : /
-     * résultat : commentaires de la page avec les auteurs associés
+     * résultat : commentaires de la page avec les auteurs et les notes associées
      */
     public function getCommentsWithAuthorsAndNotes()
     {
@@ -142,19 +145,28 @@ class StationsModel extends Model
         foreach ($comments as &$comment) {
             $comment['author'] = $authorsById[$comment['id_user']] ?? null;
         }
+        unset($comment);
 
         // Ajoute la note donnée à la station par les utilisateurs
-        $notesModel = new NotesModel();
-        foreach ($comments as &$comment) {
-            $noteID = $notesModel->getNoteByUserAndStation($comment['id_user'], $comment['id_station']);
-            if ($noteID !== null) {
-                $note = $notesModel->getNote($noteID);
-                $comment['note'] = $note['value_'] ?? null;
-            } else {
-                $comment['note'] = null;
-            }
+        if (!isset($notesModel)) {
+            $notesModel = new NotesModel();
         }
+        $notes = $notesModel->getNoteForComments($comments);
+        $comments = $notesModel->linkNotes($comments, $notes);
 
         return $comments;
+    }
+
+    /*
+     * Fonction getStationsByRegion
+     * paramètre : id de la région
+     * résultat : tableau des stations de la région
+     */
+    public function getStationsByRegion(int $regionId)
+    {
+        return $this->dbRequestAll(
+            "SELECT id_station, label FROM " . $this->tableName . " WHERE id_region = ?",
+            [$regionId]
+        );
     }
 }

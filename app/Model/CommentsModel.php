@@ -36,6 +36,23 @@ class CommentsModel extends Model
     }
 
     /*
+     * Fonction getCommentsByUser
+     * paramètre : id de l'utilisateur
+     * résultat : commentaires postés par l'utilisateur
+     */
+    public function getCommentsByUser(int $userID)
+    {
+        if (empty($userID)) {
+            return [];
+        }
+
+        return $this->dbRequestAll(
+            "SELECT * FROM comments WHERE id_user = ? AND is_deleted = 0",
+            [$userID]
+        ) ?? [];
+    }
+
+    /*
      * Fonction saveComment
      * paramètre : id utilisateur
      * résultat : enregistre un nouveau commentaire

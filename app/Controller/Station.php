@@ -5,6 +5,7 @@ namespace CoteInfo\Controller;
 use CoteInfo\Model\StationsModel;
 use CoteInfo\Model\CommentsModel;
 use CoteInfo\Model\NotesModel;
+use CoteInfo\Model\ReportsModel;
 /*
  * Classe Station
  * Gère les articles des stations balnéaires
@@ -86,7 +87,7 @@ class Station
         }
 
         // Gestion de suppression de commentaires
-        if (isset($_GET["delete"])) {
+        if (isset($_GET['delete']) && isset($_SESSION['user_id'])) {
             if (!isset($commentsModel)) {
                 $commentsModel = new CommentsModel;
             }
@@ -95,16 +96,22 @@ class Station
         }
 
         // Gestion de reports de commentaires
+        if (isset($_GET['report']) && isset($_SESSION['user_id']) && $_SESSION['is_admin'] !== true) {
+            if ($_GET['report'] === $_SESSION['user_id']) {
+                $this->errors['comment'] = "Vous ne pouvez pas signaler votre propre commentaire.";
+            }
+
+            if (!isset($reportsModel)) {
+                $reportsModel = new ReportsModel;
+            }
+            $reportsModel->newReport($_GET['report'], $_SESSION['user_id']);
+        }
 
         $this->comments = $stationsMdl->getCommentsWithAuthorsAndNotes(); // Commentaires
         // Range les commentaires par ordre décroissant chronologique
         usort($this->comments, function ($a, $b) {
             return strtotime($b['date_']) - strtotime($a['date_']);
         });
-
-        if (!isset($notesModel)) {
-            $notesModel = new NotesModel;
-        }
 
 
         require ROOT . "/app/View/beach_view.php";

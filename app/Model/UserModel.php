@@ -1,6 +1,9 @@
 <?php
 
 namespace CoteInfo\Model;
+
+use PDOException;
+
 /*
  * Classe UserModel
  * Gère les requêtes DBB sur la table users
@@ -74,6 +77,18 @@ class UserModel extends Model
     }
 
     /*
+     * Fonction getPasswordByEmail
+     * paramètres : email
+     * résultat : mot de passe lié à l'email
+     */
+    public function getPasswordByEmail(string $email)
+    {
+        return $this->dbRequest(
+            "SELECT password FROM " . $this->tableName . " WHERE email = ?",
+            [$email]
+        ) ?? null;
+    }
+    /*
      * Fonction loginCheck
      * paramètres : l'email et le mot de passe entrés par l'utilisateur
      * résultat : true - si l'email et le mot de passe correspondent à un compte existant
@@ -82,10 +97,7 @@ class UserModel extends Model
     public function loginCheck(string $email, string $password)
     {
         // Cherche un mot de passe correspondant à l'email
-        $user = $this->dbRequest(
-            "SELECT password FROM " . $this->tableName . " WHERE email = ?",
-            [$email]
-        );
+        $user = $this->getPasswordByEmail($email);
 
         // Si rien n'est trouvé, retourne false
         if ($user === null) {
@@ -122,5 +134,49 @@ class UserModel extends Model
             "SELECT id_user, username, avatar FROM " . $this->tableName . " WHERE id_user IN ($placeholders)",
             $userIds
         ) ?? [];
+    }
+
+    /*
+     * Fonction updateAvatar
+     * paramètres : id utilisateur, nom du fichier avatar
+     * résultat : true si mise à jour réussie, false sinon
+     */
+    public function updateAvatar(int $userId, string $fileName)
+    {
+        $this->dbRequest(
+            "UPDATE " . $this->tableName . " SET avatar = ? WHERE " . $this->idName . " = ?",
+            [$fileName, $userId]
+        );
+    }
+
+    /*
+     * Fonction getEmailByID
+     * paramètres : id utilisateur
+     * résultat : supprime le compte de l'utilisateur
+     */
+    public function getEmailByID(int $userID)
+    {
+        return $this->dbRequest(
+            "SELECT email FROM " . $this->tableName . " WHERE id_user = ?",
+            [$userID]
+        );
+    }
+
+    /*
+     * Fonction deleteAccount
+     * paramètres : id utilisateur
+     * résultat : supprime le compte de l'utilisateur
+     */
+    public function deleteAccount(int $userID)
+    {
+        try {
+            $this->dbRequest(
+                "DELETE FROM " . $this->tableName . " WHERE id_user = ?",
+                [$userID]
+            );
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
     }
 }

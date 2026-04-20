@@ -101,9 +101,7 @@ class Station
                 $this->errors['comment'] = "Vous ne pouvez pas signaler votre propre commentaire.";
             }
 
-            if (!isset($reportsModel)) {
-                $reportsModel = new ReportsModel;
-            }
+            $reportsModel = new ReportsModel;
             $reportsModel->newReport($_GET['report'], $_SESSION['user_id']);
         }
 

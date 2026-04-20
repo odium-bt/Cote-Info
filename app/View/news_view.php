@@ -3,7 +3,12 @@
     <div class="flex justify-center">
 
         <article class="padding-50 box">
-            <h1 class="titre">Actualités</h1>
+            <h1>Actualités</h1>
+            <?php if ($this->isAdmin() === true) { ?>
+                <a href="?action=write">
+                    <div class="button">Nouveau</div>
+                </a>
+            <?php     } ?>
             <div class="news_list">
                 <?php
                 foreach ($this->articles as $article) {
@@ -12,7 +17,13 @@
                         <div class="news_article box">
                             <img src="./public/images/beach/<?= $article['thumbnail']['path'] ?>" alt="<?= $article['thumbnail']['alt'] ?>">
                             <div class="news_article__title">
-                                <h6><?= $article['title'] ?></h6>
+                                <h6 title="<?= $article['title'] ?>">
+                                    <?php
+                                    if (strlen($article['title']) > 40) {
+                                        echo substr($article['title'], 0, 40) . "...";
+                                    } else {
+                                        echo $article['title'];
+                                    } ?></h6>
                             </div>
                         </div>
                     </a>

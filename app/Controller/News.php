@@ -3,6 +3,7 @@
 namespace CoteInfo\Controller;
 
 use CoteInfo\Model\NewsModel;
+use CoteInfo\Model\UserModel;
 /*
  * Classe News
  * Gère la page des actualités
@@ -25,5 +26,23 @@ class News
         });
 
         require ROOT . "/app/View/news_view.php";
+    }
+
+
+    /*
+     * Fonction isAdmin
+     * paramètre : /
+     * résultat : check le statut admin de l'utilisateur
+     */
+    protected function isAdmin()
+    {
+        $userMdl = new UserModel;
+        $isAdmin = $userMdl->isAdmin($_SESSION['user_id']);
+        if ($isAdmin === true) {
+            $_SESSION['is_admin'] = true;
+        } else {
+            $_SESSION['is_admin'] = false;
+        }
+        return $isAdmin;
     }
 }

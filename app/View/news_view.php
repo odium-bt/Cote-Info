@@ -4,7 +4,7 @@
 
         <article class="padding-50 box">
             <h1>Actualités</h1>
-            <?php if ($this->isAdmin() === true) { ?>
+            <?php if (isset($_SESSION['user_id']) && $this->isAdmin() === true) { ?>
                 <a href="?action=write">
                     <div class="button">Nouveau</div>
                 </a>

@@ -36,6 +36,9 @@ class News
      */
     protected function isAdmin()
     {
+        if (!isset($_SESSION['user_id'])) {
+            return false;
+        }
         $userMdl = new UserModel;
         $isAdmin = $userMdl->isAdmin($_SESSION['user_id']);
         if ($isAdmin === true) {

@@ -92,7 +92,7 @@ class Register
             // Vérifie que l'adresse email ne soit pas déjà utilisée
             if ($user->isEmailUsed($this->email) === false) {
                 $user->registerUser($this->username, $this->email, $this->password); // envoie les infos utilisateur sur le modèle
-                require ROOT . '/app/View/inscription-succes_view.php'; // affiche page succès
+                require ROOT . '/app/View/inscription-success_view.php'; // affiche page succès
             } else {
                 // Affiche une erreur dans le formulaire d'inscription
                 $this->errors['email'] = "Cette adresse existe déjà";

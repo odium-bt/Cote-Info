@@ -66,11 +66,12 @@ class NotesModel extends Model
             return [];
         }
 
+        // Associe les id utilisateur et id station des commentaires
         $pairs = [];
-
         foreach ($comments as $comment) {
             $pairs[] = "(" . intval($comment['id_user']) . ", " . intval($comment['id_station']) . ")";
         }
+
 
         $values = implode(',', $pairs);
 

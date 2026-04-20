@@ -70,7 +70,6 @@ class Profile
         $newsModel = new NewsModel;
         $articleIDs = $newsModel->getArticleIDsByUser($this->userID) ?? [];
         if (!empty($articleIDs)) {
-            var_dump($articleIDs);
             return $newsModel->getPreviews($articleIDs);
         } else {
             return [];

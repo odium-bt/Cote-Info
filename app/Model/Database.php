@@ -15,7 +15,7 @@ class Database
     private function __construct()
     {
         try {
-            $this->connexion = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'] . "; charset=utf8", $_ENV['DB_LOGIN'], $_ENV['DB_PASSWORD']);
+            $this->connexion = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'] . "; charset=utf8mb4", $_ENV['DB_LOGIN'], $_ENV['DB_PASSWORD']);
             $this->connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die($e->getMessage() . "<br />Erreur de connexion PDO");

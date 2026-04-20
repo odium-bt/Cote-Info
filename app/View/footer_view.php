@@ -1,32 +1,32 @@
 <footer class="box">
     <div class="footernav">
         <div>
-            <h5>Côte Info</h5>
+            <h3>Côte Info</h3>
             <p>Votre guide des stations balnéaires en France métropole.</p>
         </div>
         <div>
-            <h5>Liens rapides</h5>
+            <h3>Liens rapides</h3>
             <ul>
-                <a href="?action=policy">
-                    <li>RGPD</li>
-                </a>
-                <a href="?action=contact">
-                    <li>Contact</li>
-                </a>
+                <li><a href="?action=policy">
+                        RGPD
+                    </a></li>
+                <li><a href="?action=contact">
+                        Contact
+                    </a></li>
             </ul>
         </div>
         <div>
-            <h5>Communauté</h5>
+            <h3>Communauté</h3>
             <ul>
-                <a href="#">
-                    <li>Facebook</li>
-                </a>
-                <a href="#">
-                    <li>Twitter</li>
-                </a>
-                <a href="#">
-                    <li>Instagram</li>
-                </a>
+                <li><a href="#">
+                        Facebook
+                    </a></li>
+                <li><a href="#">
+                        Twitter
+                    </a></li>
+                <li><a href="#">
+                        Instagram
+                    </a></li>
             </ul>
         </div>
     </div>

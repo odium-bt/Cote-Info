@@ -277,6 +277,9 @@ footer {
   div {
     margin: 0 15px;
   }
+  h3 {
+    font-size: 14px;
+  }
 }
 
 .copyright {
@@ -341,17 +344,17 @@ footer {
 /* prettier-ignore */
 .region-btn,
 .beach-btn {
-  font-size:18px !important;
   position: absolute;
-  border: 2px solid rgba(0, 0, 0, 0.5);
   border-radius: 35px;
-  width: 35%;
-  height: 40%;
   opacity: 1;
   visibility: visible;
   transition:
     opacity 0.3s ease,
     filter 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.btn-1 { background-color: $bretagne; }
   &.btn-2 { background-color: $pays-de-la-loire; color: white; }
@@ -366,13 +369,18 @@ footer {
   }
 }
 
+.region-btn {
+  font-size: 18px !important;
+  width: 35%;
+  height: 40%;
+  border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
 .beach-btn {
   font-size: 0.6rem !important;
   border: 1px solid rgba(0, 0, 0, 0.5);
   width: 50%;
   height: 35%;
-  display: flex;
-  align-items: center;
 }
 
 .credit {
@@ -732,7 +740,7 @@ footer {
   .footernav {
     padding: 40px 80px;
     font-size: 16px;
-    h5 {
+    h3 {
       font-family: $fontTitle;
       font-size: 18px;
     }

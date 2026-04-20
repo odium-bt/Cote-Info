@@ -282,6 +282,9 @@ footer h5 {
 .footernav div {
   margin: 0 15px;
 }
+.footernav h3 {
+  font-size: 14px;
+}
 
 .copyright {
   text-align: center;
@@ -340,15 +343,14 @@ footer h5 {
 /* prettier-ignore */
 .region-btn,
 .beach-btn {
-  font-size: 18px !important;
   position: absolute;
-  border: 2px solid rgba(0, 0, 0, 0.5);
   border-radius: 35px;
-  width: 35%;
-  height: 40%;
   opacity: 1;
   visibility: visible;
   transition: opacity 0.3s ease, filter 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .region-btn.btn-1,
 .beach-btn.btn-1 {
@@ -385,13 +387,18 @@ footer h5 {
   filter: brightness(0.8); /* darken when hovered */
 }
 
+.region-btn {
+  font-size: 18px !important;
+  width: 35%;
+  height: 40%;
+  border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
 .beach-btn {
   font-size: 0.6rem !important;
   border: 1px solid rgba(0, 0, 0, 0.5);
   width: 50%;
   height: 35%;
-  display: flex;
-  align-items: center;
 }
 
 .credit {
@@ -742,7 +749,7 @@ footer h5 {
     padding: 40px 80px;
     font-size: 16px;
   }
-  .footernav h5 {
+  .footernav h3 {
     font-family: "Montserrat", serif;
     font-size: 18px;
   }

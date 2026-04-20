@@ -56,6 +56,54 @@ class NotesModel extends Model
     }
 
     /*
+     * Fonction getNotesForComments
+     * paramètre : commentaires
+     * résultat : retourne la note associée (null si vide)
+     */
+    public function getNoteForComments(array $comments)
+    {
+        if (empty($comments)) {
+            return [];
+        }
+
+        $pairs = [];
+
+        foreach ($comments as $comment) {
+            $pairs[] = "(" . intval($comment['id_user']) . ", " . intval($comment['id_station']) . ")";
+        }
+
+        $values = implode(',', $pairs);
+
+        return $this->dbRequestAll(
+            "SELECT * FROM `" . $this->tableName . "` WHERE (id_user, id_station) IN ($values)"
+        ) ?? [];
+    }
+
+    /*
+     * Fonction linkNotes
+     * paramètre : commentaires
+     * résultat : les commentaires avec une nouvelle propriété "note" contenant la valeur de la note
+     */
+    public function linkNotes(array $comments, array $notes)
+    {
+        // Associe les notes à leurs commentaires
+        // Créée une carte pour trouver une note par id_user et id_station
+        $notesByKey = [];
+        foreach ($notes as $note) {
+            $key = $note['id_user'] . '_' . $note['id_station'];
+            $notesByKey[$key] = $note;
+        }
+        foreach ($comments as &$comment) {
+            $key = $comment['id_user'] . '_' . $comment['id_station']; // créé une clé par id_user et id_station
+
+            $comment['note'] = $notesByKey[$key]['value_'] ?? null; // récupère sa note, ou null
+        }
+        unset($comment);
+
+        return $comments;
+    }
+
+    /*
      * Fonction getNote
      * paramètre : ID note
      * résultat : retourne la note de l'utilisateur (null si vide)

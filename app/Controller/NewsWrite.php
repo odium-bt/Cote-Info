@@ -44,22 +44,23 @@ class NewsWrite
                         $this->title = htmlspecialchars(trim($_POST['title'])) ?? null;
                         break;
                     case 'content':
-                        $this->content = htmlspecialchars(trim($_POST['content'])) ?? null;
+                        $this->content = (trim($_POST['content'])) ?? null;
                         break;
                     case 'region':
                         $this->selectedRegion = intval(htmlspecialchars(trim($_POST['region']))) ?? null;
                         break;
                     case 'stations':
                         $stations_input = $_POST['stations'] ?? [];
-                        $this->selectedStations = array_map(function ($value) { // Nettoie le tableau 
+                        $this->selectedStations = array_map(function ($value) {
                             return htmlspecialchars(trim($value));
                         }, $stations_input);
                         break;
-                    case 'thumbnail':
-                        $this->thumbnail = $_POST['thumbnail'] ?? [];
-                        break;
                 }
             }
+
+            // Les données de fichier arrivent dans $_FILES
+            $this->thumbnail = $_FILES['thumbnail'] ?? [];
+
             // Titre
             if (!$this->title) {
                 $this->errors['title'] = "Requis";
@@ -104,15 +105,16 @@ class NewsWrite
             }
 
             // Stations
+            $validStationIds = array_column($this->stations, 'id_station');
             $allValid = true;
             foreach ($this->selectedStations as $value) {
-                if (!in_array($value, $this->stations, true)) {
+                if (!in_array(intval($value), $validStationIds, true)) {
                     $allValid = false;
                     break;
                 }
             }
-            if ($allValid = false) {
-                $this->errors['password-confirm'] = "Stations invalides";
+            if ($allValid === false) {
+                $this->errors['selectedStations'] = "Stations invalides";
             }
         }
 
@@ -132,7 +134,7 @@ class NewsWrite
 
             // Enregistre le thumbnail dans la table médias et retourne son ID
             $mediaModel = new MediaModel;
-            $thumbnailID = $mediaModel->save([`path`, `MIME_type`, `id_region`], [$this->thumbnail['name'], $this->thumbnail['type'], $this->selectedRegion]);
+            $thumbnailID = $mediaModel->save(['path', 'MIME_type', 'id_region'], [$filename, $this->thumbnail['type'], $this->selectedRegion]);
 
 
             // Enregistre l'article dans la base
@@ -141,7 +143,7 @@ class NewsWrite
 
             // Enregistre les connexions entre l'article et les stations si applicable
             if (!empty($this->selectedStations)) {
-                $newsModel->connect([$this->selectedStations], $newsID);
+                $newsModel->connect($this->selectedStations, $newsID);
             }
 
             require ROOT . "/app/View/news-article-writing-success_view.php";

@@ -9,6 +9,7 @@ document
     const stationContainer = document.getElementById("station_container");
     const stationList = document.getElementById("station_list");
 
+    // Lorsqu'aucune des régions est sélectionnée, la séléction des stations est cachée
     if (!regionID) {
       stationContainer.classList.add("hide");
       stationList.innerHTML = "";
@@ -17,7 +18,7 @@ document
 
     stationContainer.classList.remove("hide");
 
-    // reset station list
+    // Réinitialise la liste des stations
     stationList.innerHTML = "<p>Chargement...</p>";
 
     fetch(`?action=getStationsByRegion&id_region=${regionID}`)
@@ -31,6 +32,10 @@ document
       });
   });
 
+/* Fonction display
+ * paramètre : données (en json)
+ * résultat : ajoute des checkbox pour chaque station associée à la région sélectionnée
+ */
 function display(data) {
   const stationList = document.getElementById("station_list");
   stationList.innerHTML = "";

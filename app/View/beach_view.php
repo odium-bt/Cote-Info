@@ -8,7 +8,7 @@
 
                 <div class="beach_header margin-bottom-30">
                     <!-- Titre -->
-                    <h1 class="titre"><?= $this->beach['label'] ?></h1>
+                    <h1><?= $this->beach['label'] ?></h1>
                     <!-- Note -->
                     <?php if (!isset($_SESSION['user_id'])) { ?>
                         <a href="?action=login">
@@ -96,7 +96,7 @@
 
             <!-- == Section commentaires == -->
             <section class="comments box padding-30 margin-side-20 margin-bottom-30">
-                <h3 class="titre margin-bottom-30">Commentaires</h3>
+                <h3 class="margin-bottom-30">Commentaires</h3>
                 <?php if (isset($_SESSION['user_id'])) { ?>
                     <form class="comment_write margin-bottom-30 padding-30 box" action="?action=station&id=<?= $this->id ?>" method="post">
                         <h6>Envoyer un commentaire :</h6>
@@ -140,10 +140,10 @@
                                 <?php if (isset($_SESSION['user_id'])) { ?>
                                     <div>
                                         <?php if ($_SESSION['is_admin'] === false && $comment['id_user'] !== $_SESSION['user_id']) { ?>
-                                            <button><i class="fa-solid fa-flag"></i></i></button>
+                                            <a href="?action=station&id=<?= $this->id ?>&report=<?= $comment['id_comment'] ?>"><i class="fa-solid fa-flag"></i></a>
                                         <?php }; ?>
                                         <?php if ($comment['id_user'] === $_SESSION['user_id'] || $_SESSION['is_admin'] === true) { ?>
-                                            <a href="?action=station&id=<?= $this->id ?>&delete=<?= $comment["id_comment"] ?>"><button id="delete"><i class="fa-solid fa-trash"></i></button></a>
+                                            <a href="?action=station&id=<?= $this->id ?>&delete=<?= $comment['id_comment'] ?>"><button id="delete"><i class="fa-solid fa-trash"></i></button></a>
                                         <?php }; ?>
                                     </div>
                                 <?php } ?>

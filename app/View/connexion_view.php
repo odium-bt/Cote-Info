@@ -4,7 +4,7 @@
         <!-- Formulaire de connexion -->
         <div class="box">
             <form class="form" action="?action=login" method="post">
-                <h1 class="titre">Connexion</h1>
+                <h1>Connexion</h1>
 
                 <p><?php if (isset($this->errors["failure"])) echo ("<span class='error'>" . $this->errors["failure"] . "</span>"); ?></p>
 

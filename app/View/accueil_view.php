@@ -1,14 +1,14 @@
 <?php require ROOT . '/app/View/header_view.php'; ?>
 <main class="content">
     <div class="map-intro">
-        <h1 class="titre">Découvrez la météo des plages de France</h1>
+        <h1>Découvrez la météo des plages de France</h1>
         <p>Cliquez sur une région pour consulter les prévisions météo des zones côtières et stations balnéaires</p>
         <p><a href="?action=addbeach">New beach</a></p>
 
     </div>
 
     <article id="map" class="box map">
-        <h2 class="map__title titre">Carte interactive des régions côtières</h2>
+        <h2 class="map__title">Carte interactive des régions côtières</h2>
 
         <!-- Carte interactive en SVG -->
         <button onclick="resetZoom()" class="reset-btn"><i class="fa-solid fa-arrow-left-long"></i> Retour</button>
@@ -76,7 +76,7 @@
                     <button><a href="?action=station&id=16" class="beach-btn btn-3">Plage d'Arcachon</a></button>
                 </body>
             </foreignObject>
-            <foreignObject class="beach hide" data-region="Nouvelle-Aquitaine" x="260" y="690" width="140" height="80">
+            <foreignObject class="beach hide" data-region="Nouvelle-Aquitaine" x="260" y="690" width="140" height="120">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button><a href="?action=station&id=15" class="beach-btn btn-3">Plage de la Côte des Basques</a></button>
@@ -146,7 +146,7 @@
                 </body>
             </foreignObject>
             <!-- Stations  -->
-            <foreignObject class="beach hide" data-region="Occitanie" x="430" y="790" width="120" height="100">
+            <foreignObject class="beach hide" data-region="Occitanie" x="430" y="790" width="120" height="130">
 
                 <body xmlns="http://www.w3.org/1999/xhtml">
                     <button><a href="?action=station&id=17" class="beach-btn btn-7">Plage de Palavas-les-Flots</a></button>

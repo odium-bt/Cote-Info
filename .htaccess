@@ -1,0 +1,10 @@
+<Files ".htaccess">
+Require all denied
+</Files>
+<Files ".env">
+Require all denied
+</Files>
+<Files "config.php">
+Require all denied
+</Files>
+Options -Indexes

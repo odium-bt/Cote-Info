@@ -9,7 +9,8 @@
     } else if (isset($this->reportDeleteStatus) && $this->reportDeleteStatus === false) {
         echo "<p>" . "Le commentaire n'a pas été supprimé. Vérifiez que vous ayez la permission ou que le commentaire que vous essayez de supprimer soit bien signalé." . "</p>";
     }
-    if (empty($this->reports)) {
+
+    if (empty($this->reportedComments)) {
     ?> <p class="padding-30">Aucun commentaire signalé.</p>
  <?php }
     foreach ($this->reportedComments as $report) {

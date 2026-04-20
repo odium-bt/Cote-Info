@@ -37,7 +37,7 @@ class UserModel extends Model
 
     /*
      * Fonction isAdmin
-     * paramètres : id
+     * paramètres : id utilisateur
      * résultat : true si admin, false si pas admin
      */
     public function isAdmin(int $id)
@@ -49,6 +49,27 @@ class UserModel extends Model
 
         return is_array($result) && isset($result['is_admin']) ? (bool)$result['is_admin'] : false;
     }
+
+    /*
+     * Fonction isCurrentAdmin
+     * paramètre : /
+     * résultat : check le statut admin de l'utilisateur actif
+     */
+    public function isCurrentAdmin()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            return false;
+        }
+        $isAdmin = $this->isAdmin($_SESSION['user_id']);
+        if ($isAdmin === true) {
+            $_SESSION['is_admin'] = true;
+        } else {
+            $_SESSION['is_admin'] = false;
+        }
+        return $isAdmin;
+    }
+
+
     /*
      * Fonction getIdByEmail
      * paramètres : email

@@ -33,7 +33,7 @@
             </ul>
         </nav>
         <div class="searchbar">
-            <i class="fa-solid fa-magnifying-glass"></i>
+
             <input type="text">
         </div>
     </header>

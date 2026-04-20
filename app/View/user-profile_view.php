@@ -1,17 +1,16 @@
- <h2 class="titre">Mon profil</h2>
- <div class="profil">
+ <h2 class="margin-bottom-30">Mon profil</h2>
+ <div class="padding-30 flex column">
      <div class="flex">
-         <img src="<?= ROOT . "/public/images/avatars/" . $this->user['avatar'] ?>" alt="Ton avatar" onerror="this.onerror=null; this.src='./public/images/avatars/default.png';">
-         <form action="?action=user">
-             <label for="new-avatar">Modification de votre photo de profil : </label><input name="new-avatar" type="file">
-             <input class="button" type="submit">
+         <img class="user_avatar margin-20" src="<?= ROOT . "/public/images/avatars/" . $this->user['avatar'] ?>" alt="Ton avatar" onerror="this.onerror=null; this.src='./public/images/avatars/default.png';">
+         <form action="?action=user" class="flex column">
+             <label class="margin-overunder-3" for="new-avatar">Modification de votre photo de profil : </label>
+             <input class="margin-overunder-3" name="new-avatar" type="file">
+             <input class="margin-overunder-3 button" type="submit">
          </form>
      </div>
-     <h3><?= $this->user['username'] ?></h3>
+     <h3 class="username margin-side-20"><?= $this->user['username'] ?></h3>
  </div>
 
- <p>Date de création du compte : <?= $this->user['date_'] ?></p>
- <a href="?action=logout">
+ <a class="margin-overunder-3" href="?action=logout">
      <div class="button red">Déconnexion</div>
  </a>
- <div class="button red">Suppression du compte</div>

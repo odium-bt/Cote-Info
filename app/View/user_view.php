@@ -12,9 +12,6 @@
                 <li><a href="?action=user&tab=comments"><i class="tab_icon fa-solid fa-comments"></i><span class="tab_text">Mes&nbsp;commentaires</span>
                     </a>
                 </li>
-                <li><a href="?action=user&tab=notes"><i class="tab_icon fa-solid fa-star"></i><span class="tab_text">Mes&nbsp;notes</span>
-                    </a>
-                </li>
                 <li><a href="?action=user&tab=settings "><i class="tab_icon fa-solid fa-gear"></i><span class="tab_text">Préférences</span>
                     </a>
                 </li>
@@ -32,7 +29,8 @@
         </nav>
     </aside>
 
-    <div id="user_box" class="box padding-50">
+    <div class="user__box box padding-50">
+        <h1>Espace utilisateur</h1>
         <?php
         if (isset($_GET['tab'])) {
             switch ($_GET['tab']) {
@@ -44,9 +42,6 @@
                     break;
                 case 'comments':
                     require ROOT . '/app/View/user-comments_view.php';
-                    break;
-                case 'notes':
-                    require ROOT . '/app/View/user-notes_view.php';
                     break;
                 case 'settings':
                     require ROOT . '/app/View/user-settings_view.php';

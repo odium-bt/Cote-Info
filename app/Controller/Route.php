@@ -15,7 +15,10 @@ class Route
     public function __construct()
     {
         // Récupère $_GET, sinon "accueil" quand vide
-        $this->action = $_GET["action"] ?? "home";
+        if (!isset($_GET['action'])) {
+            $_GET['action'] = "home";
+        }
+        $this->action = $_GET["action"];
         $this->redirigeVers();
     }
 

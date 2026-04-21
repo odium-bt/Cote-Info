@@ -1,9 +1,9 @@
 /*
- * Script pour ma carte interactive
+ * Script pour une carte interactive
  * Fonctionnalités :
  * - Zoom sur les régions
  * - Reset du niveau de zoom
- * - Affichage dynamique des plages associées aux régions
+ * - Affichage dynamique des boutons associés aux régions ou plages selon le niveau de zoom
  */
 
 const regions = document.querySelectorAll(".region-btn");

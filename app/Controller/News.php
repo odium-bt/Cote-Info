@@ -25,6 +25,7 @@ class News
     {
         $newsModel = new NewsModel;
         $mediaModel = new MediaModel;
+
         if (isset($_GET['delete'])) {
             if ($_SESSION['is_admin'] === true) {
                 $newsModel->delete($_GET['delete']);

@@ -66,7 +66,6 @@ main {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
 }
 
 h1 {
@@ -161,6 +160,10 @@ button {
 
 button {
   background-color: inherit;
+}
+
+.red {
+  color: red;
 }
 
 /* ===== Header ===== */
@@ -348,9 +351,6 @@ footer h5 {
   opacity: 1;
   visibility: visible;
   transition: opacity 0.3s ease, filter 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .region-btn.btn-1,
 .beach-btn.btn-1 {
@@ -399,6 +399,8 @@ footer h5 {
   border: 1px solid rgba(0, 0, 0, 0.5);
   width: 50%;
   height: 35%;
+  display: flex;
+  align-items: center;
 }
 
 .credit {
@@ -424,10 +426,6 @@ footer h5 {
 }
 .beach_header h1 {
   margin-bottom: 0;
-}
-
-.beach_article {
-  width: 80%;
 }
 
 .info {
@@ -582,10 +580,9 @@ footer h5 {
 /* ===== News - Actualités ===== */
 .news_list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
 }
 
-/* ===== News - Article ===== */
 /* - News previews - */
 .news_article {
   margin: 20px;
@@ -601,6 +598,7 @@ footer h5 {
   max-width: 900px;
   aspect-ratio: 16/9;
   border-radius: 10px 10px 0 0;
+  object-fit: cover;
 }
 .news_article__title {
   width: 100%;
@@ -612,6 +610,17 @@ footer h5 {
 }
 .news_article__title h6 {
   font-size: 12px;
+}
+
+/* ===== News - Article ===== */
+.article_news {
+  position: relative;
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 /* ===== News - Rédaction ===== */
@@ -721,6 +730,11 @@ footer h5 {
   aspect-ratio: 1/1;
 }
 
+/* - Account - */
+#delete-btn {
+  width: 13em;
+}
+
 /* ===== Privacy Policy ===== */
 .policy h2 {
   margin-bottom: 10px;
@@ -826,6 +840,9 @@ footer h5 {
   #station {
     flex-direction: row;
     align-items: start;
+  }
+  #station .beach_article {
+    width: 80%;
   }
   .beach_header {
     flex-direction: row;

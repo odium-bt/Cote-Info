@@ -1,27 +1,21 @@
 /*
- * Script permettant la notation des stations par les utilisateurs
+ * Script pour afficher la note choisie par l'utilisateur
  */
 
 const stars = document.querySelectorAll("#rating i");
-const input = document.getElementById("rating-value");
+const note = pageData["note"];
 
+// Colorie l'étoile choisie et les étoiles précédentes
 stars.forEach((star) => {
-  star.addEventListener("click", () => {
-    const value = star.getAttribute("data-value");
+  const value = Number(star.getAttribute("data-value"));
 
-    input.value = value; // La note choisie
-
-    // Colorie l'étoile choisie et les étoiles précédentes
-    stars.forEach((star) => {
-      if (star.getAttribute("data-value") <= value) {
-        star.classList.add("active");
-        star.classList.remove("fa-regular");
-        star.classList.add("fa-solid");
-      } else {
-        star.classList.remove("active");
-        star.classList.remove("fa-solid");
-        star.classList.add("fa-regular");
-      }
-    });
-  });
+  if (value <= note) {
+    star.classList.add("active");
+    star.classList.remove("fa-regular");
+    star.classList.add("fa-solid");
+  } else {
+    star.classList.remove("active");
+    star.classList.remove("fa-solid");
+    star.classList.add("fa-regular");
+  }
 });

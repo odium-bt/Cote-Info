@@ -47,13 +47,15 @@
         ?> <script>
                 const pageData = {
                     latitude: "<?= $this->beach['latitude'] ?>",
-                    longitude: "<?= $this->beach['longitude'] ?>"
+                    longitude: "<?= $this->beach['longitude'] ?>",
+                    note: "<?= $this->note ?>"
                 };
             </script>
             <?php if (!empty($this->medias)) { ?>
                 <script src="./public/js/slider.js"></script>
             <?php } ?>
             <script src="./public/js/weather.js"></script>
+            <script src="./public/js/note.js"></script>
         <?php
             break;
         case 'write':

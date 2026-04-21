@@ -3,7 +3,7 @@
     <div id="station" class="flex">
         <div class="beach_article">
             <!-- == Article == -->
-            <article class="info box padding-30 margin-side-20 margin-bottom-30">
+            <article class="info box padding-30 margin-bottom-30">
 
 
                 <div class="beach_header margin-bottom-30">
@@ -11,19 +11,25 @@
                     <h1><?= $this->beach['label'] ?></h1>
                     <!-- Note -->
                     <?php if (!isset($_SESSION['user_id'])) { ?>
-                        <a href="?action=login">
-                        <?php } ?>
+                        ?><a href="?action=login">
+                            <div class="rating" id="rating">
+                                <button type="submit" name="note" value="1"><i class="fa-regular fa-star" data-value="1"></i></button>
+                                <button type="submit" name="note" value="2"><i class="fa-regular fa-star" data-value="2"></i></button>
+                                <button type="submit" name="note" value="3"><i class="fa-regular fa-star" data-value="3"></i></button>
+                                <button type="submit" name="note" value="4"><i class="fa-regular fa-star" data-value="4"></i></button>
+                                <button type="submit" name="note" value="5"><i class="fa-regular fa-star" data-value="5"></i></button>
+                            </div>
+                        </a>
+                    <?php } else { ?>
                         <div class="rating" id="rating">
                             <form action="?action=station&id=<?= $this->id ?>" method="post">
-                                <button type="submit" name="note" value="1"><i class="fa-regular fa-star"></i></button>
-                                <button type="submit" name="note" value="2"><i class="fa-regular fa-star"></i></button>
-                                <button type="submit" name="note" value="3"><i class="fa-regular fa-star"></i></button>
-                                <button type="submit" name="note" value="4"><i class="fa-regular fa-star"></i></button>
-                                <button type="submit" name="note" value="5"><i class="fa-regular fa-star"></i></button>
+                                <button type="submit" name="note" value="1"><i class="fa-regular fa-star" data-value="1"></i></button>
+                                <button type="submit" name="note" value="2"><i class="fa-regular fa-star" data-value="2"></i></button>
+                                <button type="submit" name="note" value="3"><i class="fa-regular fa-star" data-value="3"></i></button>
+                                <button type="submit" name="note" value="4"><i class="fa-regular fa-star" data-value="4"></i></button>
+                                <button type="submit" name="note" value="5"><i class="fa-regular fa-star" data-value="5"></i></button>
                             </form>
                         </div>
-                        <?php if (isset($_SESSION['user_id'])) { ?>
-                        </a>
                     <?php } ?>
                 </div>
                 <!-- météo -->
@@ -95,7 +101,7 @@
             </article>
 
             <!-- == Section commentaires == -->
-            <section class="comments box padding-30 margin-side-20 margin-bottom-30">
+            <section class="comments box padding-30 margin-bottom-30">
                 <h3 class="margin-bottom-30">Commentaires</h3>
                 <?php if (isset($_SESSION['user_id'])) { ?>
                     <form class="comment_write margin-bottom-30 padding-30 box" action="?action=station&id=<?= $this->id ?>" method="post">
@@ -139,16 +145,17 @@
                                 <p class="padding-10"><?= $comment['date_'] ?></p>
                                 <?php if (isset($_SESSION['user_id'])) { ?>
                                     <div>
-                                        <?php if ($_SESSION['is_admin'] === false && $comment['id_user'] !== $_SESSION['user_id']) { ?>
+                                        <?php if ($_SESSION['is_admin'] === false && intval($comment['id_user']) !== $_SESSION['user_id']) { ?>
                                             <a href="?action=station&id=<?= $this->id ?>&report=<?= $comment['id_comment'] ?>"><i class="fa-solid fa-flag"></i></a>
                                         <?php }; ?>
-                                        <?php if ($comment['id_user'] === $_SESSION['user_id'] || $_SESSION['is_admin'] === true) { ?>
+                                        <?php
+                                        if (intval($comment['id_user']) === $_SESSION['user_id'] || $_SESSION['is_admin'] === true) { ?>
                                             <a href="?action=station&id=<?= $this->id ?>&delete=<?= $comment['id_comment'] ?>"><button id="delete"><i class="fa-solid fa-trash"></i></button></a>
                                         <?php }; ?>
                                     </div>
                                 <?php } ?>
                             </div>
-                            <div class=" comment__content padding-10">
+                            <div class="comment__content padding-10">
                                 <p><?= $comment['content'] ?></p>
                             </div>
                         </div>

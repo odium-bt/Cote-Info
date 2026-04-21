@@ -6,6 +6,7 @@ use CoteInfo\Model\UserModel;
 use CoteInfo\Model\CommentsModel;
 use CoteInfo\Model\NotesModel;
 use CoteInfo\Model\NewsModel;
+use CoteInfo\Model\MediaModel;
 use CoteInfo\Model\ReportsModel;
 use PDOException;
 /*
@@ -33,11 +34,10 @@ class Profile
         $this->userID = $_SESSION['user_id'];
         $this->isAdmin = $userModel->isAdmin($this->userID) ?? false;
 
-        $this->user = $userModel->getById($this->userID);
 
         // Changement d'avatar
         if (isset($_FILES['new-avatar'])) {
-            $newAvatar = $this->replaceAvatar($_FILES['new-avatar']);
+            $this->replaceAvatar($_FILES['new-avatar']);
         }
 
         if (isset($_GET['tab']) && $_GET['tab'] === 'reports') {
@@ -48,6 +48,8 @@ class Profile
         if (isset($_GET['delete'])) {
             $this->reportDeleteStatus = $this->setReportAsDeleted($_GET['delete']);
         }
+
+        $this->user = $userModel->getById($this->userID);
 
         require ROOT . "/app/View/user_view.php";
     }
@@ -130,7 +132,11 @@ class Profile
         $newsModel = new NewsModel;
         $articleIDs = $newsModel->getArticleIDsByUser($this->userID) ?? [];
         if (!empty($articleIDs)) {
-            return $newsModel->getPreviews($articleIDs);
+            $idList = array_column($articleIDs, "id_news");
+            // Va chercher les articles (sans thumbnail) dans la table news
+            $articles = $newsModel->getPreviews($idList);
+            $mediaModel = new MediaModel;
+            return $mediaModel->getThumbnails($articles);
         } else {
             return [];
         }
@@ -145,6 +151,15 @@ class Profile
      */
     private function replaceAvatar($avatar)
     {
+        if (empty($avatar['name'])) {
+            $this->errors['avatar'] = "Aucun fichier détecté.";
+            return false;
+        }
+        if ($avatar['error'] !== UPLOAD_ERR_OK) {
+            $this->errors['avatar'] = "Une erreur s'est produite lors de l'envoi de l'image.";
+            return false;
+        }
+
         $fileTmp = $avatar['tmp_name'];
 
         // Vérifie que c'est bien une image
@@ -199,11 +214,8 @@ class Profile
         // Copie et redimensionne l'image source vers la destination
         imagecopyresampled($destination, $src, 0, 0, 0, 0, $newWidth, $newHeight, $imageInfo[0], $imageInfo[1]);
 
-        // Crée le dossier s'il n'existe pas
+        // Définis le dossier de sauvegarde
         $uploadDir = ROOT . "/public/images/avatars/";
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
 
         // Nom sécurisé
         $fileName = uniqid("avatar_", true) . "." . $allowed[$mime];
@@ -223,21 +235,27 @@ class Profile
                 break;
         }
 
-        // Nettoyage des ressources
-        unlink($fileTmp);
-
         if (!$saved) {
             $this->errors['avatar'] = "Erreur lors de la sauvegarde de l'avatar.";
             return false;
         }
 
-        // Mise à jour de la base de données
         $userModel = new UserModel();
+        $oldAvatarName = $userModel->getAvatar($this->userID);
+
+
+        // Mise à jour de la base de données
         if (!$userModel->updateAvatar($this->userID, $fileName)) {
             // Supprime le fichier si la mise à jour échoue
             unlink($path);
             $this->errors['avatar'] = "Erreur lors de la mise à jour du profil.";
             return false;
+        }
+
+        // Si le code arrive jusqu'ici sans erreurs, supprime l'avatar précédent
+        if ($oldAvatarName !== null) {
+            $oldAvatar = $uploadDir . $oldAvatarName["avatar"];
+            unlink($oldAvatar);
         }
 
         return true;

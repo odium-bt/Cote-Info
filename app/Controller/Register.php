@@ -65,8 +65,8 @@ class Register
             // Mot de passe
             if (!$this->password) {
                 $this->errors['password'] = "Requis";
-            } else if (strlen($this->password) <= 12) {
-                $this->errors['password'] = "Veuillez choisir un mot de passe de plus de 12 caractères";
+            } else if (strlen($this->password) < 8) {
+                $this->errors['password'] = "Veuillez choisir un mot de passe de plus de 8 caractères";
             } else if (strlen($this->password) >= 128) {
                 $this->errors['password'] = "Veuillez choisir un mot de passe de moins de 128 caractères";
             }

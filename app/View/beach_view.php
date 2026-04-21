@@ -66,14 +66,14 @@
                                         if (str_starts_with($media['MIME_type'], 'image/')) {
                                         ?>
 
-                                            <img src="./public/images/beach/<?= $media['path'] ?>" loading="lazy" alt="<?= $media['alt'] ?>">
+                                            <img src="/public/images/beach/<?= htmlspecialchars($media['path'], ENT_QUOTES, 'UTF-8') ?>" loading="lazy" alt="<?= $media['alt'] ?>">
                                             <p class="legend"><?= $media['legend'] ?></p>
                                         <?php
                                         } elseif (str_starts_with($media['MIME_type'], 'video/')) {
                                         ?>
-                                            <video loading="lazy" controls>
-                                                <source src="./public/images/beach/<?= $media['path'] ?>.webm" type="video/webm">
-                                                <source src="./public/images/beach/<?= $media['path'] ?>.mp4" type="video/mp4">
+                                            <video controls preload="none">
+                                                <source src="./public/images/beach/<?= htmlspecialchars($media['path'], ENT_QUOTES, 'UTF-8') ?>.webm" type="video/webm">
+                                                <source src="./public/images/beach/<?= htmlspecialchars($media['path'], ENT_QUOTES, 'UTF-8') ?>.mp4" type="video/mp4">
                                                 Votre navigateur ne supporte pas les vidéos.
                                             </video>
                                         <?php

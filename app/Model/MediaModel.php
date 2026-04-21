@@ -41,4 +41,32 @@ class MediaModel extends Model
             [$filename]
         );
     }
+
+    /*
+     * Fonction getThumbnails
+     * paramètre : tableau d'ids
+     * résultat : tableau contenant l'id, le nom de fichier, l'alt et la légende des articles et les range dans le tableau articles
+     */
+    public function getThumbnails(array $articles)
+    {
+        $thumbnailIDs = array_column($articles, 'id_thumbnail');
+        if (empty($thumbnailIDs)) {
+            return $articles;
+        }
+
+        // Va chercher les infos dans la table media
+        $thumbnails = $this->getMedias($thumbnailIDs);
+
+        // Range les thumbnails par leur IDs dans $thumbnailsByID
+        $thumbnailsByID = [];
+        foreach ($thumbnails as $thumbnail) {
+            $thumbnailsByID[$thumbnail['id_media']] = $thumbnail;
+        }
+        // Range les thumbnails dans leurs articles
+        foreach ($articles as &$article) {
+            $article['thumbnail'] = $thumbnailsByID[$article['id_thumbnail']] ?? null;
+        }
+
+        return $articles;
+    }
 }

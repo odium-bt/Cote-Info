@@ -12,9 +12,6 @@
                 <li><a href="?action=user&tab=comments"><i class="tab_icon fa-solid fa-comments"></i><span class="tab_text">Mes&nbsp;commentaires</span>
                     </a>
                 </li>
-                <li><a href="?action=user&tab=settings "><i class="tab_icon fa-solid fa-gear"></i><span class="tab_text">Préférences</span>
-                    </a>
-                </li>
                 <?php if ($this->isAdmin === true) {
                 ?>
                     <li><a href="?action=user&tab=articles"><i class="tab_icon fa-solid fa-newspaper"></i><span class="tab_text">Mes&nbsp;articles</span>
@@ -42,9 +39,6 @@
                     break;
                 case 'comments':
                     require ROOT . '/app/View/user-comments_view.php';
-                    break;
-                case 'settings':
-                    require ROOT . '/app/View/user-settings_view.php';
                     break;
                 case 'articles':
                     if ($this->isAdmin === true) {

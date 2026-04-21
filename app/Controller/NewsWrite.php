@@ -44,7 +44,7 @@ class NewsWrite
                         $this->title = htmlspecialchars(trim($_POST['title'])) ?? null;
                         break;
                     case 'content':
-                        $this->content = (trim($_POST['content'])) ?? null;
+                        $this->content = nl2br(htmlspecialchars(trim($_POST['content']))) ?? null;
                         break;
                     case 'region':
                         $this->selectedRegion = intval(htmlspecialchars(trim($_POST['region']))) ?? null;

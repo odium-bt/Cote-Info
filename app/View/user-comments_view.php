@@ -31,7 +31,7 @@
              <p class="padding-10"><?= $comment['date_'] ?></p>
              <?php if (isset($_SESSION['user_id'])) { ?>
                  <div>
-                     <?php if ($comment['id_user'] === $_SESSION['user_id'] || $_SESSION['is_admin'] === true) { ?>
+                     <?php if (intval($comment['id_user']) === $_SESSION['user_id'] || $_SESSION['is_admin'] === true) { ?>
                          <a href="?action=station&id=<?= $this->id ?>&delete=<?= $comment['id_comment'] ?>"><button id="delete"><i class="fa-solid fa-trash"></i></button></a>
                      <?php }; ?>
                  </div>

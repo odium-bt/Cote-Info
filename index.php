@@ -6,6 +6,9 @@ $dotenv->load();
 
 use CoteInfo\Controller\Route;
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_name('session_coteinfo'); // Nom de la session de votre choix
+    session_start();
+}
 
 new Route;

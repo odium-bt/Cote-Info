@@ -4,7 +4,7 @@
         <h1>Rédaction d'article</h1>
         <form class="flex column" id="article_write" action="?action=write" method="post" enctype="multipart/form-data">
 
-            <label for="region_select">Choisis une région : </label>
+            <label for="region_select">Choisis une région<span class="red">*</span> : </label>
             <select name="region" id="region_select" required>
                 <option value="">-- Choisissez une région --</option>
                 <option value="1">Bretagne</option>
@@ -25,17 +25,17 @@
             </div>
             <p><?php if (isset($this->errors['selectedStations'])) echo ("<span class='error'>" . $this->errors['selectedStations'] . "</span>"); ?></p>
 
-            <label for="write-title">Titre : </label>
+            <label for="write-title">Titre<span class="red">*</span> : </label>
             <input name="title" id="write-title" type="text" required>
             <p><?php if (isset($this->errors['title'])) echo ("<span class='error'>" . $this->errors['title'] . "</span>"); ?></p>
 
 
-            <label for="write-area">Contenu :</label>
+            <label for="write-area">Contenu<span class="red">*</span> :</label>
             <textarea name="content" id="write-area" cols="90" rows="20" maxlength="10000" required></textarea>
             <p><?php if (isset($this->errors['content'])) echo ("<span class='error'>" . $this->errors['content'] . "</span>"); ?></p>
 
 
-            <label for="thumbnail">Ajoutez un thumbnail : </label>
+            <label for="thumbnail">Ajoutez un thumbnail<span class="red">*</span> : </label>
             <input type="file" name="thumbnail" id="thumbnail" accept="image/*" required>
             <p><?php if (isset($this->errors['thumbnail'])) echo ("<span class='error'>" . $this->errors['thumbnail'] . "</span>"); ?></p>
 

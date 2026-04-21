@@ -222,6 +222,11 @@ class UserModel extends Model
             $this->dbConnector->beginTransaction();
 
             $this->dbRequest(
+                "DELETE FROM reports WHERE id_user = ?",
+                [intval($userID)]
+            );
+
+            $this->dbRequest(
                 "DELETE FROM comments WHERE id_user = ?",
                 [intval($userID)]
             );

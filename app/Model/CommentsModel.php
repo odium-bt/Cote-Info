@@ -86,13 +86,13 @@ class CommentsModel extends Model
 
     /*
      * Fonction setDeleted
-     * paramètre : ID commentaire et ID utilisateur
+     * paramètre : ID commentaire et ID de l'utilisateur supprimant
      * résultat : Marque le commentaire comme supprimé
      */
     public function setDeleted(int $IDcomment, int $IDuser = 0)
     {
         $comment = $this->getById($IDcomment);
-        if ($IDuser === $comment["id_user"] || $_SESSION["is_admin"] === true) { // Vérifie que l'utilisateur à l'origine de la requête soit l'auteur du commentaire OU est admin
+        if ($IDuser === intval($comment["id_user"]) || $_SESSION["is_admin"] === true) { // Vérifie que l'utilisateur à l'origine de la requête soit l'auteur du commentaire OU est admin
             $this->dbRequest(
                 "UPDATE `comments` SET `is_deleted` = 1 WHERE `id_comment` = ?",
                 [$IDcomment]
@@ -112,7 +112,7 @@ class CommentsModel extends Model
     {
         $comment = $this->getById($IDcomment);
 
-        if ($IDuser === $comment["id_user"] || $_SESSION["is_admin"] === true) { // Vérifie que l'utilisateur à l'origine de la requête soit l'auteur du commentaire OU est admin
+        if ($IDuser === intval($comment["id_user"]) || $_SESSION["is_admin"] === true) { // Vérifie que l'utilisateur à l'origine de la requête soit l'auteur du commentaire OU est admin
             $this->dbRequest(
                 "UPDATE `comments` SET `is_deleted` = 0 WHERE `id_comment` = ?",
                 [$IDcomment]

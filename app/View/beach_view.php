@@ -66,7 +66,7 @@
                                         if (str_starts_with($media['MIME_type'], 'image/')) {
                                         ?>
 
-                                            <img src="/public/images/beach/<?= htmlspecialchars($media['path'], ENT_QUOTES, 'UTF-8') ?>" loading="lazy" alt="<?= $media['alt'] ?>">
+                                            <img src="./public/images/beach/<?= htmlspecialchars($media['path'], ENT_QUOTES, 'UTF-8') ?>" loading="lazy" alt="<?= $media['alt'] ?>">
                                             <p class="legend"><?= $media['legend'] ?></p>
                                         <?php
                                         } elseif (str_starts_with($media['MIME_type'], 'video/')) {

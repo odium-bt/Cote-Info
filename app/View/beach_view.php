@@ -13,11 +13,11 @@
                     <?php if (!isset($_SESSION['user_id'])) { ?>
                         <a href="?action=login">
                             <div class="rating" id="rating">
-                                <button type="submit" name="note" value="1"><i class="fa-regular fa-star" data-value="1"></i></button>
-                                <button type="submit" name="note" value="2"><i class="fa-regular fa-star" data-value="2"></i></button>
-                                <button type="submit" name="note" value="3"><i class="fa-regular fa-star" data-value="3"></i></button>
-                                <button type="submit" name="note" value="4"><i class="fa-regular fa-star" data-value="4"></i></button>
-                                <button type="submit" name="note" value="5"><i class="fa-regular fa-star" data-value="5"></i></button>
+                                <i class="fa-regular fa-star" data-value="1"></i>
+                                <i class="fa-regular fa-star" data-value="2"></i>
+                                <i class="fa-regular fa-star" data-value="3"></i>
+                                <i class="fa-regular fa-star" data-value="4"></i>
+                                <i class="fa-regular fa-star" data-value="5"></i>
                             </div>
                         </a>
                     <?php } else { ?>
@@ -102,7 +102,7 @@
 
             <!-- == Section commentaires == -->
             <section class="comments box padding-30 margin-bottom-30">
-                <h3 class="margin-bottom-30">Commentaires</h3>
+                <h2 class="margin-bottom-30">Commentaires</h2>
                 <?php if (isset($_SESSION['user_id'])) { ?>
                     <form class="comment_write margin-bottom-30 padding-30 box" action="?action=station&id=<?= $this->id ?>" method="post">
                         <h6>Envoyer un commentaire :</h6>

@@ -19,6 +19,85 @@ class UserModel extends Model
     }
 
     /*
+     * Fonction getIdByEmail
+     * paramètres : email
+     * résultat : donne l'id de l'utilisateur
+     */
+    public function getIdByEmail(string $email)
+    {
+        $result = $this->dbRequest(
+            "SELECT `" . $this->idName . "` FROM `" . $this->tableName . "` WHERE email = ?",
+            [$email]
+        );
+
+        return is_array($result) && isset($result[$this->idName]) ? (int)$result[$this->idName] : null;
+    }
+
+    /*
+     * Fonction getPasswordByEmail
+     * paramètres : email
+     * résultat : mot de passe lié à l'email
+     */
+    public function getPasswordByEmail(string $email)
+    {
+        return $this->dbRequest(
+            "SELECT password FROM " . $this->tableName . " WHERE email = ?",
+            [$email]
+        ) ?? null;
+    }
+
+    /*
+     * Fonction getAuthors
+     * paramètres : tableau d'id utilisateurs
+     * résultat : tableau des autheurs avec les avatars et noms d'utilisateurs
+     */
+    public function getAuthors(array $userIds)
+    {
+        if (empty($userIds)) {
+            return [];
+        }
+
+        $placeholders = implode(', ', array_fill(0, count($userIds), '?'));
+
+        return $this->dbRequestAll(
+            "SELECT id_user, username, avatar FROM " . $this->tableName . " WHERE id_user IN ($placeholders)",
+            $userIds
+        ) ?? [];
+    }
+
+    /*
+     * Fonction getAvatar
+     * paramètres : id utilisateur
+     * résultat : nom du fichier de l'avatar ou null si vide
+     */
+    public function getAvatar(int $userID)
+    {
+        try {
+            return $this->dbRequest(
+                "SELECT avatar FROM " . $this->tableName . " WHERE " . $this->idName . " = ?",
+                [intval($userID)]
+            );
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+
+            return null;
+        }
+    }
+
+    /*
+     * Fonction getEmailByID
+     * paramètres : id utilisateur
+     * résultat : supprime le compte de l'utilisateur
+     */
+    public function getEmailByID(int $userID)
+    {
+        return $this->dbRequest(
+            "SELECT email FROM " . $this->tableName . " WHERE id_user = ?",
+            [$userID]
+        );
+    }
+
+    /*
      * Fonction isEmailUsed
      * paramètres : un email
      * résultat : true - si l'email a été trouvé dans la base de données
@@ -69,22 +148,6 @@ class UserModel extends Model
         return $isAdmin;
     }
 
-
-    /*
-     * Fonction getIdByEmail
-     * paramètres : email
-     * résultat : donne l'id de l'utilisateur
-     */
-    public function getIdByEmail(string $email)
-    {
-        $result = $this->dbRequest(
-            "SELECT `" . $this->idName . "` FROM `" . $this->tableName . "` WHERE email = ?",
-            [$email]
-        );
-
-        return is_array($result) && isset($result[$this->idName]) ? (int)$result[$this->idName] : null;
-    }
-
     /*
      * Fonction registerUser
      * paramètres : le nom d'utilisateur, email et mot de passe donnés par l'utilisateur
@@ -97,18 +160,6 @@ class UserModel extends Model
         $this->save(['username', 'email', 'password'], [$username, $email, $hash]);
     }
 
-    /*
-     * Fonction getPasswordByEmail
-     * paramètres : email
-     * résultat : mot de passe lié à l'email
-     */
-    public function getPasswordByEmail(string $email)
-    {
-        return $this->dbRequest(
-            "SELECT password FROM " . $this->tableName . " WHERE email = ?",
-            [$email]
-        ) ?? null;
-    }
     /*
      * Fonction loginCheck
      * paramètres : l'email et le mot de passe entrés par l'utilisateur
@@ -139,64 +190,54 @@ class UserModel extends Model
     }
 
     /*
-     * Fonction getAuthors
-     * paramètres : tableau d'id utilisateurs
-     * résultat : tableau des autheurs avec les avatars et noms d'utilisateurs
-     */
-    public function getAuthors(array $userIds)
-    {
-        if (empty($userIds)) {
-            return [];
-        }
-
-        $placeholders = implode(', ', array_fill(0, count($userIds), '?'));
-
-        return $this->dbRequestAll(
-            "SELECT id_user, username, avatar FROM " . $this->tableName . " WHERE id_user IN ($placeholders)",
-            $userIds
-        ) ?? [];
-    }
-
-    /*
      * Fonction updateAvatar
      * paramètres : id utilisateur, nom du fichier avatar
      * résultat : true si mise à jour réussie, false sinon
      */
     public function updateAvatar(int $userId, string $fileName)
     {
-        $this->dbRequest(
-            "UPDATE " . $this->tableName . " SET avatar = ? WHERE " . $this->idName . " = ?",
-            [$fileName, $userId]
-        );
-    }
 
-    /*
-     * Fonction getEmailByID
-     * paramètres : id utilisateur
-     * résultat : supprime le compte de l'utilisateur
-     */
-    public function getEmailByID(int $userID)
-    {
-        return $this->dbRequest(
-            "SELECT email FROM " . $this->tableName . " WHERE id_user = ?",
-            [$userID]
-        );
-    }
-
-    /*
-     * Fonction deleteAccount
-     * paramètres : id utilisateur
-     * résultat : supprime le compte de l'utilisateur
-     */
-    public function deleteAccount(int $userID)
-    {
         try {
             $this->dbRequest(
-                "DELETE FROM " . $this->tableName . " WHERE id_user = ?",
-                [$userID]
+                "UPDATE " . $this->tableName . " SET avatar = ? WHERE " . $this->idName . " = ?",
+                [$fileName, $userId]
             );
             return true;
         } catch (PDOException $e) {
+            error_log($e->getMessage());
+
+            return false;
+        }
+    }
+
+    /*
+     * Fonction delete
+     * paramètre : ID de l'utilisateur
+     * résultat : supprime le compte de l'utilisateur ainsi que ses commentaires
+     *            true si succès, false sinon
+     */
+    public function delete(int $userID)
+    {
+        try {
+            $this->dbConnector->beginTransaction();
+
+            $this->dbRequest(
+                "DELETE FROM comments WHERE id_user = ?",
+                [intval($userID)]
+            );
+
+            $this->dbRequest(
+                "DELETE FROM users WHERE id_user = ?",
+                [intval($userID)]
+            );
+
+            $this->dbConnector->commit();
+
+            return true;
+        } catch (PDOException $e) {
+            $this->dbConnector->rollBack();
+            error_log($e->getMessage());
+
             return false;
         }
     }

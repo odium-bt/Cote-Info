@@ -36,11 +36,7 @@ class Route
                 new Home;
                 break;
             case "news":
-                if (isset($_GET["id"])) {
-                    new NewsArticle;
-                } else {
-                    new News;
-                }
+                new News;
                 break;
             case "about":
                 new About;
@@ -52,7 +48,7 @@ class Route
                 new Register;
                 break;
             case "user":
-                if (isset($_SESSION["user_id"])) {
+                if (isset($_SESSION['user_id'])) {
                     new Profile;
                 } else {
                     new Login;
@@ -64,11 +60,15 @@ class Route
                 new Home;
                 break;
             case "deletion":
-                new Deletion;
+                if (isset($_SESSION['user_id'])) {
+                    new Deletion;
+                } else {
+                    new PermissionDenied;
+                }
                 break;
             case "station":
                 // Si aucun ID station est trouvé, affiche la page 404
-                if (isset($_GET["id"])) {
+                if (isset($_GET['id'])) {
                     new Station;
                 } else {
                     new PageNotFound;

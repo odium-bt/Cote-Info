@@ -3,6 +3,7 @@
 namespace CoteInfo\Controller;
 
 use CoteInfo\Model\StationsModel;
+use CoteInfo\Model\MediaModel;
 use CoteInfo\Model\CommentsModel;
 use CoteInfo\Model\NotesModel;
 use CoteInfo\Model\ReportsModel;
@@ -38,9 +39,13 @@ class Station
         $stationsMdl = new StationsModel($this->id);
 
         $this->beach = $stationsMdl->getBeach(); // Données station
-        $this->medias =  $stationsMdl->getMedia(); // Médias station
+        $this->medias =  $stationsMdl->getMedia($this->id); // Médias station
 
-        $this->articles = $stationsMdl->getArticlePreviews(); // Articles
+        $articles = $stationsMdl->getArticlePreviews($this->id); // Articles
+        $mediaModel = new MediaModel;
+        $this->articles = $mediaModel->getThumbnails($articles);
+
+
         // Range les articles par ordre décroissant chronologique
         usort($this->articles, function ($a, $b) {
             return strtotime($b['date_']) - strtotime($a['date_']);

@@ -11,7 +11,7 @@
                     <h1><?= $this->beach['label'] ?></h1>
                     <!-- Note -->
                     <?php if (!isset($_SESSION['user_id'])) { ?>
-                        ?><a href="?action=login">
+                        <a href="?action=login">
                             <div class="rating" id="rating">
                                 <button type="submit" name="note" value="1"><i class="fa-regular fa-star" data-value="1"></i></button>
                                 <button type="submit" name="note" value="2"><i class="fa-regular fa-star" data-value="2"></i></button>

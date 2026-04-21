@@ -32,61 +32,26 @@ class NewsModel extends Model
 
     /*
      * Fonction getPreviews
-     * paramètre : tableau d'IDs d'articles
-     * résultat : tableau contenant l'id, le titre, la date et l'id thumbnail des articles demandés, avec une limite de 6, par ordre décroissant de nouveauté
+     * paramètre : tableau d'IDs d'articles, limite d'articles (optionelle)
+     * résultat : tableau contenant l'id, le titre, la date et l'id thumbnail des articles demandés
+     *            rangés par ordre décroissant de nouveauté
+     *            ajoute une limite si choisie
      */
-    public function getPreviews(array $ids)
+    public function getPreviews(array $ids, int $limit = 0)
     {
         $placeholders = implode(', ', array_fill(0, count($ids), '?'));
 
-        return $this->dbRequestAll(
-            "SELECT `id_news`,`title`,`date_`,`id_thumbnail` FROM news WHERE id_news IN ($placeholders) ORDER BY date_ DESC",
-            $ids
-        ) ?? [];
-    }
-
-    /*
-     * Fonction getBeachPreviews
-     * paramètre : tableau d'IDs d'articles
-     * résultat : tableau contenant l'id, le titre, la date et l'id thumbnail des articles demandés, avec une limite de 6, par ordre décroissant de nouveauté
-     */
-    public function getBeachPreviews(array $ids)
-    {
-        $placeholders = implode(', ', array_fill(0, count($ids), '?'));
-
-        return $this->dbRequestAll(
-            "SELECT `id_news`,`title`,`date_`,`id_thumbnail` FROM news WHERE id_news IN ($placeholders) ORDER BY date_ DESC LIMIT 6",
-            $ids
-        ) ?? [];
-    }
-
-    /*
-     * Fonction getThumbnails
-     * paramètre : tableau d'ids
-     * résultat : tableau contenant l'id, le nom de fichier, l'alt et la légende des articles et les range dans le tableau articles
-     */
-    public function getThumbnails(array $articles)
-    {
-        $thumbnailIDs = array_column($articles, 'id_thumbnail');
-        if (empty($thumbnailIDs)) {
-            return $articles;
+        if ($limit !== 0) {
+            return $this->dbRequestAll(
+                "SELECT `id_news`,`title`,`date_`,`id_thumbnail` FROM news WHERE id_news IN ($placeholders) ORDER BY date_ DESC LIMIT $limit",
+                $ids
+            ) ?? [];
+        } else {
+            return $this->dbRequestAll(
+                "SELECT `id_news`,`title`,`date_`,`id_thumbnail` FROM news WHERE id_news IN ($placeholders) ORDER BY date_ DESC",
+                $ids
+            ) ?? [];
         }
-
-        // Va chercher les infos dans la table media
-        $mediaModel = new MediaModel;
-        $thumbnails = $mediaModel->getMedias($thumbnailIDs);
-
-        // Range les thumbnails par leur IDs dans $thumbnailsByID
-        $thumbnailsByID = [];
-        foreach ($thumbnails as $thumbnail) {
-            $thumbnailsByID[$thumbnail['id_media']] = $thumbnail;
-        }
-        // Range les thumbnails dans leurs articles
-        foreach ($articles as &$article) {
-            $article['thumbnail'] = $thumbnailsByID[$article['id_thumbnail']] ?? null;
-        }
-
-        return $articles;
     }
 
     /*
@@ -102,11 +67,6 @@ class NewsModel extends Model
         return $this->save($fields, $values);
     }
 
-
-
-
-
-
     /*
      * Fonction connect
      * paramètre : ID des stations liées à l'article, ID de l'article
@@ -119,6 +79,43 @@ class NewsModel extends Model
                 "INSERT INTO news_station (id_station, id_news) VALUES (?, ?)",
                 [intval($stationID), $articleID]
             );
+        }
+    }
+
+    /*
+     * Fonction deleteArticle
+     * paramètre : ID de l'article
+     * résultat : supprime l'article et ses connections
+     *            true si succès, false sinon
+     */
+    public function delete(int $articleID)
+    {
+        try {
+            $this->dbConnector->beginTransaction();
+
+            $this->dbRequest(
+                "DELETE FROM news_images WHERE id_news = ?",
+                [intval($articleID)]
+            );
+
+            $this->dbRequest(
+                "DELETE FROM news_station WHERE id_news = ?",
+                [intval($articleID)]
+            );
+
+            $this->dbRequest(
+                "DELETE FROM news WHERE id_news = ?",
+                [intval($articleID)]
+            );
+
+            $this->dbConnector->commit();
+
+            return true;
+        } catch (PDOException $e) {
+            $this->dbConnector->rollBack();
+            error_log($e->getMessage());
+
+            return false;
         }
     }
 }

@@ -265,12 +265,6 @@ footer {
   margin-top: 100px;
   padding: 0;
   font-size: 12px;
-  h5 {
-    font-family: $fontTitle;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
 }
 
 .footernav {
@@ -280,8 +274,9 @@ footer {
   div {
     margin: 0 15px;
   }
-  h3 {
+  .title {
     font-size: 14px;
+    font-weight: bold;
   }
 }
 
@@ -602,7 +597,7 @@ footer {
     text-overflow: ellipsis;
     // white-space: nowrap;
 
-    h6 {
+    h2 {
       font-size: 12px;
     }
   }
@@ -755,7 +750,7 @@ footer {
   .footernav {
     padding: 40px 80px;
     font-size: 16px;
-    h3 {
+    .title {
       font-family: $fontTitle;
       font-size: 18px;
     }
@@ -795,7 +790,7 @@ footer {
     display: block;
   }
   /* = News = */
-  .news_article__title h6 {
+  .news_article__title h2 {
     font-size: 13px;
   }
   .news_list {

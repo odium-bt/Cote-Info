@@ -17,13 +17,13 @@
                         <div class="news_article box">
                             <img src="./public/images/beach/<?= $article['thumbnail']['path'] ?>" alt="<?= $article['thumbnail']['alt'] ?>">
                             <div class="news_article__title">
-                                <h6 title="<?= $article['title'] ?>">
+                                <h2 title="<?= $article['title'] ?>">
                                     <?php
                                     if (strlen($article['title']) > 40) {
                                         echo substr($article['title'], 0, 40) . "...";
                                     } else {
                                         echo $article['title'];
-                                    } ?></h6>
+                                    } ?></h2>
                             </div>
                         </div>
                     </a>

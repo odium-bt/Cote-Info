@@ -57,6 +57,7 @@ class Route
             case "logout":
                 session_unset();
                 session_destroy();
+                $_GET['action'] = "home";
                 new Home;
                 break;
             case "deletion":

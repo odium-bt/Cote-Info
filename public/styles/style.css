@@ -270,12 +270,6 @@ footer {
   padding: 0;
   font-size: 12px;
 }
-footer h5 {
-  font-family: "Montserrat", serif;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
 
 .footernav {
   padding: 20px 16px;
@@ -285,8 +279,9 @@ footer h5 {
 .footernav div {
   margin: 0 15px;
 }
-.footernav h3 {
+.footernav .title {
   font-size: 14px;
+  font-weight: bold;
 }
 
 .copyright {
@@ -608,7 +603,7 @@ footer h5 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.news_article__title h6 {
+.news_article__title h2 {
   font-size: 12px;
 }
 
@@ -763,7 +758,7 @@ footer h5 {
     padding: 40px 80px;
     font-size: 16px;
   }
-  .footernav h3 {
+  .footernav .title {
     font-family: "Montserrat", serif;
     font-size: 18px;
   }
@@ -799,7 +794,7 @@ footer h5 {
     display: block;
   }
   /* = News = */
-  .news_article__title h6 {
+  .news_article__title h2 {
     font-size: 13px;
   }
   .news_list {

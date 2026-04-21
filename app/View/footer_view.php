@@ -1,11 +1,11 @@
 <footer class="box">
     <div class="footernav">
         <div>
-            <h3>Côte Info</h3>
+            <p class="title">Côte Info</p class="title">
             <p>Votre guide des stations balnéaires en France métropole.</p>
         </div>
         <div>
-            <h3>Liens rapides</h3>
+            <p class="title">Liens rapides</p class="title">
             <ul>
                 <li><a href="?action=policy">
                         RGPD
@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div>
-            <h3>Communauté</h3>
+            <p class="title">Communauté</p class="title">
             <ul>
                 <li><a href="#">
                         Facebook

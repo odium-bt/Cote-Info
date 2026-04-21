@@ -16,5 +16,5 @@
  </div>
 
  <a class="margin-overunder-3" href="?action=logout">
-     <div class="button red">Déconnexion</div>
+     <div class="button">Déconnexion</div>
  </a>

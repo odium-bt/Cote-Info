@@ -8,5 +8,5 @@
 
  <p class="margin-overunder-3">Date de création du compte : <?= $this->user['date_'] ?></p>
  <a class="margin-overunder-3" href="?action=deletion">
-     <div id="delete-btn" class="button red">Suppression du compte</div>
+     <div id="delete-btn" class="button">Suppression du compte</div>
  </a>

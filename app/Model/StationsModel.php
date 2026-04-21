@@ -35,16 +35,16 @@ class StationsModel extends Model
 
     /*
      * Fonction getMedia
-     * paramètre : /
+     * paramètre : id station
      * résultat : tableau contenant les médias (id, chemin, alt, légende, id région) associés à la station
      */
-    public function getMedia()
+    public function getMedia(int $id)
     {
         // Cherche les ID médias associés à la station
 
         $mediaIDs = $this->dbRequestAll(
             "SELECT id_media FROM station_images WHERE id_station = ?",
-            [$this->id]
+            [intval($id)]
         );
         if (empty($mediaIDs)) {
             return [];
@@ -61,16 +61,15 @@ class StationsModel extends Model
 
     /*
      * Fonction getArticlePreviews
-     * paramètre : /
+     * paramètre : id de la station
      * résultat : tableau contenant un preview des articles associés à la station
      */
-    public function getArticlePreviews()
+    public function getArticlePreviews(int $id)
     {
         // Cherche les ID des articles de news associés à la station
-
         $newsIDs = $this->dbRequestAll(
             "SELECT id_news FROM news_station WHERE id_station = ?",
-            [$this->id]
+            [intval($id)]
         );
 
         if (empty($newsIDs)) {
@@ -82,29 +81,9 @@ class StationsModel extends Model
             return [];
         }
 
-        // Va chercher les infos dans la table news
+        // Va chercher les articles (sans thumbnail) dans la table news
         $newsModel = new NewsModel;
-        $articles = $newsModel->getBeachPreviews($articleIDs);
-
-        $thumbnailIDs = array_column($articles, 'id_thumbnail');
-        if (empty($thumbnailIDs)) {
-            return $articles;
-        }
-
-        // Va chercher les infos dans la table media
-        $mediaModel = new MediaModel;
-        $thumbnails = $mediaModel->getMedias($thumbnailIDs);
-
-        // Range les thumbnails par leur IDs dans $thumbnailsByID
-        $thumbnailsByID = [];
-        foreach ($thumbnails as $thumbnail) {
-            $thumbnailsByID[$thumbnail['id_media']] = $thumbnail;
-        }
-        // Range les thumbnails dans leurs articles
-        foreach ($articles as &$article) {
-            $article['thumbnail'] = $thumbnailsByID[$article['id_thumbnail']] ?? null;
-        }
-        unset($article);
+        $articles = $newsModel->getPreviews($articleIDs, 6);
 
         return $articles;
     }

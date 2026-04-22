@@ -41,6 +41,9 @@ class Route
             case "about":
                 new About;
                 break;
+            case "contact":
+                new Contact;
+                break;
             case "login":
                 new Login;
                 break;

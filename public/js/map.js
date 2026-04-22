@@ -12,7 +12,7 @@ let currentRegion = null;
 let zoomLevel = 0;
 
 /*
- * Function zoomRegion()
+ * Function zoomRegion
  * paramètre : id de la région visée
  * résultat : - zoom sur cette région
  */
@@ -91,7 +91,7 @@ function animateViewBox(
 }
 
 /*
- * Function resetZoom()
+ * Function resetZoom
  * paramètre : /
  * résultat : Affiche la carte entière
  */
@@ -110,7 +110,7 @@ function resetZoom() {
 }
 
 /*
- * Function updateButtons()
+ * Function updateButtons
  * paramètre : /
  * résultat : cache ou affiche les boutons de la carte selon le niveau de zoom / la région affichée
  */

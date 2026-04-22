@@ -412,6 +412,9 @@ footer {
   align-items: center;
 }
 
+.description {
+  width: 100%;
+}
 /* - Note - */
 .rating {
   display: flex;
@@ -650,27 +653,42 @@ footer {
 .form {
   padding: 5em 10em;
 
-  a {
-    font-size: 12px;
-  }
-  .button {
-    margin-top: 30px;
-  }
   input {
     height: 2em;
     width: 100%;
+  }
+  textarea {
+    width: 100%;
+    height: 10em;
+  }
+  &__checkbox {
+    display: flex;
+    input {
+      height: auto;
+      width: auto;
+    }
   }
 }
 .form-group {
   margin: 10px 0;
 }
 
+label[for="rgpd"] {
+  margin-left: 6px;
+  font-size: inherit;
+}
 .error {
   color: red;
   font-size: 0.8em;
   font-style: oblique;
 }
-
+.login-switch {
+  margin-bottom: 20px;
+}
+.disclaimer {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
 .submit {
   display: flex;
   justify-content: center;

@@ -1,7 +1,7 @@
 <?php require ROOT . '/app/View/header_view.php'; ?>
 <main class="content">
     <div class="flex justify-center">
-        <!-- Formulaire de connexion -->
+        <!-- Formulaire d'inscription' -->
         <div class="box">
             <form class="form" action="?action=register" method="post">
                 <h1>Inscription</h1>
@@ -54,8 +54,9 @@
                     <?php if (isset($this->errors["password-confirm"])) echo ("<br><span class='error'>" . $this->errors["password-confirm"] . "</span>"); ?>
                 </div>
 
-                <a class="blue-link" href="?action=login">Vous avez déjà un compte&nbsp;?</a>
+                <p class="login-switch"><a class=" blue-link" href="?action=login">Vous avez déjà un compte&nbsp;?</a></p>
 
+                <p class="disclaimer">En vous inscrivant, vous acceptez notre <a class="blue-link" href="?action=policy">Politique de Confidentialité</a>.</p>
                 <div class="submit">
                     <input type="submit" class="button" value="Enregistrer">
                 </div>

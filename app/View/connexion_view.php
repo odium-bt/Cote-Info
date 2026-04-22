@@ -21,7 +21,7 @@
                     <?php if (isset($this->errors["password"])) echo ("<br><span class='error'>" . $this->errors["password"] . "</span>"); ?>
                 </div>
 
-                <a class="blue-link" href="?action=register">Vous n'avez pas de compte&nbsp;?</a>
+                <p class="login-switch"><a class="blue-link" href="?action=register">Vous n'avez pas de compte&nbsp;?</a></p>
 
                 <div class="submit">
                     <input type="submit" class="button" value="Valider">

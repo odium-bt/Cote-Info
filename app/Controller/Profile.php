@@ -253,7 +253,7 @@ class Profile
         }
 
         // Si le code arrive jusqu'ici sans erreurs, supprime l'avatar précédent
-        if ($oldAvatarName !== null) {
+        if ($oldAvatarName["avatar"] !== null) {
             $oldAvatar = $uploadDir . $oldAvatarName["avatar"];
             unlink($oldAvatar);
         }
